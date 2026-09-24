@@ -224,6 +224,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--w2);posi
   .beta-b p{text-align:center}
   .foot .tagline{margin-left:0;width:100%}
 }
+[hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -274,6 +275,9 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--w2);posi
     <p class="lede">Your veteran advisor catches what's due on every car. Your new hire just does what's asked. <b>RO Engine closes that gap</b> &mdash; automatically, on every repair order, for every advisor on your team.</p>
     <div class="cta-row">
       <a href="#demo" class="btn btn-g">Claim a beta seat <svg class="ic"><use href="#i-arrow"/></svg></a>
+      <!-- FREE TRIAL: self-service signup, beta plan preselected ($99/mo, 10 seats, 90 days free).
+           Hidden until Stripe leaves sandbox mode — remove `hidden` here and in the beta box. -->
+      <a href="https://app.roengine.com/signup?plan=beta" class="btn btn-g" data-trial hidden>Start your 90-day free trial <svg class="ic"><use href="#i-arrow"/></svg></a>
       <a href="#problem" class="btn" style="background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3)">See the problem <svg class="ic"><use href="#i-down"/></svg></a>
     </div>
     <p class="trust">No sales team, no demo script. You'd be talking to the guy who runs the shop it was built in.</p>
@@ -519,6 +523,8 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--w2);posi
         <div class="lb2">locked for life</div>
       </div>
       <p>The first <strong>10 beta shops</strong> pay $99/month for as long as they stay &mdash; not $99 for a year, $99 permanently. In exchange you tell me what's broken and what's missing. I'm running this in my own shop every day, so I'll be fixing it either way.</p>
+      <!-- FREE TRIAL (see the hero): hidden until Stripe is live. -->
+      <a href="https://app.roengine.com/signup?plan=beta" class="btn btn-p" data-trial hidden style="flex:none">Start your 90-day free trial <svg class="ic"><use href="#i-arrow"/></svg></a>
     </div>
 
     <div class="roi">
