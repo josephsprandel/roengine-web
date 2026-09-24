@@ -1,0 +1,15 @@
+---
+# cPanel Git Version Control deployment for roengine.com (reseller account `roengine`).
+# Deploy = cPanel → Git Version Control → Manage → "Update from Remote", then "Deploy HEAD Commit".
+# Copies and overwrites only — never deletes.
+#
+# Deliberately NOT deployed:
+#   config.php   — secrets (Mailgun key, admin token); lives ONLY on the host. Template: config.example.php
+#   .htaccess    — security rules + a cPanel-managed PHP-handler footer; edit on the host
+#                  (the copy here is the reference)
+#   DEPLOY.md, config.example.php — docs; .htaccess denies them anyway
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/roengine/public_html/
+    - /bin/cp -f index.html form.php leads.php robots.txt sitemap.xml $DEPLOYPATH
+    - /bin/cp -Rf assets $DEPLOYPATH

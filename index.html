@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RO Engine &mdash; The AI Service Advisor for Independent Shops</title>
+<meta name="description" content="Your best advisor knows what every car needs before the customer asks. RO Engine gives that knowledge to your whole team. $199/month flat, everything included, no tiers.">
+<link rel="canonical" href="https://roengine.com/">
+<meta property="og:title" content="RO Engine &mdash; The AI Service Advisor for Independent Shops">
+<meta property="og:description" content="Your veteran advisor catches what's due on every car. RO Engine gives that to every advisor on your team. $199/month flat, no tiers, no per-seat charges.">
+<meta property="og:url" content="https://roengine.com/">
+<meta property="og:type" content="website">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#2d4d78;--blue-mid:#385984;--blue-vivid:#3f7fc4;
+  --teal:#4da9a4;--teal-vivid:#3fb5ae;--teal-deep:#2f8480;--teal-wash:#eefaf9;
+  --ink:#101a26;--ink-2:#4a5c70;--ink-3:#8598ab;
+  --w:#fff;--w2:#f7fafd;--w3:#edf4fa;
+  --line:#e2ecf4;--line-hi:#c7dced;
+  --green:#2f9e69;--red:#e0625c;--amber:#eba020;
+  --g:linear-gradient(115deg,#385984 0%,#3f7fc4 45%,#4db5ae 100%);
+  --gb:linear-gradient(115deg,#2d4d78 0%,#336a9e 55%,#2f8480 100%);
+  --sh-sm:0 2px 10px rgba(24,54,90,.05);--sh:0 12px 34px rgba(24,54,90,.10);--sh-lg:0 30px 70px rgba(24,54,90,.18);
+  --r:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#fff;color:var(--ink-2);font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3{color:var(--ink);font-weight:800;letter-spacing:-.033em;line-height:1.05}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+a{color:inherit;text-decoration:none}
+.gt{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---- icon system: inline SVG, inherits currentColor, pure ASCII ---- */
+.ic{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic-lg{width:28px;height:28px}
+
+nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1200px;margin:0 auto;padding:12px 28px;display:flex;align-items:center;gap:34px}
+.logo-lock{display:flex;align-items:center;gap:13px}
+.logo-lock .mk{height:46px;display:block}
+.logo-lock .nm{font-weight:700;font-size:23px;line-height:1;color:var(--ink);letter-spacing:-.015em}
+.logo-lock .tg{display:block;font-weight:600;font-size:9.5px;letter-spacing:.185em;text-transform:uppercase;color:var(--ink-3);margin-top:4px}
+.nav-links{margin-left:auto;display:flex;gap:30px;align-items:center}
+.nav-links a{font-size:15px;font-weight:600;color:var(--ink-2);transition:color .2s}
+.nav-links a:hover{color:var(--blue-vivid)}
+.nav-links a.btn-p{color:#fff}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 28px;border-radius:14px;font-weight:700;font-size:16px;font-family:inherit;transition:transform .18s,box-shadow .18s;border:none;cursor:pointer}
+.btn-p{background:var(--gb);color:#fff;box-shadow:0 8px 24px rgba(45,77,120,.30)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(45,77,120,.4)}
+.btn-g{background:#fff;color:var(--blue);box-shadow:0 8px 24px rgba(16,26,38,.12)}
+.btn-g:hover{transform:translateY(-2px)}
+.btn-sm{padding:10px 20px;font-size:14.5px;border-radius:11px}
+.btn .ic{width:18px;height:18px}
+.mob-hide{display:block}
+
+.hero{background:var(--g);position:relative;overflow:hidden;padding:78px 0 130px;text-align:center;color:#fff}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(800px 420px at 78% 8%,rgba(255,255,255,.20),transparent 60%),radial-gradient(620px 380px at 12% 88%,rgba(45,77,120,.34),transparent 62%)}
+.hero-curve{position:absolute;right:0;bottom:-6%;width:66%;height:82%;z-index:1;opacity:.75;background:url("/assets/curve-white.svg") right bottom/100% 100% no-repeat;pointer-events:none}
+.hero>.wrap{position:relative;z-index:2}
+.badge{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);color:#fff;padding:8px 18px;border-radius:100px;font-size:14px;font-weight:700;backdrop-filter:blur(8px);margin-bottom:26px}
+.dot{width:8px;height:8px;border-radius:50%;background:#8ff0e6;box-shadow:0 0 0 4px rgba(143,240,230,.26)}
+.hero h1{font-size:clamp(46px,6.4vw,82px);color:#fff;margin-bottom:22px;letter-spacing:-.04em}
+.hero h1 em{font-style:normal;color:#a8f0e8}
+.lede{font-size:20px;max-width:660px;margin:0 auto 34px;color:rgba(255,255,255,.9)}
+.lede b{color:#fff;font-weight:700}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.trust{margin-top:22px;font-size:15.5px;color:rgba(255,255,255,.85)}
+
+.float{margin-top:-96px;position:relative;z-index:5}
+.card{background:#fff;border-radius:24px;box-shadow:var(--sh-lg);overflow:hidden;max-width:840px;margin:0 auto;border:1px solid var(--line)}
+.card-bar{display:flex;align-items:center;gap:8px;padding:15px 20px;background:var(--w2);border-bottom:1px solid var(--line)}
+.tl{width:11px;height:11px;border-radius:50%}
+.card-title{margin-left:9px;font-size:14.5px;font-weight:700;color:var(--ink)}
+.live{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--teal-deep)}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--teal-vivid);box-shadow:0 0 0 4px rgba(63,181,174,.22)}
+.veh{display:flex;align-items:center;gap:15px;padding:20px 24px;border-bottom:1px solid var(--line)}
+.veh-ico{width:48px;height:48px;border-radius:14px;background:var(--g);display:grid;place-items:center;flex-shrink:0;color:#fff}
+.veh-n{font-weight:800;color:var(--ink);font-size:17px;line-height:1.3}
+.veh-s{font-size:13.5px;color:var(--ink-3)}
+.veh-m{margin-left:auto;text-align:right}
+.veh-m .mi{font-weight:800;color:var(--ink);font-size:17px}
+.veh-m .lb{font-size:12px;color:var(--ink-3)}
+.scan{padding:12px 24px;background:var(--teal-wash);border-bottom:1px solid var(--line);font-size:13.5px;color:var(--teal-deep);font-weight:600;display:flex;align-items:center;gap:9px}
+.scan .ic{width:16px;height:16px}
+.recs{display:grid;grid-template-columns:1fr 1fr}
+.rec{display:flex;gap:13px;padding:17px 24px;border-bottom:1px solid var(--line);align-items:flex-start;text-align:left}
+.rec:nth-child(odd){border-right:1px solid var(--line)}
+.chip{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:7px}
+.c-red{background:var(--red)}.c-amb{background:var(--amber)}.c-grn{background:var(--green)}
+.rec-b{flex:1;min-width:0}
+.rec-t{font-weight:700;color:var(--ink);font-size:15px;margin-bottom:3px}
+.rec-d{font-size:13.5px;color:var(--ink-3);line-height:1.5}
+.rec-p{font-weight:800;color:var(--teal-deep);font-size:16px;flex-shrink:0}
+.card-ft{display:flex;align-items:center;padding:18px 24px;background:var(--w2)}
+.card-ft .l{font-size:14.5px;font-weight:600;color:var(--ink-2)}
+.card-ft .v{margin-left:auto;font-size:26px;font-weight:800;color:var(--ink)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:64px;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh-sm)}
+.stat{padding:30px 26px;text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none}
+.stat .n{font-size:44px;font-weight:800;line-height:1;margin-bottom:5px;letter-spacing:-.03em}
+.stat .l{font-size:14px;color:var(--ink-3);font-weight:600}
+
+section{padding:100px 0;position:relative}
+.tint{background:var(--w2)}
+.center{text-align:center}
+.center .sub{margin-left:auto;margin-right:auto}
+.eyebrow{display:inline-block;background:var(--teal-wash);color:var(--teal-deep);padding:7px 18px;border-radius:100px;font-size:13.5px;font-weight:700;margin-bottom:20px}
+h2{font-size:clamp(38px,4.8vw,58px);margin-bottom:18px}
+.sub{font-size:19px;max-width:640px;margin-bottom:52px}
+.edge{position:absolute;left:0;right:0;height:120px;pointer-events:none;opacity:.10;background:url("/assets/curve.svg") left bottom/100% 100% no-repeat}
+.edge-top{top:0}
+
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:24px;text-align:left}
+.adv{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:32px;box-shadow:var(--sh-sm)}
+.adv.win{box-shadow:0 20px 50px rgba(63,127,196,.2);background:linear-gradient(#fff,#fff) padding-box,var(--g) border-box;border:2px solid transparent}
+.adv-h{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.av{width:50px;height:50px;border-radius:15px;display:grid;place-items:center;font-weight:800;font-size:16px;color:#fff;flex-shrink:0}
+.av.a{background:var(--g)}.av.b{background:#b6c8d8}
+.adv-h .nm{font-weight:800;color:var(--ink);font-size:17px}
+.adv-h .ex{font-size:14px;color:var(--ink-3)}
+.line-i{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
+.line-i:last-of-type{border-bottom:none}
+.line-i .m{color:var(--ink-3);font-weight:600}
+.tot{display:flex;justify-content:space-between;align-items:baseline;margin-top:20px;padding-top:18px;border-top:2px solid var(--line)}
+.tot .l{font-size:14.5px;color:var(--ink-2);font-weight:600}
+.tot .v{font-size:40px;font-weight:800;letter-spacing:-.03em}
+.gap-b{margin-top:26px;background:var(--g);border-radius:var(--r);padding:34px 38px;display:flex;align-items:center;gap:24px;color:#fff;box-shadow:0 20px 46px rgba(63,127,196,.32);text-align:left}
+.gap-b .big{font-size:62px;font-weight:800;line-height:1;color:#fff;flex-shrink:0;letter-spacing:-.04em}
+.gap-b p{font-size:17.5px;color:rgba(255,255,255,.94)}
+.illus{font-size:14px;color:var(--ink-3);margin-top:18px;text-align:center}
+
+.bento{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;text-align:left}
+.fc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:32px;box-shadow:var(--sh-sm);transition:transform .22s,box-shadow .22s;position:relative;overflow:hidden}
+.fc::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:var(--g);opacity:0;transition:opacity .22s}
+.fc:hover{transform:translateY(-5px);box-shadow:var(--sh)}
+.fc:hover::before{opacity:1}
+.fi{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;margin-bottom:20px;background:var(--teal-wash);color:var(--teal-deep)}
+.fc h3{font-size:25px;margin-bottom:11px}
+.fc>p{font-size:16px;margin-bottom:18px}
+.chk{list-style:none;display:grid;gap:10px}
+.chk li{display:flex;gap:11px;font-size:15px;align-items:flex-start}
+.chk li::before{content:'\2713';width:21px;height:21px;border-radius:7px;background:var(--g);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:2px}
+
+.price-g{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;text-align:left}
+.pc{border-radius:var(--r);padding:38px;border:1px solid var(--line);background:#fff;box-shadow:var(--sh-sm)}
+.pc.hero-p{background:var(--g);color:#fff;border:0;box-shadow:0 26px 60px rgba(63,127,196,.34)}
+.tag{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:5px 16px;border-radius:100px;font-size:13px;font-weight:700;margin-bottom:16px}
+.pc .who{font-size:15px;font-weight:700;color:var(--ink-3);margin-bottom:14px}
+.pc.hero-p .who{color:rgba(255,255,255,.85)}
+.pc .amt{font-size:70px;font-weight:800;line-height:1;letter-spacing:-.045em;margin-bottom:4px}
+.pc.hero-p .amt{color:#fff}.pc.alt .amt{color:var(--ink-3)}
+.pc .per{font-size:14.5px;color:var(--ink-3);margin-bottom:26px}
+.pc.hero-p .per{color:rgba(255,255,255,.8)}
+.pl{list-style:none;display:grid;gap:11px}
+.pl li{display:flex;gap:11px;font-size:15.5px;align-items:flex-start}
+.pc.hero-p .pl li{color:#fff}
+.pl li.y::before{content:'\2713';font-weight:800;color:var(--teal-deep)}
+.pc.hero-p .pl li.y::before{color:#a8f0e8}
+.pl li.n::before{content:'\2014';font-weight:800;color:#c3d3e0}
+.pl li.n{color:var(--ink-3)}
+.pnote{font-size:14px;color:var(--ink-3);margin-top:18px;max-width:760px;margin-left:auto;margin-right:auto;line-height:1.6}
+.pnote a{color:var(--teal-deep);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.beta-b{margin-top:26px;border:2px solid var(--teal-vivid);background:var(--teal-wash);border-radius:var(--r);
+        padding:26px 32px;display:flex;gap:26px;align-items:center;text-align:left;flex-wrap:wrap;justify-content:center}
+.beta-b .amt2{font-size:52px;font-weight:800;line-height:1;letter-spacing:-.04em;color:var(--teal-deep);flex:none}
+.beta-b .lb2{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);opacity:.8;margin-top:4px}
+.beta-b p{font-size:16.5px;max-width:520px;color:var(--ink-2)}
+.roi{margin-top:26px;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:36px;text-align:center;box-shadow:var(--sh-sm);position:relative;overflow:hidden}
+.roi .curve-accent{position:absolute;right:0;bottom:0;width:42%;height:78%;opacity:.13;background:url("/assets/curve.svg") right bottom/100% 100% no-repeat;pointer-events:none}
+.proof{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative}
+.proof .n{font-size:42px;font-weight:800;line-height:1;letter-spacing:-.035em;margin-bottom:6px}
+.proof .l{font-size:14px;color:var(--ink-3);font-weight:600;line-height:1.45}
+.src{font-size:13.5px;color:var(--ink-3);margin-top:22px;position:relative}
+
+.about-g{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;text-align:left}
+.pill-l{list-style:none;display:grid;gap:13px;margin-top:26px}
+.pill-l li{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px 22px;display:flex;gap:14px;align-items:center;font-size:16px;box-shadow:var(--sh-sm)}
+.pill-l li .ic{color:var(--teal-deep)}
+
+.form-c{background:#fff;border:1px solid var(--line);border-radius:24px;padding:44px;box-shadow:var(--sh-lg);text-align:left}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+label{display:block;font-size:14px;font-weight:700;color:var(--ink-2);margin-bottom:7px}
+input,select,textarea{width:100%;padding:14px 16px;border:1px solid var(--line-hi);border-radius:12px;font-family:inherit;font-size:16px;color:var(--ink);background:var(--w2);transition:border-color .18s,box-shadow .18s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal-vivid);background:#fff;box-shadow:0 0 0 4px rgba(63,181,174,.16)}
+.hp{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden}
+.benefits{list-style:none;display:grid;gap:15px;margin-top:26px;text-align:left}
+.benefits li{display:flex;gap:13px;align-items:flex-start;font-size:16.5px}
+.benefits li::before{content:'\2713';width:26px;height:26px;border-radius:9px;background:var(--g);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:800;flex-shrink:0;margin-top:2px}
+.seats{margin-top:24px;font-size:15px;font-weight:700;color:var(--teal-deep);display:flex;align-items:center;gap:9px}
+.msg{padding:14px 16px;border-radius:12px;font-weight:600;margin-bottom:18px;display:none}
+.msg.ok{display:block;background:#e8f8f0;color:#1e7a52;border:1px solid #b9e5cf}
+.msg.err{display:block;background:#fdeceb;color:#a83b36;border:1px solid #f2c4c1}
+.fineprint{font-size:13px;color:var(--ink-3);margin-top:14px;line-height:1.55}
+
+footer{border-top:1px solid var(--line);padding:44px 0;background:var(--w2);position:relative;overflow:hidden}
+.foot-curve{position:absolute;left:0;right:0;top:0;height:70px;opacity:.09;background:url("/assets/curve.svg") left top/100% 100% no-repeat;pointer-events:none}
+.foot{display:flex;align-items:center;gap:24px;flex-wrap:wrap;position:relative}
+.foot .logo-lock .mk{height:38px}
+.foot .logo-lock .nm{font-size:19px}
+.foot .logo-lock .tg{font-size:8.5px}
+.foot p{font-size:15px;color:var(--ink-3)}
+.foot .tagline{margin-left:auto;font-weight:700;color:var(--blue-vivid)}
+
+@media(max-width:900px){
+  .cmp,.bento,.price-g,.about-g,.recs{grid-template-columns:1fr}
+  .rec:nth-child(odd){border-right:none}
+  .stats,.proof{grid-template-columns:1fr 1fr}
+  .stat:nth-child(2){border-right:none}
+  .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--line)}
+  .nav-links a.mob-hide{display:none}
+  .logo-lock .nm{font-size:19px}.logo-lock .mk{height:38px}
+  .hero{padding:52px 0 110px}
+  section{padding:64px 0}
+  .fg{grid-template-columns:1fr}
+  .form-c{padding:28px}
+  .gap-b{flex-direction:column;text-align:center;padding:28px}
+  .beta-b{flex-direction:column;text-align:center}
+  .beta-b p{text-align:center}
+  .foot .tagline{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- =====================================================================
+     ICON SPRITE. Renders nothing. Everything below references it by id.
+     Replaces the emoji that were on this page - those are 4-byte UTF-8
+     and turn into black diamonds whenever this file is pasted through a
+     non-UTF-8 editor. This whole document is now pure ASCII.
+     ===================================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 5a3 3 0 1 0-5.997.142 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.142 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
+</defs></svg>
+
+<nav>
+  <div class="nav-in">
+    <a href="#top" class="logo-lock"><img class="mk" src="/assets/mark-roe.svg" alt="RO Engine" width="70" height="46">
+      <span><span class="nm">RO Engine</span><span class="tg">Automotive Intelligence</span></span></a>
+    <div class="nav-links">
+      <a href="#problem" class="mob-hide">The Problem</a>
+      <a href="#how" class="mob-hide">How It Works</a>
+      <a href="#pricing" class="mob-hide">Pricing</a>
+      <a href="#about" class="mob-hide">About</a>
+      <a href="#demo" class="btn btn-p btn-sm">Claim a Beta Seat</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-curve"></div>
+  <div class="wrap">
+    <div class="badge"><span class="dot"></span> 10 beta seats &middot; $99/mo locked for life</div>
+    <h1>Your best advisor.<br><em>Every</em> write-up.</h1>
+    <p class="lede">Your veteran advisor catches what's due on every car. Your new hire just does what's asked. <b>RO Engine closes that gap</b> &mdash; automatically, on every repair order, for every advisor on your team.</p>
+    <div class="cta-row">
+      <a href="#demo" class="btn btn-g">Claim a beta seat <svg class="ic"><use href="#i-arrow"/></svg></a>
+      <a href="#problem" class="btn" style="background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3)">See the problem <svg class="ic"><use href="#i-down"/></svg></a>
+    </div>
+    <p class="trust">No sales team, no demo script. You'd be talking to the guy who runs the shop it was built in.</p>
+  </div>
+</header>
+
+<div class="float">
+  <div class="wrap">
+    <div class="card">
+      <div class="card-bar">
+        <span class="tl" style="background:#ff5f57"></span><span class="tl" style="background:#ffbd2e"></span><span class="tl" style="background:#28c940"></span>
+        <span class="card-title">AI Service Advisor</span>
+        <span class="live"><span class="pulse"></span> Working</span>
+      </div>
+      <div class="veh">
+        <div class="veh-ico"><svg class="ic ic-lg"><use href="#i-car"/></svg></div>
+        <div style="text-align:left"><div class="veh-n">2019 Honda Accord EX-L</div><div class="veh-s">VIN &middot;&middot;&middot;&middot;8821 &middot; last visit 11 months ago</div></div>
+        <div class="veh-m"><div class="mi">87,432</div><div class="lb">miles</div></div>
+      </div>
+      <div class="scan"><svg class="ic"><use href="#i-refresh"/></svg> Checking the maintenance schedule and this car's history&hellip;</div>
+      <div class="recs">
+        <div class="rec"><div class="chip c-red"></div><div class="rec-b"><div class="rec-t">Transmission Fluid</div><div class="rec-d">27,432 miles overdue. Old fluid causes shift hesitation and early clutch wear.</div></div><div class="rec-p">$189</div></div>
+        <div class="rec"><div class="chip c-amb"></div><div class="rec-b"><div class="rec-t">Brake Fluid Flush</div><div class="rec-d">Hit the 3-year mark. Moisture in the fluid lowers the boiling point &mdash; safety item.</div></div><div class="rec-p">$95</div></div>
+        <div class="rec"><div class="chip c-amb"></div><div class="rec-b"><div class="rec-t">Spark Plugs</div><div class="rec-d">Iridium plugs due at 90K. She's 2,568 miles out &mdash; worth doing while it's here.</div></div><div class="rec-p">$145</div></div>
+        <div class="rec"><div class="chip c-grn"></div><div class="rec-b"><div class="rec-t">Cabin Air Filter</div><div class="rec-d">8,000 miles since the last one.</div></div><div class="rec-p">$38</div></div>
+      </div>
+      <div class="card-ft"><span class="l">Recommended total</span><span class="v">$556</span></div>
+    </div>
+
+    <div class="wrap stats" style="padding:0">
+      <div class="stat"><div class="n gt">$199</div><div class="l">per month, flat</div></div>
+      <div class="stat"><div class="n gt">54,823</div><div class="l">OEM service intervals</div></div>
+      <div class="stat"><div class="n gt">6,900</div><div class="l">customers migrated</div></div>
+      <div class="stat"><div class="n gt">10</div><div class="l">beta seats</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="problem">
+  <div class="wrap center">
+    <div class="eyebrow">The advisor knowledge gap</div>
+    <h2>Same car. Two advisors.<br>Huge difference.</h2>
+    <p class="sub">A vehicle comes in for a routine oil change. Here's what happens depending on who writes it up.</p>
+
+    <div class="cmp">
+      <div class="adv win">
+        <div class="adv-h"><div class="av a">MV</div><div><div class="nm">Your veteran advisor</div><div class="ex">8+ years on the counter</div></div></div>
+        <div class="line-i"><span>Oil &amp; filter</span><span>$89</span></div>
+        <div class="line-i"><span>Transmission fluid &mdash; overdue</span><span>$189</span></div>
+        <div class="line-i"><span>Brake fluid flush &mdash; 3 yr</span><span>$95</span></div>
+        <div class="line-i"><span>Spark plugs &mdash; due at 90K</span><span>$145</span></div>
+        <div class="line-i"><span>Rear diff service</span><span>$120</span></div>
+        <div class="line-i"><span>Cabin + engine filters</span><span>$72</span></div>
+        <div class="line-i"><span>Deferred from last visit</span><span>$137</span></div>
+        <div class="tot"><span class="l">Ticket written</span><span class="v gt">$847</span></div>
+      </div>
+      <div class="adv">
+        <div class="adv-h"><div class="av b">NH</div><div><div class="nm">Your new hire</div><div class="ex">4 months on the counter</div></div></div>
+        <div class="line-i"><span>Oil &amp; filter</span><span>$89</span></div>
+        <div class="line-i"><span>Wiper blades</span><span>$36</span></div>
+        <div class="line-i"><span class="m">Transmission fluid</span><span class="m">missed</span></div>
+        <div class="line-i"><span class="m">Brake fluid flush</span><span class="m">missed</span></div>
+        <div class="line-i"><span class="m">Spark plugs</span><span class="m">missed</span></div>
+        <div class="line-i"><span class="m">Rear diff service</span><span class="m">missed</span></div>
+        <div class="line-i"><span class="m">Deferred services</span><span class="m">never surfaced</span></div>
+        <div class="tot"><span class="l">Ticket written</span><span class="v" style="color:var(--ink-3)">$125</span></div>
+      </div>
+    </div>
+
+    <div class="gap-b">
+      <div class="big">$722</div>
+      <p>missed on a single vehicle. Not because your new advisor isn't trying &mdash; because nobody handed him twelve years of pattern recognition on his first day. RO Engine does, on every RO.</p>
+    </div>
+    <p class="illus">Illustrative example using typical Northwest Arkansas labor and parts pricing, not a guaranteed result.</p>
+  </div>
+</section>
+
+<section id="how" class="tint">
+  <div class="wrap center">
+    <div class="eyebrow">How it works</div>
+    <h2>See it in action</h2>
+    <p class="sub">The moment a vehicle is written up, RO Engine cross-references the manufacturer maintenance schedule, the vehicle's own history, and known failure patterns for that model.</p>
+
+    <div class="bento">
+
+      <div class="fc">
+        <div class="fi"><svg class="ic ic-lg"><use href="#i-brain"/></svg></div>
+        <h3>AI Service Advisor</h3>
+        <p>Every vehicle gets veteran-level recommendations. Consistent, every time, on every car.</p>
+        <ul class="chk">
+          <li>Overdue services surfaced automatically</li>
+          <li>Deferred services remembered from prior visits</li>
+          <li>Customer explanation written in plain language</li>
+          <li>Parts and pricing populated instantly</li>
+        </ul>
+      </div>
+
+      <div class="fc">
+        <div class="fi"><svg class="ic ic-lg"><use href="#i-phone"/></svg></div>
+        <h3>AI Phone Answering</h3>
+        <p>Included, not a $99 add-on &mdash; and it's wired into the repair order, not bolted on beside it.</p>
+        <ul class="chk">
+          <li>Answers when the counter is buried</li>
+          <li>Takes vehicle and customer details</li>
+          <li>Call transcripts land on the customer record</li>
+          <li>Tone and personality you control</li>
+        </ul>
+      </div>
+
+      <div class="fc">
+        <div class="fi"><svg class="ic ic-lg"><use href="#i-clipboard"/></svg></div>
+        <h3>Digital Estimate Approval</h3>
+        <p>Send the estimate, they approve it from the couch. No phone tag, and the answer is in writing.</p>
+        <ul class="chk">
+          <li>Private link, no app and no login</li>
+          <li>Line-by-line approve or decline</li>
+          <li>Declines saved as deferred work for next visit</li>
+          <li>Approval timestamped on the RO</li>
+        </ul>
+      </div>
+
+      <div class="fc">
+        <div class="fi"><svg class="ic ic-lg"><use href="#i-box"/></svg></div>
+        <h3>Parts &amp; Purchase Orders</h3>
+        <p>Order against the job, receive against the PO, and know what a ticket actually cost you.</p>
+        <ul class="chk">
+          <li>Parts attached to the job that needs them</li>
+          <li>Purchase orders and receiving built in</li>
+          <li>Margin visible before the customer approves</li>
+          <li>Core charges and returns tracked</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     THREE CARDS PULLED FROM THIS SECTION - read before publishing.
+
+     The previous version of this page advertised "Photo Intake / VIN OCR",
+     "Multi-Point Inspection" and "Oil Change Decal". I could not corroborate
+     the first two against the build list, so rather than publish a claim
+     that might not be true I swapped in four features that are definitely
+     shipping. You know the product better than the notes do.
+
+     If any of these DO ship, paste the card back in - they are all strong,
+     particularly photo intake. If they do not ship yet, they also need to
+     come off any other page that mentions them.
+
+<div class="fc">
+  <div class="fi"><svg class="ic ic-lg"><use href="#i-camera"/></svg></div>
+  <h3>Photo Intake</h3>
+  <p>Your tech photographs the car. RO Engine reads it and builds the record.</p>
+  <ul class="chk">
+    <li>VIN extracted from door jamb sticker</li>
+    <li>Mileage read from dashboard photo</li>
+    <li>License plate captured for state lookup</li>
+    <li>Timestamped pre-service damage documentation</li>
+  </ul>
+</div>
+
+<div class="fc">
+  <div class="fi"><svg class="ic ic-lg"><use href="#i-clipboard"/></svg></div>
+  <h3>MPI Inspection</h3>
+  <p>Structured multi-point inspection with AI note translation for customers.</p>
+  <ul class="chk">
+    <li>Green / yellow / red condition ratings</li>
+    <li>Photo evidence attached to every finding</li>
+    <li>Tech shorthand rewritten for customers automatically</li>
+    <li>Red findings auto-create repair recommendations</li>
+  </ul>
+</div>
+
+<div class="fc">
+  <div class="fi"><svg class="ic ic-lg"><use href="#i-tag"/></svg></div>
+  <h3>Oil Change Decal</h3>
+  <p>The right sticker prints itself, with the right spec, every single time.</p>
+  <ul class="chk">
+    <li>Next mileage from the actual oil spec</li>
+    <li>Service date calculated from OEM time interval</li>
+    <li>Oil viscosity and approval spec printed on decal</li>
+    <li>Triggers automatically when the service is completed</li>
+  </ul>
+</div>
+
+     (An i-camera and i-tag symbol are both in the sprite already.)
+     ===================================================================== -->
+
+<section id="pricing" class="center">
+  <div class="wrap">
+    <div class="eyebrow">Pricing</div>
+    <h2>One price.<br>Everything in it.</h2>
+    <p class="sub">Most shop software puts the features you'd use every day behind a tier you have to upgrade into. We don't have tiers.</p>
+
+    <div class="price-g">
+
+      <div class="pc hero-p">
+        <span class="tag">RO Engine</span>
+        <div class="who">Everything, one price</div>
+        <div class="amt">$199</div>
+        <div class="per">per month &middot; unlimited users &middot; no tiers &middot; no add-ons</div>
+        <ul class="pl">
+          <li class="y">Work orders, invoicing, customers</li>
+          <li class="y">Two-way texting with customers</li>
+          <li class="y">AI service recommendations on every RO</li>
+          <li class="y">AI phone answering, included</li>
+          <li class="y">Digital estimate approval</li>
+          <li class="y">54,000+ OEM maintenance schedule entries</li>
+          <li class="y">Deferred service memory across visits</li>
+          <li class="y">Parts ordering and receiving</li>
+        </ul>
+      </div>
+
+      <div class="pc alt">
+        <div class="who">Tekmetric <strong>START</strong></div>
+        <div class="amt">$199</div>
+        <div class="per">per month &middot; unlimited users &middot; texting on a higher tier</div>
+        <ul class="pl">
+          <li class="y">Work orders, invoicing, customers</li>
+          <li class="n">Two-way texting &mdash; <strong>SCALE, $439/mo</strong></li>
+          <li class="n">AI service recommendations on every RO</li>
+          <li class="n">AI phone answering, included</li>
+          <li class="y">Digital estimate approval</li>
+          <li class="n">54,000+ OEM maintenance schedule entries</li>
+          <li class="n">Deferred service memory across visits</li>
+          <li class="y">Parts ordering and receiving</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <p class="pnote">
+      Tekmetric plans and prices as published at
+      <a href="https://www.tekmetric.com/pricing" rel="nofollow noopener" target="_blank">tekmetric.com/pricing</a>,
+      August 2026: START $199, GROW $349, SCALE $439. Unlimited 2-way texting appears on SCALE.
+      They're good software &mdash; we just don't think texting your customers is a premium feature.
+    </p>
+
+    <div class="beta-b">
+      <div>
+        <div class="amt2">$99</div>
+        <div class="lb2">locked for life</div>
+      </div>
+      <p>The first <strong>10 beta shops</strong> pay $99/month for as long as they stay &mdash; not $99 for a year, $99 permanently. In exchange you tell me what's broken and what's missing. I'm running this in my own shop every day, so I'll be fixing it either way.</p>
+    </div>
+
+    <div class="roi">
+      <div class="curve-accent"></div>
+      <div class="proof">
+        <div><div class="n gt">6,900</div><div class="l">customer records migrated off Shop-Ware</div></div>
+        <div><div class="n gt">6,000</div><div class="l">repair orders carried over with them</div></div>
+        <div><div class="n gt">54,823</div><div class="l">OEM maintenance schedule entries</div></div>
+        <div><div class="n gt">1</div><div class="l">real shop running it every single day</div></div>
+      </div>
+      <p class="src">Those are our numbers, not an industry average. AutoHouse Automotive, Northwest Arkansas &mdash; six bays, three techs, and one service advisor who tells me immediately when something is annoying.</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="about" class="tint">
+  <div class="wrap">
+    <div class="about-g">
+      <div>
+        <div class="eyebrow">Built different</div>
+        <h2>By a shop owner.<br>For shop owners.</h2>
+        <p style="font-size:18px">RO Engine wasn't built by a software company that read about the auto repair industry. It was built by a working shop owner who ran his own custom management system for over a decade before building this one &mdash; and who still has to explain a $1,900 estimate to somebody every week.</p>
+      </div>
+      <ul class="pill-l">
+        <li><svg class="ic"><use href="#i-wrench"/></svg> Active shop owner, 13+ years on the floor</li>
+        <li><svg class="ic"><use href="#i-code"/></svg> Built a custom shop management system in 2013</li>
+        <li><svg class="ic"><use href="#i-check"/></svg> Every feature production-tested in a live shop</li>
+        <li><svg class="ic"><use href="#i-pin"/></svg> Northwest Arkansas &mdash; beta shops onboarding now</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <div class="about-g" style="align-items:start">
+      <div>
+        <div class="eyebrow">Claim a beta seat</div>
+        <h2>Ten shops. Then the price goes up.</h2>
+        <ul class="benefits">
+          <li><strong>$99/month locked for life</strong> &mdash; not an intro rate</li>
+          <li>We migrate your customers, vehicles and history <strong>free</strong></li>
+          <li>Live AI recommendations run on your actual vehicles</li>
+          <li>A straight answer about whether it fits your shop</li>
+          <li>Coming off Shop-Ware? We've already done that migration</li>
+        </ul>
+        <p class="seats"><svg class="ic"><use href="#i-check"/></svg> No contract. No setup fee. Leave whenever you want.</p>
+      </div>
+      <form class="form-c" id="demoForm" action="/form.php" method="post">
+        <div class="msg" id="formMsg"></div>
+        <div class="fg">
+          <div><label for="first">First name</label><input id="first" name="first" required placeholder="Joe" autocomplete="given-name"></div>
+          <div><label for="last">Last name</label><input id="last" name="last" required placeholder="Shopowner" autocomplete="family-name"></div>
+        </div>
+        <div style="margin-bottom:16px"><label for="shop">Shop name</label><input id="shop" name="shop" required placeholder="AutoHouse Automotive" autocomplete="organization"></div>
+        <div class="fg">
+          <div><label for="email">Email</label><input id="email" name="email" type="email" required placeholder="you@shop.com" autocomplete="email"></div>
+          <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" placeholder="(479) 555-0100" autocomplete="tel"></div>
+        </div>
+        <div class="fg">
+          <div><label for="bays">Number of bays</label><select id="bays" name="bays"><option>1-3</option><option>4-6</option><option>7-10</option><option>10+</option></select></div>
+          <div><label for="sms">Current SMS</label><select id="sms" name="sms"><option>ShopWare</option><option>Tekmetric</option><option>Mitchell1</option><option>AutoFluent</option><option>R.O. Writer</option><option>Other</option><option>None &mdash; paper or spreadsheets</option></select></div>
+        </div>
+        <div style="margin-bottom:20px"><label for="notes">Anything else? (optional)</label><textarea id="notes" name="notes" rows="3" placeholder="What's driving you off your current system?"></textarea></div>
+        <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+        <input type="hidden" name="ts" id="ts">
+        <button class="btn btn-p" style="width:100%;justify-content:center" type="submit">Claim a beta seat <svg class="ic"><use href="#i-arrow"/></svg></button>
+        <p class="fineprint">I read these myself, usually same day. No sales sequence, no drip campaign, and your email doesn't go anywhere else.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-curve"></div>
+  <div class="wrap foot">
+    <span class="logo-lock"><img class="mk" src="/assets/mark-roe.svg" alt="RO Engine" width="58" height="38">
+      <span><span class="nm">RO Engine</span><span class="tg">Automotive Intelligence</span></span></span>
+    <p>&copy; 2026 RO Engine &middot; <a href="mailto:joe@roengine.com" style="color:var(--teal-deep);font-weight:700">joe@roengine.com</a></p>
+    <p class="tagline">Built by a shop owner, for shop owners.</p>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"RO Engine",
+  "applicationCategory":"BusinessApplication",
+  "applicationSubCategory":"Auto Repair Shop Management",
+  "operatingSystem":"Web",
+  "url":"https://roengine.com/",
+  "description":"AI-powered shop management software for independent auto repair shops. Surfaces overdue and deferred services on every repair order.",
+  "offers":{"@type":"Offer","price":"199.00","priceCurrency":"USD","priceValidUntil":"2027-12-31","availability":"https://schema.org/InStock"},
+  "author":{"@type":"Person","name":"Joe Sprandel"},
+  "publisher":{"@type":"Organization","name":"RO Engine","email":"joe@roengine.com"}
+}
+</script>
+
+<script>
+document.getElementById('ts').value = Math.floor(Date.now()/1000);
+document.getElementById('demoForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var f=this, msg=document.getElementById('formMsg'), btn=f.querySelector('button');
+  msg.className='msg'; btn.disabled=true; btn.textContent='Sending...';
+  try{
+    var r=await fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}});
+    var d=await r.json();
+    if(r.ok && d.ok){
+      f.innerHTML='<div style="text-align:center;padding:48px 0"><div style="font-size:40px;font-weight:800;color:#2f8480">Seat held.</div><p>I\'ll be in touch within one business day &mdash; usually sooner.</p></div>';
+      return;
+    }
+    throw new Error(d.error||'Something went wrong.');
+  }catch(err){
+    msg.textContent=err.message+' You can also email joe@roengine.com.';
+    msg.className='msg err'; btn.disabled=false;
+    btn.innerHTML='Claim a beta seat <svg class="ic"><use href="#i-arrow"/></svg>';
+  }
+});
+</script>
+
+</body>
+</html>

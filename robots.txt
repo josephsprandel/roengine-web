@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /form.php
+Sitemap: https://roengine.com/sitemap.xml

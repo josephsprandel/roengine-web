@@ -1,0 +1,7 @@
+config.php
+*.log
+error_log
+leads.jsonl
+mail-failures.log
+.ratelimit/
+.htaccess.phpupgrader.*

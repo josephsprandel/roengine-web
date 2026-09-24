@@ -1,0 +1,36 @@
+# --- force HTTPS + non-www ---------------------------------------------------
+RewriteEngine On
+# let AutoSSL / ACME validation through before any redirect
+RewriteRule ^\.well-known/ - [L]
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://roengine.com%{REQUEST_URI} [L,R=301]
+# --- never serve the config or dotfiles --------------------------------------
+<FilesMatch "^(config\.php|config\.example\.php|\.htaccess|.*\.md)$">
+  Require all denied
+</FilesMatch>
+# --- security headers --------------------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  # HSTS — leave commented until AutoSSL has issued and renewed successfully
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+# --- caching -----------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType text/css      "access plus 1 year"
+  ExpiresByType text/html     "access plus 0 seconds"
+</IfModule>
+# --- compression -------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/json
+</IfModule>
+ErrorDocument 404 /index.html
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# This domain inherits the “PHP” package.
+# php -- END cPanel-generated handler, do not edit
