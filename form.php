@@ -1,6 +1,6 @@
 <?php
 /**
- * roengine.com — demo/beta request handler
+ * roengine.com — question / contact request handler
  * Drop-in replacement. Same contract the front-end JS expects:
  *   POST multipart -> {"ok":true} | {"ok":false,"error":"..."}
  *
@@ -242,9 +242,9 @@ function mg_send(string $key, array $fields): array {
 }
 
 $hot = ($sms === 'ShopWare') ? ' [SHOPWARE]' : '';
-$subject = 'Beta request — ' . $shop . ' (' . $bays . ' bays, ' . $sms . ')' . $hot;
+$subject = 'Question — ' . $shop . ' (' . $bays . ' bays, ' . $sms . ')' . $hot;
 $body =
-    "New beta / demo request from roengine.com\n" .
+    "New question from roengine.com\n" .
     str_repeat('-', 46) . "\n" .
     "Name        : $first $last\n" .
     "Shop        : $shop\n" .
@@ -306,12 +306,12 @@ if (true) {
         'subject'    => 'Got your request — RO Engine',
         'text'       =>
             "$first,\n\n" .
-            "Got it. I'll reach out within one business day to set up a time.\n\n" .
+            "Got it — I'll reply within one business day.\n\n" .
             "I run AutoHouse Automotive in Northwest Arkansas — I built RO Engine " .
             "because I needed it, and it's been running my shop. So when we talk, " .
             "you're talking to another shop owner, not a salesperson.\n\n" .
-            "If it's easier, just reply to this email with a couple of times that work.\n\n" .
-            "— Joe Sprandel\nRO Engine\n" . NOTIFY_TO . "\n",
+            "Want to look around in the meantime? Start a test drive at https://app.roengine.com/signup — nothing charges for 90 days.\n\n" .
+            "— Joe Sprandel\nRO Engine\n" . REPLY_TO . "\n",
         'o:tag'      => 'autoresponder',
         'h:List-Unsubscribe' => '<mailto:' . NOTIFY_TO . '?subject=unsubscribe>',
     ]);
