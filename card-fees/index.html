@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Follow the Card Fees: How Shop Software Makes Its Money | RO Engine</title>
+<meta name="description" content="Payment processing has become a major business for the software companies that serve small shops. What the public record shows, with a link for every figure.">
+<link rel="canonical" href="https://roengine.com/card-fees/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Follow the Card Fees: How Shop Software Makes Its Money">
+<meta property="og:description" content="What the public record shows about payment processing and shop software, with a link for every figure.">
+<meta property="og:url" content="https://roengine.com/card-fees/">
+<meta property="og:type" content="article">
+<!--
+  Deliberately NOT the marketing site's look: a filed-report chassis reads as
+  "receipts". Two brand anchors only: the RO^e mark and the brand-navy accent.
+
+  EVERY factual sentence here was checked against its source on 2026-09-26
+  and must stay that way. Rules used when writing it:
+   - figures link to where they come from; estimates are named as estimates
+   - litigation is "alleged" — no court has found Visa/Mastercard liable
+   - no claims about competitors' rates, margins or intent that their own
+     public materials don't support
+  Re-check the numbers (and the date in the byline) before editing them.
+-->
+<style>
+  :root{
+    --ink:#141414; --paper:#faf8f2; --line:#141414; --muted:#5a5a5a;
+    /* Brand navy (site --blue). The report originally used an editorial red, #c1272d. */
+    --accent:#2d4d78; --accent-wash:#edf2f8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:Georgia, 'Times New Roman', serif; line-height:1.55;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:0 20px;}
+  header.masthead{
+    border-bottom:4px solid var(--ink); padding:28px 0 18px; margin-bottom:8px;
+  }
+  header.masthead .brandline{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+  header.masthead .brandline a{display:block; line-height:0;}
+  header.masthead .brandline img{height:22px; width:auto; display:block;}
+  header.masthead .kicker{
+    font-family:Arial, Helvetica, sans-serif; letter-spacing:2px; text-transform:uppercase;
+    font-size:12px; color:var(--accent); font-weight:bold;
+    border-left:1px solid #c9c3b3; padding-left:10px;
+  }
+  h1.title{
+    font-size:34px; line-height:1.15; margin:0 0 10px; font-weight:900;
+  }
+  .dek{font-size:18px; color:var(--muted); margin:0 0 4px; font-style:italic;}
+  .byline{
+    font-family:Arial, Helvetica, sans-serif; font-size:12px; color:var(--muted);
+    margin-top:14px; text-transform:uppercase; letter-spacing:1px;
+  }
+  section{padding:26px 0; border-bottom:1px solid #d8d3c4;}
+  h2{
+    font-size:22px; margin:0 0 14px; border-left:5px solid var(--accent); padding-left:12px;
+  }
+  p{margin:0 0 16px; font-size:17px;}
+  .fact-box{
+    background:#fff; border:2px solid var(--ink); padding:20px 22px; margin:18px 0;
+  }
+  .fact-box .num{
+    font-family:Arial, Helvetica, sans-serif; font-weight:900; font-size:13px;
+    color:var(--accent); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;
+  }
+  .fact-box .claim{font-size:19px; font-weight:bold; margin-bottom:8px;}
+  .fact-box .source{
+    font-family:Arial, Helvetica, sans-serif; font-size:13px; color:var(--muted);
+  }
+  .fact-box .source a{color:var(--ink);}
+  .table-scroll{overflow-x:auto; margin:18px 0;}
+  table.compare{
+    width:100%; border-collapse:collapse;
+    font-family:Arial, Helvetica, sans-serif; font-size:14px;
+  }
+  table.compare th, table.compare td{
+    border:1px solid var(--ink); padding:10px 12px; text-align:left;
+  }
+  table.compare.money td:not(:first-child), table.compare.money th:not(:first-child){text-align:right; white-space:nowrap;}
+  table.compare th{background:var(--ink); color:var(--paper);}
+  table.compare tr.hl td{background:var(--accent-wash); font-weight:bold;}
+  .callout{
+    background:var(--ink); color:var(--paper); padding:22px 24px; margin:22px 0;
+  }
+  .callout p{color:var(--paper); margin-bottom:8px;}
+  .callout .big{font-size:24px; font-weight:900; margin-bottom:10px;}
+  .cta{
+    text-align:center; padding:40px 20px; background:#fff; border:3px solid var(--ink);
+    margin:24px 0;
+  }
+  .cta h3{font-size:24px; margin:0 0 10px;}
+  .cta p{margin-bottom:18px;}
+  .cta a.btn{
+    display:inline-block; background:var(--accent); color:#fff; text-decoration:none;
+    font-family:Arial, Helvetica, sans-serif; font-weight:bold; padding:16px 32px;
+    font-size:16px; letter-spacing:0.5px;
+  }
+  .cta .fine{
+    font-family:Arial, Helvetica, sans-serif; font-size:12px; color:var(--muted); margin-top:12px;
+  }
+  footer{
+    font-family:Arial, Helvetica, sans-serif; font-size:12px; color:var(--muted);
+    padding:24px 0 60px; text-align:center;
+  }
+  footer a{color:var(--muted);}
+  .sourcelist{font-family:Arial, Helvetica, sans-serif; font-size:13px; color:var(--muted);}
+  .sourcelist li{margin-bottom:6px;}
+  .fact-box .source a, .sourcelist a{word-break:break-word;}
+  .note{font-family:Arial, Helvetica, sans-serif; font-size:13px; color:var(--muted); margin-top:-6px;}
+  ul.ask{margin:0 0 16px; padding-left:22px;}
+  ul.ask li{margin-bottom:8px; font-size:17px;}
+  @media (max-width:560px){
+    h1.title{font-size:27px;}
+    .dek{font-size:16px;}
+    p, ul.ask li{font-size:16px;}
+    .fact-box{padding:16px;}
+    .fact-box .claim{font-size:17px;}
+    .callout{padding:18px;}
+    .callout .big{font-size:19px;}
+    .cta{padding:28px 16px;}
+    .cta h3{font-size:20px;}
+    .cta a.btn{display:block; padding:15px 16px;}
+    header.masthead .kicker{letter-spacing:1.2px; font-size:11px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="brandline">
+      <a href="https://roengine.com/" aria-label="RO Engine home"><img src="/assets/mark-roe.svg" alt="RO Engine" width="56" height="22"></a>
+      <div class="kicker">The Shop Owner's Fact Sheet &mdash; Sourced &amp; Dated</div>
+    </div>
+    <h1 class="title">Follow the Card Fees: How Shop Software Makes Its Money</h1>
+    <p class="dek">Payment processing has become one of the biggest businesses for the software companies that serve small shops &mdash; sometimes bigger than the software. Here is what the public record shows, with a link for every figure so you can check it yourself.</p>
+    <div class="byline">Published by RO Engine &middot; Sources checked September 26, 2026 &middot; Every figure links to its source</div>
+  </header>
+
+  <section>
+    <h2>The biggest cost most shops never negotiate</h2>
+    <div class="fact-box">
+      <div class="num">Fact 1 &mdash; Industry Data (Nilson Report)</div>
+      <div class="claim">U.S. merchants paid $198.25 billion in credit and debit card swipe fees in 2025 &mdash; $118.8 billion of it on Visa and Mastercard credit cards alone.</div>
+      <div class="source">Source: Nilson Report figures, as published by the Merchants Payments Coalition (a merchant trade group), <a href="https://merchantspaymentscoalition.com/credit-and-debit-card-swipe-fees-reach-record-19825-billion-president-and-congress-call-action">March 18, 2026</a>. The 2024 figures were $187.2 billion and $111.2 billion (<a href="https://www.merchantspaymentscoalition.com/credit-and-debit-card-swipe-fees-hit-new-record-1872-billion-driving-prices-american-families">March 18, 2025</a>).</div>
+    </div>
+    <p>Merchants have been in federal court over these fees since 2005. In June 2024, U.S. District Judge Margo Brodie rejected a proposed settlement, writing that its estimated $6 billion in annual savings was &ldquo;paltry compared to the $100 billion that merchants paid in interchange fees on Visa and Mastercard transactions in 2023.&rdquo;</p>
+    <div class="fact-box">
+      <div class="num">Fact 2 &mdash; Federal Court Record</div>
+      <div class="claim">In November 2025, Visa and Mastercard agreed to a revised settlement that the merchants' economists value at about $38 billion in fee reductions through 2031. A federal judge granted preliminary approval in June 2026; final approval is pending.</div>
+      <div class="source">Sources: <em>In re Payment Card Interchange Fee and Merchant Discount Antitrust Litigation</em>, No. 05-md-1720 (E.D.N.Y.) &mdash; <a href="https://merchantspaymentscoalition.com/sites/default/files/2024-07/ViaMastercardSettlement-Rejected-Opinion.pdf">Memorandum &amp; Order denying preliminary approval, June 25, 2024</a>; Visa Inc. <a href="https://www.sec.gov/Archives/edgar/data/1403161/000140316125000093/v-20251110.htm">Form 8-K, November 10, 2025</a>; Reuters, <a href="https://finance.yahoo.com/news/visa-mastercard-reach-revised-swipe-135122581.html">November 10, 2025</a>; Payments Dive, <a href="https://www.paymentsdive.com/news/court-approves-visa-mastercard-settlement/822440/">June 2026</a>.</div>
+    </div>
+    <p class="note">Visa and Mastercard have not admitted wrongdoing, and no court has found that they violated antitrust law. The settlement lowers fees; it is not a cash payment to merchants.</p>
+    <p>Those fees don't only go to the card networks and the banks. More and more, a share goes to the software company whose screen the payment runs through.</p>
+  </section>
+
+  <section>
+    <h2>Exhibit A: a public company's audited numbers</h2>
+    <div class="fact-box">
+      <div class="num">Fact 3 &mdash; Public Company Filing (Form 10-K)</div>
+      <div class="claim">In 2025, Toast earned $1.15 billion in gross profit from payment processing and related financial products &mdash; more than the $672 million it earned from software subscriptions.</div>
+      <div class="source">Source: Toast, Inc. <a href="https://www.sec.gov/Archives/edgar/data/1650164/000165016426000057/tost-20251231.htm">Form 10-K for fiscal year 2025</a>, filed with the U.S. Securities and Exchange Commission, February 18, 2026.</div>
+    </div>
+    <div class="table-scroll">
+    <table class="compare money">
+      <tr><th>Toast, Inc. &mdash; fiscal 2025</th><th>Revenue</th><th>Gross profit</th></tr>
+      <tr><td>Subscription software</td><td>$936 million</td><td>$672 million</td></tr>
+      <tr class="hl"><td>Financial technology (mostly payment processing)</td><td>$5,037 million</td><td>$1,146 million</td></tr>
+      <tr><td>Hardware and professional services</td><td>$180 million</td><td>&minus;$220 million</td></tr>
+    </table>
+    </div>
+    <p class="note">Gross profit here is each line's revenue minus its cost of revenue, as reported in the 10-K (Toast does not total it by line). Toast reports payment revenue before paying interchange and network fees, which is why that revenue figure is so large; gross profit is the fairer comparison.</p>
+    <p>Toast sells to restaurants, not repair shops. We use it because it is a public company, so its numbers are audited and published. It shows how the model works: the hardware is sold at a loss, and payments bring in more gross profit than the software.</p>
+  </section>
+
+  <section>
+    <h2>Exhibit B: the same model, in auto repair</h2>
+    <p>The large auto repair platforms are private, so they don't publish their numbers. Here is what they and their investors do say in public.</p>
+
+    <div class="fact-box">
+      <div class="num">Fact 4 &mdash; Investor's Own Portfolio Page</div>
+      <div class="claim">Tekmetric's growth-equity investor, Susquehanna Growth Equity, lists among its work with the company: &ldquo;Transformed payments offering by negotiating credit card tiers, developing merchant migration strategy, and exploring integrated finance product offerings.&rdquo;</div>
+      <div class="source">Source: Susquehanna Growth Equity, <a href="https://www.sgep.com/company/tekmetric">Tekmetric portfolio page</a> (investment year listed as 2021). Susquehanna's <a href="https://stripe.com/customers/susquehanna-growth-equity">case study with Stripe</a> says it &ldquo;helps entrepreneurs understand and build the business case for embedded payments&rdquo;; Tekmetric's own <a href="https://stripe.com/customers/tekmetric">Stripe case study</a> says its payments run on Stripe Connect, which moves money &ldquo;between car owners, repair shops, and Tekmetric.&rdquo;</div>
+    </div>
+
+    <div class="fact-box">
+      <div class="num">Fact 5 &mdash; Independent Research Estimate</div>
+      <div class="claim">Sacra, an independent research firm, estimates that on an average shop's $720,000 in annual sales, Shopmonkey &ldquo;can earn up to $18k per year in payment processing revenue from each customer.&rdquo;</div>
+      <div class="source">Source: Sacra, <a href="https://sacra.com/c/shopmonkey/">&ldquo;Shopmonkey revenue, funding &amp; growth rate&rdquo;</a>. This is Sacra's estimate, not a figure Shopmonkey has published. It applies a 2.5% processing fee to total shop sales, so most of that amount goes to card networks and banks, not to Shopmonkey.</div>
+    </div>
+
+    <p>Both companies sell integrated card processing alongside the software. Neither publishes its processing rates:</p>
+    <div class="table-scroll">
+    <table class="compare">
+      <tr><th>Published September 26, 2026</th><th>Tekmetric</th><th>Shopmonkey</th></tr>
+      <tr><td>Software, per month</td><td><a href="https://www.tekmetric.com/pricing">$179&ndash;439</a></td><td><a href="https://www.shopmonkey.io/pricing">$215&ndash;499</a></td></tr>
+      <tr class="hl"><td>Card processing rates</td><td><a href="https://www.tekmetric.com/feature/payment-processing">&ldquo;Transaction fees vary&rdquo; &mdash; schedule a demo</a></td><td><a href="https://www.shopmonkey.io/pricing">&ldquo;Call for Pricing&rdquo;</a></td></tr>
+      <tr><td>Surcharging (passing card fees on to your customer)</td><td>Not mentioned on its payments page</td><td><a href="https://www.shopmonkey.io/product/payments">Listed as a feature</a></td></tr>
+    </table>
+    </div>
+
+    <div class="fact-box">
+      <div class="num">Fact 6 &mdash; Venture Capital Research</div>
+      <div class="claim">Andreessen Horowitz, a venture firm that invests in software companies, wrote that adding payments can &ldquo;increase revenue per customer by 2-5x,&rdquo; and that a vertical software company &ldquo;can typically capture up to 1.75% on transactions.&rdquo;</div>
+      <div class="source">Source: a16z, <a href="https://a16z.com/fintech-scales-vertical-saas/">&ldquo;Fintech Scales Vertical SaaS&rdquo;</a>, August 4, 2020.</div>
+    </div>
+    <p>None of this is illegal, and none of it tells you what any one shop pays. It tells you where the money is &mdash; and why a low software price is worth a second look at the processing agreement that comes with it.</p>
+  </section>
+
+  <section>
+    <h2>What to ask before you sign</h2>
+    <p>Whatever software you use, get these answers in writing:</p>
+    <ul class="ask">
+      <li><strong>What is my effective rate?</strong> Total processing fees divided by total card sales, on your real card mix &mdash; not the advertised rate.</li>
+      <li><strong>Is it flat-rate or interchange-plus?</strong> The Federal Reserve Bank of Kansas City notes that small merchants often pay a single flat rate (&ldquo;for example, 3 percent&rdquo;), while large merchants typically get interchange-plus pricing, which &ldquo;is thus more transparent.&rdquo; (<a href="https://www.kansascityfed.org/research/economic-review/debit-card-interchange-fees-charged-to-small-merchants-after-regulation-ii/">Kansas City Fed, 2025</a>)</li>
+      <li><strong>Does the software company earn anything on my processing?</strong> It's a fair question, and the answer tells you whose side a &ldquo;better rate&rdquo; offer is on.</li>
+      <li><strong>Can I use my own processor?</strong> And if I leave the software, what happens to my merchant account, terminals and payouts?</li>
+    </ul>
+    <div class="callout">
+      <p class="big">On $1,000,000 a year in card sales, every half a percentage point is $5,000 a year.</p>
+      <p style="font-size:13px; opacity:0.85;">Simple arithmetic, not a quote &mdash; your rate depends on your card mix, ticket size and processor. For reference, Stripe's standard U.S. pricing is <a href="https://stripe.com/pricing" style="color:var(--paper);">2.9% + 30&cent; online and 2.7% + 5&cent; in person</a>.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where RO Engine stands</h2>
+    <p>RO Engine doesn't take a cut of your card processing. Our revenue is the subscription: $349 a month, flat &mdash; no tiers, unlimited users, everything on from day one, including 300 AI phone minutes, 300 calls and 1,500 texts. Which processor you use, and what you pay it, is between you and your processor.</p>
+    <p>We built RO Engine's AI service-recommendation engine because we run a real repair shop and needed it ourselves first. That's the pitch. Your card volume isn't part of it.</p>
+  </section>
+
+  <div class="cta">
+    <h3>90-Day Free Trial. 25% Off For Founding Shops.</h3>
+    <p>Join before July 1, 2027 and your rate locks at $261.75/month for as long as you stay &mdash; down from $349/month standard. No tiers, no contracts, unlimited users.</p>
+    <a class="btn" href="https://app.roengine.com/signup">Start Your Free Trial &rarr;</a>
+    <div class="fine">No contract. No cut of your card processing. No per-user fees.</div>
+  </div>
+
+  <section>
+    <h2>Sources, in full</h2>
+    <ul class="sourcelist">
+      <li>Merchants Payments Coalition, <a href="https://merchantspaymentscoalition.com/credit-and-debit-card-swipe-fees-reach-record-19825-billion-president-and-congress-call-action">&ldquo;Credit and debit card swipe fees reach record $198.25 billion&rdquo;</a> (March 18, 2026), citing the Nilson Report</li>
+      <li>Merchants Payments Coalition, <a href="https://www.merchantspaymentscoalition.com/credit-and-debit-card-swipe-fees-hit-new-record-1872-billion-driving-prices-american-families">&ldquo;Credit and debit card swipe fees hit new record $187.2 billion&rdquo;</a> (March 18, 2025), citing the Nilson Report</li>
+      <li>U.S. District Court, E.D.N.Y., No. 05-md-1720, <a href="https://merchantspaymentscoalition.com/sites/default/files/2024-07/ViaMastercardSettlement-Rejected-Opinion.pdf">Memorandum &amp; Order</a> (Judge Margo K. Brodie, June 25, 2024)</li>
+      <li>Visa Inc., <a href="https://www.sec.gov/Archives/edgar/data/1403161/000140316125000093/v-20251110.htm">Form 8-K</a> (November 10, 2025)</li>
+      <li>Reuters, <a href="https://finance.yahoo.com/news/visa-mastercard-reach-revised-swipe-135122581.html">&ldquo;Visa, Mastercard reach revised swipe fee settlement&rdquo;</a> (November 10, 2025)</li>
+      <li>Payments Dive, <a href="https://www.paymentsdive.com/news/court-approves-visa-mastercard-settlement/822440/">&ldquo;Court approves Visa, Mastercard settlement&rdquo;</a> (June 2026)</li>
+      <li>Toast, Inc., <a href="https://www.sec.gov/Archives/edgar/data/1650164/000165016426000057/tost-20251231.htm">Form 10-K, fiscal year 2025</a> (filed February 18, 2026)</li>
+      <li>Susquehanna Growth Equity, <a href="https://www.sgep.com/company/tekmetric">Tekmetric portfolio page</a></li>
+      <li>Stripe, <a href="https://stripe.com/customers/susquehanna-growth-equity">&ldquo;Susquehanna Growth Equity partners with Stripe to build payment capabilities in portfolio companies&rdquo;</a></li>
+      <li>Stripe, <a href="https://stripe.com/customers/tekmetric">&ldquo;Enhancing auto shop success: Tekmetric integrates Stripe for seamless customer experience&rdquo;</a></li>
+      <li>Sacra, <a href="https://sacra.com/c/shopmonkey/">&ldquo;Shopmonkey revenue, funding &amp; growth rate&rdquo;</a></li>
+      <li>Tekmetric, <a href="https://www.tekmetric.com/pricing">pricing</a> and <a href="https://www.tekmetric.com/feature/payment-processing">payment processing</a> pages</li>
+      <li>Shopmonkey, <a href="https://www.shopmonkey.io/pricing">pricing</a> and <a href="https://www.shopmonkey.io/product/payments">payments</a> pages</li>
+      <li>Andreessen Horowitz, <a href="https://a16z.com/fintech-scales-vertical-saas/">&ldquo;Fintech Scales Vertical SaaS&rdquo;</a> (August 4, 2020)</li>
+      <li>Federal Reserve Bank of Kansas City, <a href="https://www.kansascityfed.org/research/economic-review/debit-card-interchange-fees-charged-to-small-merchants-after-regulation-ii/">&ldquo;Debit Card Interchange Fees Charged to Small Merchants after Regulation II&rdquo;</a> (2025)</li>
+      <li>Stripe, <a href="https://stripe.com/pricing">pricing</a></li>
+    </ul>
+    <p style="font-size:13px; color:var(--muted); margin-top:16px;">RO Engine is not affiliated with Toast, Tekmetric, Shopmonkey, Susquehanna Growth Equity, Sacra, Visa, Mastercard or Stripe; their names and marks belong to them. Figures are taken from the public sources linked above as they read on September 26, 2026. Prices and terms change &mdash; check the current version before relying on any of them. Spot something wrong or out of date? Email <a href="mailto:joe@roengine.com" style="color:var(--muted);">joe@roengine.com</a> and we'll correct it.</p>
+  </section>
+
+  <footer>
+    <a href="https://roengine.com/">RO Engine</a> &middot; <a href="mailto:joe@roengine.com">joe@roengine.com</a>
+  </footer>
+
+</div>
+</body>
+</html>

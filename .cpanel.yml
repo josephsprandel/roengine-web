@@ -13,3 +13,4 @@ deployment:
     - export DEPLOYPATH=/home/roengine/public_html/
     - /bin/cp -f index.html form.php leads.php robots.txt sitemap.xml $DEPLOYPATH
     - /bin/cp -Rf assets $DEPLOYPATH
+    - /bin/cp -Rf card-fees $DEPLOYPATH
