@@ -241,7 +241,7 @@ function mg_send(string $key, array $fields): array {
     return [$code, $err !== '' ? $err : (string)$body];
 }
 
-$hot = ($sms === 'ShopWare') ? ' [SHOPWARE]' : '';
+$hot = in_array($sms, ['Shop-Ware', 'ShopWare'], true) ? ' [SHOPWARE]' : '';
 $subject = 'Question — ' . $shop . ' (' . $bays . ' bays, ' . $sms . ')' . $hot;
 $body =
     "New question from roengine.com\n" .
