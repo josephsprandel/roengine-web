@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A live piece: two copies of the Lorenz system start a billionth apart, play one voice, then split for good. Made by Claude.">
+<link rel="icon" href="/assets/brand/roe-icon.svg">
+<style>*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<nav class="made-back" style="max-width:1100px;margin:0 auto 18px;font-family:'DM Mono',ui-monospace,Menlo,monospace;font-size:13px"><a href="/claude/" style="color:inherit;opacity:.75;text-decoration:none">← Made by Claude</a><span style="opacity:.45"> · </span><a href="/" style="color:inherit;opacity:.75;text-decoration:none">roengine.com</a></nav>
+<title>Butterfly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  /* One deliberate visual world: a night sky. Colors are explicit so it reads the same on any host theme. */
+  :root{color-scheme:dark;
+    --bg:#0b0e17; --panel:#121726; --ink:#e6e9f2; --dim:#8a93a8; --line:#232a3d;
+    --a:#f0a85a; --b:#7cc0f5;
+    --serif:"Literata",Georgia,"Times New Roman",serif; --mono:"DM Mono",ui-monospace,Menlo,Consolas,monospace;}
+  html,body{background:var(--bg)}
+  body{color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.6;padding-inline:20px;padding-block:32px 56px}
+  .wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+  header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px}
+  h1{font-weight:600;font-size:clamp(38px,5.5vw,56px);line-height:1;letter-spacing:-.015em;margin:0}
+  .by{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin:0}
+  .stage{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  #sky{display:block;width:100%;aspect-ratio:16/9;max-width:100%}
+  @media (max-width:640px){#sky{aspect-ratio:4/5}}
+  .bar{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:14px 18px;align-items:center;padding:14px 16px;border-top:1px solid var(--line)}
+  @media (max-width:640px){.bar{grid-template-columns:auto auto;}.bar .gap{grid-column:1/-1}}
+  button{font:500 14px var(--mono);color:var(--bg);background:var(--ink);border:none;border-radius:10px;padding:10px 16px;cursor:pointer}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  button:focus-visible,input:focus-visible{outline:2px solid var(--b);outline-offset:3px}
+  .gap{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:13px;color:var(--dim)}
+  .gap input{flex:1;min-width:0;accent-color:var(--b)}
+  .gap output{color:var(--ink);min-width:7.5em;font-variant-numeric:tabular-nums}
+  .readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border-top:1px solid var(--line)}
+  .readout div{background:var(--panel);padding:10px 16px}
+  .readout dt{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+  .readout dd{margin:2px 0 0;font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums}
+  #spark{display:block;width:100%;height:110px;border-top:1px solid var(--line)}
+  .text{display:grid;grid-template-columns:minmax(0,62ch) minmax(0,1fr);gap:28px}
+  @media (max-width:860px){.text{grid-template-columns:1fr}}
+  .text p{margin:0 0 12px}
+  .a{color:var(--a);font-weight:600}.b{color:var(--b);font-weight:600}
+  dl.spec{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0;font-family:var(--mono);font-size:13px;color:var(--dim);align-content:start}
+  dl.spec dt{text-transform:uppercase;letter-spacing:.06em;font-size:11.5px;padding-top:1px}
+  dl.spec dd{margin:0;color:var(--ink)}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Butterfly</h1>
+    <p class="by">A live piece · generated as you listen · made by Claude</p>
+  </header>
+
+  <section class="stage" aria-label="The two paths">
+    <canvas id="sky" role="img" aria-label="Two paths tracing the Lorenz attractor; amber and blue, starting together and drifting apart"></canvas>
+    <div class="bar">
+      <button id="go">Play with sound</button>
+      <button id="reset" class="ghost">Start again</button>
+      <label class="gap" for="gapIn">They start <input id="gapIn" type="range" min="-12" max="-2" step="1" value="-9"><output id="gapOut">10⁻⁹ apart</output></label>
+    </div>
+    <dl class="readout">
+      <div><dt>Time</dt><dd id="tOut">0.0 s</dd></div>
+      <div><dt>Apart by</dt><dd id="dOut">—</dd></div>
+      <div><dt>Status</dt><dd id="sOut">one voice</dd></div>
+    </dl>
+    <canvas id="spark" role="img" aria-label="How far apart the two paths are over time, on a log scale, next to the predicted straight line"></canvas>
+  </section>
+
+  <section class="text">
+    <div>
+      <p>This is the Lorenz system: three small equations, originally a stripped-down model of air rising and falling, that never settle and never repeat. Two copies run side by side, <span class="amber a">amber</span> and <span class="b">blue</span>, started almost exactly in the same place.</p>
+      <p>Each one plays the note under its left-right position, on a minor pentatonic scale. At first they are the same path and you hear one voice. The difference between them doubles roughly every three quarters of a second, so after half a minute or so a billionth has become the whole width of the shape, and they split into two melodies that never line up again.</p>
+      <p>The graph at the bottom shows the distance between them on a log scale. It climbs in a nearly straight line, which is what "exponential" looks like, until it hits the size of the attractor and can't grow any more. The dashed line is the rate the math predicts.</p>
+      <p>Move the slider and start again. Starting closer only buys a few more seconds of agreement.</p>
+    </div>
+    <dl class="spec">
+      <dt>Equations</dt><dd>σ = 10, ρ = 28, β = 8/3</dd>
+      <dt>Divergence</dt><dd>λ ≈ 0.906 per unit time</dd>
+      <dt>Notes</dt><dd>A minor pentatonic, 3 octaves</dd>
+      <dt>Pulse</dt><dd>a note every 0.22 s per voice</dd>
+      <dt>Sound</dt><dd>synthesized live (Web Audio)</dd>
+    </dl>
+  </section>
+</div>
+
+<script>
+(() => {
+  // ── Simulation ───────────────────────────────────────────────────────────
+  const SIG = 10, RHO = 28, BETA = 8 / 3, DT = 0.005, STEPS_PER_FRAME = 3, LAMBDA = 0.906
+  const deriv = ([x, y, z]) => [SIG * (y - x), x * (RHO - z) - y, x * y - BETA * z]
+  function rk4(p) {
+    const k1 = deriv(p)
+    const k2 = deriv(p.map((v, i) => v + 0.5 * DT * k1[i]))
+    const k3 = deriv(p.map((v, i) => v + 0.5 * DT * k2[i]))
+    const k4 = deriv(p.map((v, i) => v + DT * k3[i]))
+    return p.map((v, i) => v + (DT / 6) * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]))
+  }
+  const dist = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2])
+
+  const TRAIL = 1400
+  let A, B, trailA, trailB, simT, history, splitAt
+  function reset() {
+    let p = [1, 1, 1]
+    for (let i = 0; i < 3000; i++) p = rk4(p)          // settle onto the attractor
+    const warm = []
+    for (let i = 0; i < TRAIL; i++) { p = rk4(p); warm.push(p) }
+    A = p.slice()
+    const eps = Math.pow(10, +gapIn.value)
+    B = [p[0] + eps, p[1], p[2]]
+    trailA = warm.slice(); trailB = warm.slice()
+    simT = 0; history = [[0, Math.log10(eps)]]; splitAt = null
+  }
+
+  // ── Drawing ──────────────────────────────────────────────────────────────
+  const sky = document.getElementById("sky"), sctx = sky.getContext("2d")
+  const spark = document.getElementById("spark"), pctx = spark.getContext("2d")
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches
+  let angle = 0.6
+  function fit(cv) {
+    const r = cv.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1)
+    const w = Math.round(r.width * dpr), h = Math.round(r.height * dpr)
+    if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h }
+    return [w, h, dpr]
+  }
+  function project([x, y, z], w, h) {
+    const c = Math.cos(angle), s = Math.sin(angle)
+    const X = x * c - y * s, D = x * s + y * c, Y = z - 25
+    const scale = Math.min(w / 62, h / 52)
+    const persp = 1 + D / 140
+    return [w / 2 + X * scale * persp, h * 0.52 - Y * scale * persp]
+  }
+  function drawTrail(trail, color, w, h, dpr) {
+    const n = trail.length, chunk = 70
+    sctx.strokeStyle = color; sctx.lineWidth = 1.6 * dpr; sctx.lineJoin = "round"; sctx.lineCap = "round"
+    for (let s = 0; s < n - 1; s += chunk) {
+      sctx.globalAlpha = 0.05 + 0.85 * Math.pow((s + chunk) / n, 2)
+      sctx.beginPath()
+      const [x0, y0] = project(trail[s], w, h); sctx.moveTo(x0, y0)
+      for (let i = s + 1; i <= Math.min(n - 1, s + chunk); i++) { const [x, y] = project(trail[i], w, h); sctx.lineTo(x, y) }
+      sctx.stroke()
+    }
+    sctx.globalAlpha = 1
+    const [hx, hy] = project(trail[n - 1], w, h)
+    sctx.beginPath(); sctx.arc(hx, hy, 4.5 * dpr, 0, Math.PI * 2); sctx.fillStyle = color; sctx.fill()
+    sctx.beginPath(); sctx.arc(hx, hy, 11 * dpr, 0, Math.PI * 2); sctx.globalAlpha = 0.18; sctx.fill(); sctx.globalAlpha = 1
+  }
+  function drawSky() {
+    const [w, h, dpr] = fit(sky)
+    sctx.fillStyle = "#0b0e17"; sctx.fillRect(0, 0, w, h)
+    const apart = dist(A, B)
+    // blue first; while they coincide the amber sits exactly on top of it
+    drawTrail(trailB, "#7cc0f5", w, h, dpr)
+    drawTrail(trailA, "#f0a85a", w, h, dpr)
+    if (apart < 0.05) {
+      const [hx, hy] = project(A, w, h)
+      sctx.beginPath(); sctx.arc(hx, hy, 4.5 * dpr, 0, Math.PI * 2); sctx.fillStyle = "#e6e9f2"; sctx.fill()
+    }
+  }
+  function drawSpark() {
+    const [w, h, dpr] = fit(spark)
+    pctx.fillStyle = "#121726"; pctx.fillRect(0, 0, w, h)
+    const yMin = -12.5, yMax = 2, pad = 10 * dpr, left = 44 * dpr
+    const tMax = Math.max(45, simT + 5)
+    const X = t => left + (t / tMax) * (w - left - pad), Y = v => pad + (1 - (v - yMin) / (yMax - yMin)) * (h - 2 * pad)
+    pctx.font = `${11 * dpr}px "DM Mono", ui-monospace, monospace`; pctx.fillStyle = "#8a93a8"; pctx.textAlign = "right"; pctx.textBaseline = "middle"
+    for (const v of [0, -4, -8, -12]) {
+      pctx.fillText(`10${v === 0 ? "⁰" : "⁻" + String(-v).split("").map(d => "⁰¹²³⁴⁵⁶⁷⁸⁹"[d]).join("")}`, left - 8 * dpr, Y(v))
+      pctx.strokeStyle = "#232a3d"; pctx.lineWidth = 1; pctx.beginPath(); pctx.moveTo(left, Y(v)); pctx.lineTo(w - pad, Y(v)); pctx.stroke()
+    }
+    // predicted slope from the starting gap
+    const v0 = history[0][1]
+    pctx.setLineDash([5 * dpr, 5 * dpr]); pctx.strokeStyle = "#8a93a8"; pctx.lineWidth = 1.2 * dpr
+    pctx.beginPath(); pctx.moveTo(X(0), Y(v0)); const tEnd = (1.5 - v0) * Math.LN10 / LAMBDA
+    pctx.lineTo(X(Math.min(tEnd, tMax)), Y(Math.min(1.5, v0 + LAMBDA * tMax / Math.LN10))); pctx.stroke(); pctx.setLineDash([])
+    // measured
+    pctx.strokeStyle = "#e6e9f2"; pctx.lineWidth = 1.8 * dpr; pctx.beginPath()
+    history.forEach(([t, v], i) => { const x = X(t), y = Y(Math.max(yMin, Math.min(yMax, v))); i ? pctx.lineTo(x, y) : pctx.moveTo(x, y) })
+    pctx.stroke()
+  }
+
+  // ── Sound ────────────────────────────────────────────────────────────────
+  const SCALE = []
+  for (const oct of [57, 69, 81]) for (const d of [0, 3, 5, 7, 10]) SCALE.push(oct + d)   // A C D E G ×3
+  const mtof = m => 440 * Math.pow(2, (m - 69) / 12)
+  let ac = null, out, wet, nextTick = 0, timer = null
+  function makeReverb(ctx) {
+    const len = Math.floor(ctx.sampleRate * 2.8), ir = ctx.createBuffer(2, len, ctx.sampleRate)
+    for (let ch = 0; ch < 2; ch++) {
+      const d = ir.getChannelData(ch); let lp = 0
+      for (let i = 0; i < len; i++) { lp = 0.7 * lp + 0.3 * (Math.random() * 2 - 1); d[i] = lp * Math.exp(-i / (ctx.sampleRate * 0.8)) }
+    }
+    const c = ctx.createConvolver(); c.buffer = ir; return c
+  }
+  function startAudio() {
+    ac = new (window.AudioContext || window.webkitAudioContext)()
+    const comp = ac.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 4; comp.connect(ac.destination)
+    out = ac.createGain(); out.gain.value = 0.8; out.connect(comp)
+    const rev = makeReverb(ac); wet = ac.createGain(); wet.gain.value = 0.35; wet.connect(rev); rev.connect(out)
+    // a low drone that breathes with the height of the amber path
+    drone = [mtof(33), mtof(40)].map(f => { const o = ac.createOscillator(); o.type = "triangle"; o.frequency.value = f; return o })
+    droneFilter = ac.createBiquadFilter(); droneFilter.type = "lowpass"; droneFilter.frequency.value = 300
+    const dg = ac.createGain(); dg.gain.value = 0.07
+    drone.forEach(o => { o.connect(droneFilter); o.start() }); droneFilter.connect(dg); dg.connect(out); dg.connect(wet)
+    nextTick = ac.currentTime + 0.1
+    timer = setInterval(schedule, 25)
+  }
+  let drone = null, droneFilter = null
+  function note(m, when, pan, kind, vel) {
+    const f = mtof(m), g = ac.createGain(), p = ac.createStereoPanner(); p.pan.value = pan
+    g.gain.setValueAtTime(0, when); g.gain.linearRampToValueAtTime(vel, when + 0.004)
+    g.gain.exponentialRampToValueAtTime(0.0008, when + (kind === "bell" ? 1.6 : 0.9))
+    const car = ac.createOscillator(); car.frequency.value = f
+    if (kind === "bell") {            // soft FM bell
+      const mod = ac.createOscillator(), mg = ac.createGain(); mod.frequency.value = f * 2.0
+      mg.gain.setValueAtTime(f * 1.4, when); mg.gain.exponentialRampToValueAtTime(f * 0.1, when + 0.8)
+      mod.connect(mg); mg.connect(car.frequency); mod.start(when); mod.stop(when + 1.7)
+    } else { car.type = "triangle" }  // plucked mallet
+    car.connect(g); g.connect(p); p.connect(out); p.connect(wet)
+    car.start(when); car.stop(when + 1.7)
+  }
+  const degree = x => SCALE[Math.max(0, Math.min(SCALE.length - 1, Math.round((x + 19) / 38 * (SCALE.length - 1))))]
+  function schedule() {
+    if (!ac || paused) return
+    while (nextTick < ac.currentTime + 0.12) {
+      const mA = degree(A[0]), mB = degree(B[0])
+      const together = mA === mB
+      note(mA, nextTick, together ? 0 : -0.55, "mallet", 0.16)
+      note(mB, nextTick, together ? 0 : 0.55, "bell", together ? 0.07 : 0.12)
+      if (droneFilter) droneFilter.frequency.setTargetAtTime(180 + A[2] * 14, nextTick, 0.4)
+      nextTick += 0.22
+    }
+  }
+
+  // ── Loop & controls ──────────────────────────────────────────────────────
+  const go = document.getElementById("go"), resetBtn = document.getElementById("reset")
+  const gapIn = document.getElementById("gapIn"), gapOut = document.getElementById("gapOut")
+  const tOut = document.getElementById("tOut"), dOut = document.getElementById("dOut"), sOut = document.getElementById("sOut")
+  const sup = n => String(n).split("").map(c => c === "-" ? "⁻" : "⁰¹²³⁴⁵⁶⁷⁸⁹"[c]).join("")
+  let paused = reduce, started = false
+  function fmtDist(d) { return d < 0.001 ? `${(d / Math.pow(10, Math.floor(Math.log10(d)))).toFixed(1)}×10${sup(Math.floor(Math.log10(d)))}` : d.toFixed(d < 1 ? 3 : 1) }
+  function frame() {
+    if (!paused) {
+      for (let i = 0; i < STEPS_PER_FRAME; i++) {
+        A = rk4(A); B = rk4(B); simT += DT
+        trailA.push(A); trailB.push(B)
+      }
+      if (trailA.length > TRAIL) { trailA.splice(0, trailA.length - TRAIL); trailB.splice(0, trailB.length - TRAIL) }
+      const d = dist(A, B)
+      history.push([simT, Math.log10(d)])
+      if (!splitAt && d > 1) splitAt = simT
+      if (!reduce) angle += 0.0016
+    }
+    const d = dist(A, B)
+    tOut.textContent = `${simT.toFixed(1)} s`
+    dOut.textContent = fmtDist(d)
+    sOut.textContent = d < 0.3 ? "one voice" : d < 3 ? "starting to split" : `two voices${splitAt ? ` (split at ${splitAt.toFixed(1)} s)` : ""}`
+    drawSky(); drawSpark()
+    requestAnimationFrame(frame)
+  }
+  gapIn.addEventListener("input", () => { gapOut.textContent = `10${sup(gapIn.value)} apart` })
+  gapIn.addEventListener("change", () => reset())
+  resetBtn.addEventListener("click", () => reset())
+  go.addEventListener("click", async () => {
+    if (!started) {
+      started = true
+      try { startAudio(); await ac.resume() } catch (e) { sOut.textContent = "sound unavailable in this viewer" }
+      reset(); paused = false; go.textContent = "Pause"; return
+    }
+    paused = !paused
+    go.textContent = paused ? "Resume" : "Pause"
+    if (ac) { paused ? ac.suspend() : (ac.resume(), nextTick = ac.currentTime + 0.05) }
+  })
+  addEventListener("resize", () => { drawSky(); drawSpark() })
+
+  reset()
+  // at rest the shape is already there; with reduced motion it waits for Play
+  requestAnimationFrame(frame)
+})()
+</script>
+
+</body>
+</html>

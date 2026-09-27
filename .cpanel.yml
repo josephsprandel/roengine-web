@@ -16,3 +16,4 @@ deployment:
     - /bin/cp -Rf assets $DEPLOYPATH
     - /bin/cp -Rf card-fees $DEPLOYPATH
     - /bin/cp -Rf new $DEPLOYPATH
+    - /bin/cp -Rf claude $DEPLOYPATH
