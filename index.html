@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="utf-8">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4VST4NBNJY"></script>
 <script>
@@ -10,7 +11,21 @@
 
   gtag('config', 'G-4VST4NBNJY');
 </script>
-<meta charset="utf-8">
+<!-- RO Engine attribution capture -->
+<script>
+(function () {
+  var MAXAGE = 60 * 60 * 24 * 90;
+  var KEYS = ['gclid','gbraid','wbraid','utm_source','utm_medium','utm_campaign'];
+  var qs = new URLSearchParams(window.location.search);
+  var found = {};
+  KEYS.forEach(function (k) { if (qs.get(k)) found[k] = qs.get(k); });
+  if (Object.keys(found).length) {
+    found._ts = new Date().toISOString();
+    document.cookie = 're_attr=' + encodeURIComponent(JSON.stringify(found)) +
+      ';max-age=' + MAXAGE + ';path=/;domain=.roengine.com;samesite=lax;secure';
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RO Engine — The AI Service Advisor for Independent Auto Repair Shops</title>
 <meta name="description" content="Your best advisor, on every write-up. RO Engine is shop management software that gives every service advisor veteran-level recommendations on every repair order. Your own shop, live in minutes — $349/month, everything included, 90 days free.">
