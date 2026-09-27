@@ -13,6 +13,16 @@ the tagline's initials — **A**utomotive **I**ntelligence — spell A.I.
 
 All SVGs are **outlined** — no font needed to render them.
 
+**Social / general use** (`social/`, rendered 2026-09-27 from the outlined marks + site fonts)
+| File | Size | Use |
+|---|---|---|
+| `social/roe-facebook-profile-navy.png` | 1080×1080 | Facebook / Google Business / Instagram profile picture (mark sized to survive the circle crop) |
+| `social/roe-facebook-profile-white.png` | 1080×1080 | Same, light version |
+| `social/roe-facebook-cover.png` | 1640×624 | Facebook cover (2× of 820×312); content kept inside the centre 16:9 strip phones show |
+| `social/roe-linkedin-banner.png` | 1584×396 | LinkedIn company banner |
+| `social/roe-logo-tagline-for-light.png` | 2400 wide, transparent | Logo + "Automotive Intelligence" on white/light backgrounds (print, docs, vendor listings) |
+| `social/roe-logo-tagline-for-dark.png` | 2400 wide, transparent | Same on navy/dark backgrounds |
+
 **Construction** (approved 2026-09-26, "A · refined, exponent 72%")
 - `RO` — Archivo, weight 900, width 118%, letter-spacing −0.035em
 - `e` — STIX Two Text Italic, weight 600, 72% of the RO size, 0.05em gap,
