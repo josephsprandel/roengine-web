@@ -24,7 +24,7 @@
 - 90 days free; a card or bank account is required to start; nothing is charged for 90 days; cancel online.
 - Everything entered during the trial carries forward when the shop stays.
 - Texting and the AI phone switch on once the shop's number clears carrier registration (usually within two weeks); everything else works immediately.
-- Customer, vehicle and repair history migration is free; migration from Shop-Ware is already proven.
+- Customer, vehicle and repair history migration is free; migration from Shop-Ware is already proven (full repair orders, inspections, photos, payments): https://roengine.com/shop-ware/
 
 ## Who built it
 RO Engine is built by Joe Sprandel, an independent shop owner with 13+ years on the shop floor who built his first custom shop system in 2013. Every feature runs in his own shop every day before it ships.

@@ -400,6 +400,24 @@ footer a{color:#b7c7da;text-decoration:none}
   .ro{transform:none!important}
   .curve .line{stroke-dashoffset:0!important}
 }
+/* same-price comparison (pricing section) */
+.vs{margin-top:56px;border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:30px 32px 24px;background:rgba(255,255,255,.035)}
+.vs h3{color:#fff;font-size:clamp(22px,2.6vw,28px);font-weight:800}
+.vs .sub2{margin:8px 0 18px;color:#9fb3c8;font-size:15.5px}
+.vs .row{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:8px 18px;padding:13px 0;border-top:1px solid rgba(255,255,255,.1);align-items:baseline}
+.vs .row.hd{border-top:0;padding-top:4px;font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#9fb3c8}
+.vs .row.hd .us{color:var(--teal-b)}
+.vs .lbl{color:#dbe6f2;font-weight:600}
+.vs .us{color:#fff}
+.vs .them{color:#9fb3c8}
+.vs .yes::before{content:"✓ ";color:var(--teal-b);font-weight:800}
+.vs .note{margin:14px 0 0;font-size:13.5px;color:#8fa4ba}
+@media (max-width:720px){
+  .vs{padding:24px 20px 18px}
+  .vs .row{grid-template-columns:1fr 1fr}
+  .vs .row .lbl{grid-column:1/-1}
+  .vs .row.hd .lbl{display:none}
+}
 </style>
 </head>
 <body>
@@ -715,9 +733,21 @@ footer a{color:#b7c7da;text-decoration:none}
       <div class="promise">
         <div class="rv"><h3>The test drive is the real thing</h3><p>Your own shop at yourshop.roengine.com — not a sandbox. Everything you enter carries forward when you stay.</p></div>
         <div class="rv"><h3>Nothing charges for 90 days</h3><p>Card on file to start. Cancel online in a few clicks — there's no one to call.</p></div>
-        <div class="rv"><h3>We move your history over</h3><p>Customers, vehicles and repair history, migrated free. Coming off Shop-Ware? We've already done it — for ourselves.</p></div>
+        <div class="rv"><h3>We move your history over</h3><p>Customers, vehicles and repair history, migrated free. Coming off Shop-Ware? We've already done it — for ourselves. <a href="/shop-ware/" style="color:var(--teal-b);font-weight:700">See what comes over</a></p></div>
         <div class="rv"><h3>No sales calls. Ever.</h3><p>If you want to talk, you ask — and the shop owner who built it answers.</p></div>
       </div>
+    </div>
+
+    <div class="vs rv">
+      <h3>Same $349 as Tekmetric's GROW plan. Here's what's in it.</h3>
+      <p class="sub2">They make good software. We just don't think texting your customers should be a premium tier.</p>
+      <div class="row hd"><span class="lbl"></span><span class="us">RO Engine · $349</span><span class="them">Tekmetric GROW · $349</span></div>
+      <div class="row"><span class="lbl">Two-way texting with customers</span><span class="us yes">Included — 1,500 texts a month</span><span class="them">Starts at SCALE, $439</span></div>
+      <div class="row"><span class="lbl">AI phone answering</span><span class="us yes">Included — 300 minutes a month</span><span class="them">Not on their pricing page</span></div>
+      <div class="row"><span class="lbl">Factory maintenance schedules</span><span class="us yes">Included, on every RO</span><span class="them">Included</span></div>
+      <div class="row"><span class="lbl">Users</span><span class="us yes">Unlimited</span><span class="them">Unlimited</span></div>
+      <div class="row"><span class="lbl">Contract</span><span class="us yes">Month to month</span><span class="them">No long-term contract</span></div>
+      <p class="note">From Tekmetric's public pricing page, checked September 27, 2026, at monthly billing (annual billing is $309 for GROW and $409 for SCALE). Prices change, so check theirs before you decide.</p>
     </div>
   </div>
 </section>
@@ -756,7 +786,7 @@ footer a{color:#b7c7da;text-decoration:none}
       <h2 class="rv" style="margin-top:12px">Ask the shop owner who built it.</h2>
       <ul class="rv">
         <li><svg><use href="#i-check"/></svg><span>We migrate your customers, vehicles and history — <b>free</b></span></li>
-        <li><svg><use href="#i-check"/></svg><span>Coming off Shop-Ware? We've already done that migration</span></li>
+        <li><svg><use href="#i-check"/></svg><span>Coming off Shop-Ware? <a href="/shop-ware/" style="color:var(--teal);font-weight:700">We've already done that migration</a></span></li>
         <li><svg><use href="#i-check"/></svg><span>A straight answer about whether it fits your shop</span></li>
         <li><svg><use href="#i-check"/></svg><span>Or skip the questions — <a href="https://app.roengine.com/signup"><b>set up your shop</b></a>: your own real RO Engine, live in minutes, nothing charged for 90 days</span></li>
       </ul>
