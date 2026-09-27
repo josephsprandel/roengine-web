@@ -158,16 +158,25 @@
     const v = x / u.m
     return `${v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v >= 1 ? v.toFixed(2) : v.toFixed(3)} ${u.big}`
   }
+  // landmarks, matched to the nearest on a log scale (so never more than ~1.7× off)
   const LIKE = [
-    [91.44, "a football field"], [30, "a school bus, end to end"], [4.5, "a car"], [1.5, "a person lying down"],
-    [0.3, "a shoe"], [0.1, "a hand's width"], [0.025, "a quarter"], [0.006, "a grain of rice"], [0.0012, "a sesame seed"],
-    [7e-5, "the width of a human hair"], [2.54e-5, "a thou, 0.001″"], [8e-6, "a red blood cell"], [2e-6, "a bacterium"],
-    [5.3e-7, "a wavelength of green light"], [1e-7, "a virus"], [2e-8, "a transistor on a chip"], [2e-9, "the width of DNA"],
-    [3e-10, "a water molecule"], [1.06e-10, "a hydrogen atom"], [1e-11, "the inner orbit of a heavy atom"], [1e-14, "an atomic nucleus"],
-    [1.7e-15, "a proton"], [1e-18, "the smallest scale any experiment has probed"], [1e-33, "nothing anyone has ever measured"],
-    [1.616e-35, "the Planck length"],
+    [91.44, "a football field"], [25, "a blue whale"], [12, "a school bus"], [4.5, "a car"], [1.8, "a person"],
+    [0.86, "a baseball bat"], [0.38, "a bowling pin"], [0.156, "a dollar bill"], [0.067, "a tennis ball"], [0.024, "a quarter"],
+    [0.0095, "a pencil's width"], [0.005, "a grain of rice, the long way"], [0.0025, "a sesame seed"], [0.0012, "a pinhead"],
+    [4e-4, "a grain of salt"], [1.5e-4, "a grain of pollen"], [7e-5, "the width of a human hair"], [2.54e-5, "a thou, 0.001″"],
+    [1e-5, "a cloud droplet"], [6e-6, "a red blood cell"], [2e-6, "a bacterium"], [5.3e-7, "a wavelength of green light"],
+    [1.2e-7, "a virus"], [2e-8, "a transistor on a chip"], [5e-9, "a protein"], [2e-9, "the width of DNA"],
+    [3e-10, "a water molecule"], [1.06e-10, "a hydrogen atom"], [3.1e-11, "a helium atom, centre to edge"], [1e-11, "a hard X-ray's wavelength"], [1e-12, "a gamma ray's wavelength"], [2.8e-13, "a hydrogen atom with a muon for an electron"],
+    [1.5e-14, "a uranium nucleus"], [1.7e-15, "a proton"],
+    [1e-19, "the smallest scale any experiment has probed"], [1.616e-35, "the Planck length"],
   ]
-  function like(x) { let best = LIKE[0][1]; for (const [s, n] of LIKE) if (x <= s * 1.8) best = n; return best }
+  function like(x) {
+    if (x < 3e-20 && x > 4e-35) return "nothing anyone has ever measured"
+    if (x < 7e-16 && x > 3e-19) return "smaller than a proton, still within a collider's reach"
+    let best = LIKE[0], bd = Infinity
+    for (const l of LIKE) { const dd = Math.abs(Math.log(x / l[0])); if (dd < bd) { bd = dd; best = l } }
+    return best[1]
+  }
 
   // ── part 1: the race ───────────────────────────────────────────────────────
   const race = document.getElementById("race"), rc = race.getContext("2d")
