@@ -1,0 +1,224 @@
+"""
+Two Clocks — a small phase piece.
+
+Two voices play the same twelve-note figure. One clock runs a hair fast: the
+second voice slips ahead one note at a time, pausing at each step so the new
+interlocking pattern can be heard, until it has gone all the way around and
+lands back in unison. Everything is synthesized here from sine waves and noise.
+"""
+import numpy as np
+from scipy.signal import fftconvolve
+import lameenc, wave, sys, os
+
+SR = 44100
+rng = np.random.default_rng(7)
+OUT = os.path.dirname(os.path.abspath(__file__))
+
+def mtof(m):
+    return 440.0 * 2 ** ((m - 69) / 12)
+
+def smooth(x):  # smoothstep 0..1
+    x = np.clip(x, 0, 1)
+    return x * x * (3 - 2 * x)
+
+# ── Form ─────────────────────────────────────────────────────────────────────
+T = 0.2                     # one note (voice A), seconds
+CYCLE = 12 * T              # 2.4 s
+CELL = [74, 69, 78, 76, 69, 73, 74, 71, 80, 76, 69, 73]   # D lydian: D A F# E A C# D B G# E A C#
+
+B_IN = 2 * CYCLE            # 4.8 s — voice B enters in unison
+DRIFT0 = 5 * CYCLE          # 12.0 s — first step begins
+STEP = 9.0                  # each step: 3.6 s moving, 5.4 s locked
+MOVE = 3.6
+STEPS = 12                  # all the way around
+DRIFT1 = DRIFT0 + STEPS * STEP          # 120 s — home
+B_OUT = DRIFT1 + 3 * CYCLE              # 127.2 s
+A_OUT = B_OUT + CYCLE                   # 129.6 s — last figure
+END_CHORD = A_OUT
+TOTAL = END_CHORD + 11.0
+
+N = int(TOTAL * SR)
+L = np.zeros(N)
+R = np.zeros(N)
+
+def phase_offset(t):
+    """Voice B's lead over voice A, in notes (0 → 12)."""
+    t = np.asarray(t, dtype=float)
+    k = np.clip((t - DRIFT0) / STEP, 0, STEPS)
+    whole = np.floor(k)
+    frac = (k - whole) * STEP / MOVE     # 0..(STEP/MOVE); the first MOVE seconds of a step move
+    return np.where(t < DRIFT0, 0.0, np.minimum(whole + smooth(frac), STEPS))
+
+def add(buf, start_s, sig, gain=1.0):
+    i = int(round(start_s * SR))
+    if i >= N:
+        return
+    j = min(N, i + len(sig))
+    buf[i:j] += gain * sig[: j - i]
+
+def pan(sig, p):  # p: -1 left .. 1 right, constant power
+    a = (p + 1) * np.pi / 4
+    return np.cos(a) * sig, np.sin(a) * sig
+
+# ── Instruments ──────────────────────────────────────────────────────────────
+def marimba(m, vel):
+    f = mtof(m); d = 1.6
+    t = np.arange(int(d * SR)) / SR
+    body = np.sin(2 * np.pi * f * t) * np.exp(-t / 0.42)
+    over = 0.28 * np.sin(2 * np.pi * 3.93 * f * t) * np.exp(-t / 0.07)
+    tick = 0.06 * np.sin(2 * np.pi * 9.8 * f * t) * np.exp(-t / 0.012)
+    att = np.minimum(1, t / 0.003)
+    return vel * att * (body + over + tick)
+
+def bell(m, vel):
+    """Soft FM electric-piano/glass tone."""
+    f = mtof(m); d = 2.6
+    t = np.arange(int(d * SR)) / SR
+    idx = 1.6 * np.exp(-t / 0.35) + 0.25
+    mod = idx * np.sin(2 * np.pi * 2.0 * f * t)
+    car = np.sin(2 * np.pi * f * t + mod)
+    shimmer = 0.12 * np.sin(2 * np.pi * 4.01 * f * t) * np.exp(-t / 0.25)
+    env = np.minimum(1, t / 0.004) * np.exp(-t / 0.95)
+    return vel * env * (car + shimmer)
+
+def celesta(m, vel):
+    f = mtof(m); d = 4.0
+    t = np.arange(int(d * SR)) / SR
+    s = np.sin(2 * np.pi * f * t) + 0.35 * np.sin(2 * np.pi * 2 * f * t) * np.exp(-t / 0.5)
+    env = np.minimum(1, t / 0.01) * np.exp(-t / 1.4)
+    return vel * env * s
+
+def pad_voice(m, dur, vel):
+    """Warm detuned additive pad, slow swell and release."""
+    f = mtof(m)
+    t = np.arange(int(dur * SR)) / SR
+    s = np.zeros_like(t)
+    for det in (-0.07, 0.0, 0.06):
+        ff = f * 2 ** (det / 12)
+        ph = rng.uniform(0, 2 * np.pi)
+        for n in range(1, 7):
+            s += (1 / n ** 1.6) * np.sin(2 * np.pi * ff * n * t + ph * n)
+    lfo = 1 + 0.08 * np.sin(2 * np.pi * 0.11 * t + rng.uniform(0, 6))
+    env = smooth(t / 3.0) * smooth((dur - t) / 3.5)
+    return vel * env * lfo * s / 3
+
+def bass(m, dur, vel):
+    f = mtof(m)
+    t = np.arange(int(dur * SR)) / SR
+    s = np.sin(2 * np.pi * f * t) + 0.18 * np.sin(2 * np.pi * 2 * f * t)
+    env = smooth(t / 1.2) * smooth((dur - t) / 2.0)
+    return vel * env * s
+
+def shaker(vel):
+    d = 0.09
+    n = rng.normal(0, 1, int(d * SR))
+    n = np.diff(np.concatenate([[0], n]))           # tilt towards the top
+    t = np.arange(len(n)) / SR
+    return vel * n * np.minimum(1, t / 0.006) * np.exp(-t / 0.025)
+
+# ── Voice A: the steady clock ────────────────────────────────────────────────
+a_notes = int(round(A_OUT / T))
+for k in range(a_notes):
+    t0 = k * T + rng.normal(0, 0.0025)
+    m = CELL[k % 12]
+    vel = 0.55 * (1.12 if k % 12 == 0 else 1.0) * rng.uniform(0.9, 1.05)
+    fade = smooth((k * T) / 3.0)                     # the piece breathes in
+    l, r = pan(marimba(m, vel * fade), -0.45)
+    add(L, max(0, t0), l); add(R, max(0, t0), r)
+
+# ── Voice B: the clock that runs a hair fast ─────────────────────────────────
+grid = np.arange(int(B_IN * SR), int(B_OUT * SR)) / SR
+pos = grid / T + phase_offset(grid)                  # B's position in notes
+crossings = np.nonzero(np.diff(np.floor(pos)) > 0)[0]
+for idx in crossings:
+    t0 = grid[idx + 1]
+    k = int(np.floor(pos[idx + 1]))
+    m = CELL[k % 12]
+    vel = 0.42 * (1.12 if k % 12 == 0 else 1.0) * rng.uniform(0.92, 1.04)
+    fade = smooth((t0 - B_IN) / 2.4)
+    l, r = pan(bell(m, vel * fade), 0.5)
+    add(L, t0, l); add(R, t0, r)
+
+# ── Harmony: changes with each step ──────────────────────────────────────────
+CHORDS = {                                            # D lydian colours
+    "D":  ([50, 57, 61, 64, 66], 38),                 # Dmaj9
+    "Bm": ([47, 54, 57, 62, 64], 35),                 # Bm11-ish
+    "G":  ([43, 50, 54, 61, 64], 31),                 # Gmaj7#11
+    "E":  ([52, 56, 59, 62, 66], 40),                 # E9 (the lydian II)
+}
+order = ["D"] + ["D", "Bm", "G", "E"] * 3 + ["D"]
+starts = [0.0] + [DRIFT0 + i * STEP for i in range(STEPS)] + [DRIFT1]
+ends = starts[1:] + [TOTAL]
+for name, s0, s1 in zip(order, starts, ends):
+    notes, root = CHORDS[name]
+    dur = (s1 - s0) + 3.0                             # overlap for crossfades
+    for m in notes:
+        l, r = pan(pad_voice(m, dur, 0.055), rng.uniform(-0.6, 0.6))
+        add(L, max(0, s0 - 1.5), l); add(R, max(0, s0 - 1.5), r)
+    if s0 >= B_IN:
+        b = bass(root, dur, 0.22)
+        add(L, s0 - 0.5, b * 0.7); add(R, s0 - 0.5, b * 0.7)
+
+# ── The far side: counter-melody and pulse while the clocks are furthest apart
+COUNTER = [81, 78, 76, 85, 83, 80, 78, 76, 74, 73, 71, 69]
+c_start = DRIFT0 + 4 * STEP
+for i, m in enumerate(COUNTER):
+    t0 = c_start + i * 2.4 * 1.5
+    if t0 > DRIFT0 + 9 * STEP:
+        break
+    swell = np.sin(np.pi * (i + 0.5) / len(COUNTER))
+    l, r = pan(celesta(m, 0.16 * swell), 0.15 * np.sin(i))
+    add(L, t0, l); add(R, t0, r)
+
+p0, p1 = DRIFT0 + 3 * STEP, DRIFT0 + 10 * STEP
+k = 0
+t0 = p0
+while t0 < p1:
+    x = (t0 - p0) / (p1 - p0)
+    vel = 0.05 * np.sin(np.pi * x) * (1.4 if k % 2 == 0 else 0.8)
+    l, r = pan(shaker(vel), 0.1)
+    add(L, t0, l); add(R, t0, r)
+    t0 += T; k += 1
+
+# ── Home: last chord ─────────────────────────────────────────────────────────
+for i, m in enumerate([62, 69, 73, 76, 80, 86]):      # D, A, C#, E, G#, D — lydian, left open
+    l, r = pan(bell(m, 0.20) * 1.0, -0.5 + i * 0.2)
+    add(L, END_CHORD + i * 0.06, l); add(R, END_CHORD + i * 0.06, r)
+    l, r = pan(marimba(m - 12, 0.18), 0.5 - i * 0.2)
+    add(L, END_CHORD + i * 0.06, l); add(R, END_CHORD + i * 0.06, r)
+
+# ── Room ─────────────────────────────────────────────────────────────────────
+def impulse(seconds, seed):
+    g = np.random.default_rng(seed)
+    t = np.arange(int(seconds * SR)) / SR
+    n = g.normal(0, 1, len(t))
+    for _ in range(3):                                # darken: repeated one-pole low-pass
+        n = np.cumsum(n) - np.cumsum(np.concatenate([np.zeros(12), n[:-12]]))
+    n /= np.max(np.abs(n))
+    ir = n * np.exp(-t / 0.9)
+    ir[: int(0.012 * SR)] *= np.linspace(0, 1, int(0.012 * SR))
+    return ir / np.sqrt(np.sum(ir ** 2))
+
+irL, irR = impulse(3.2, 1), impulse(3.2, 2)
+wetL = fftconvolve(L, irL)[:N]
+wetR = fftconvolve(R, irR)[:N]
+mixL = 0.78 * L + 0.34 * wetL
+mixR = 0.78 * R + 0.34 * wetR
+
+# gentle master: fade in/out, soft limiter, normalize
+t = np.arange(N) / SR
+master = smooth(t / 1.5) * smooth((TOTAL - t) / 4.0)
+mixL *= master; mixR *= master
+peak = max(np.max(np.abs(mixL)), np.max(np.abs(mixR)))
+mixL = np.tanh(1.1 * mixL / peak) / np.tanh(1.1) * 0.89
+mixR = np.tanh(1.1 * mixR / peak) / np.tanh(1.1) * 0.89
+
+pcm = (np.stack([mixL, mixR], axis=1) * 32767).astype(np.int16)
+with wave.open(os.path.join(OUT, "two-clocks.wav"), "wb") as w:
+    w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
+    w.writeframes(pcm.tobytes())
+enc = lameenc.Encoder()
+enc.set_bit_rate(192); enc.set_in_sample_rate(SR); enc.set_channels(2); enc.set_quality(2)
+mp3 = enc.encode(pcm.tobytes()) + enc.flush()
+open(os.path.join(OUT, "two-clocks.mp3"), "wb").write(mp3)
+print(f"length {TOTAL:.1f}s · B notes {len(crossings)} · A notes {a_notes} · mp3 {len(mp3)/1e6:.2f} MB")

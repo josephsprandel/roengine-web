@@ -1,0 +1,39 @@
+import numpy as np, scipy.sparse as sp, scipy.sparse.linalg as sla, sys, json, time
+D1 = [(2,.5),(1,1.5),(2,2.5),(3,2.5),(3,3.5),(4,2.5),(4,1.5),(2,1.5)]
+D2 = [(7,.5),(6,.5),(6,1.5),(8,3.5),(8,2.5),(9,2.5),(8,1.5),(7,1.5)]
+def area(P):
+    x=np.array([p[0] for p in P]); y=np.array([p[1] for p in P]); return 0.5*abs(np.dot(x,np.roll(y,-1))-np.dot(y,np.roll(x,-1)))
+def perim(P):
+    return sum(np.hypot(P[i][0]-P[i-1][0], P[i][1]-P[i-1][1]) for i in range(len(P)))
+def inside(P, X, Y):
+    res = np.zeros(X.shape, bool); n=len(P)
+    for i in range(n):
+        x1,y1=P[i]; x2,y2=P[(i+1)%n]
+        cond = ((y1>Y)!=(y2>Y)) & (X < (x2-x1)*(Y-y1)/(y2-y1+1e-300)+x1)
+        res ^= cond
+    return res
+def modes(P, h, k):
+    xs=[p[0] for p in P]; ys=[p[1] for p in P]
+    x0,x1=min(xs),max(xs); y0,y1=min(ys),max(ys)
+    gx=np.arange(x0,x1+h/2,h); gy=np.arange(y0,y1+h/2,h)
+    X,Y=np.meshgrid(gx,gy)
+    # strictly-inside test: nudge to avoid boundary ambiguity, then drop points on the boundary
+    m = inside(P, X+1e-9, Y+1e-9) & inside(P, X-1e-9, Y-1e-9) & inside(P, X+1e-9, Y-1e-9) & inside(P, X-1e-9, Y+1e-9)
+    idx=-np.ones(X.shape,int); idx[m]=np.arange(m.sum())
+    rows=[];cols=[];vals=[]
+    ii,jj=np.nonzero(m)
+    for a,b in zip(ii,jj):
+        r=idx[a,b]; rows.append(r);cols.append(r);vals.append(4/h/h)
+        for da,db in ((1,0),(-1,0),(0,1),(0,-1)):
+            c=idx[a+da,b+db] if 0<=a+da<X.shape[0] and 0<=b+db<X.shape[1] else -1
+            if c>=0: rows.append(r);cols.append(c);vals.append(-1/h/h)
+    A=sp.csc_matrix((vals,(rows,cols)),shape=(m.sum(),m.sum()))
+    lam,vec=sla.eigsh(A,k=k,sigma=0,which='LM')
+    o=np.argsort(lam); return lam[o], vec[:,o], m, gx, gy
+if __name__ == "__main__":
+  print('area', area(D1), area(D2), '| perimeter', round(perim(D1),4), round(perim(D2),4))
+  for h in (1/24, 1/48, 1/96):
+      t=time.time(); l1,_,m1,_,_=modes(D1,h,24); l2,_,m2,_,_=modes(D2,h,24)
+      rel=np.abs(l1-l2)/l1
+      print(f'h=1/{round(1/h)}: pts {m1.sum()}/{m2.sum()}  first 8 eigen D1 {np.round(l1[:8],2)}')
+      print(f'            D2 {np.round(l2[:8],2)}  max rel diff (24 modes) {rel.max():.4f}  ({time.time()-t:.1f}s)')

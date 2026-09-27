@@ -1,0 +1,211 @@
+"""
+Thirteen Years — every day a repair shop was open, June 2013 to September 2026,
+played in order, 62 milliseconds per day.
+
+The data is aggregate counts only: repair orders opened each day, and how many
+services of each broad kind (oil, brakes, diagnosis, tyres, A/C, drivetrain,
+engine) were on them. Nothing else. The mapping:
+
+  day pulse   one marimba note per weekday; loudness = ROs opened. Monday to
+              Friday climb the current chord, the weekend is (nearly) silent,
+              so the week itself becomes a five-on, two-off rhythm.
+  harmony     the season picks the chord (winter minor → spring → summer lydian
+              → autumn dominant) and each New Year steps the key up a fifth.
+              Twelve years of fifths comes back home: 2025 is in D again, and
+              2026 — still being written — is in A, the chord that leads home.
+  tide        pad and bass swell with an 8-week moving average of work.
+  A/C         high glass notes, one per A/C job. They bloom every summer.
+  oil         a soft tick; brakes a low wooden knock; diagnosis a small bell.
+  New Year    a deep bell in the new key.
+"""
+import numpy as np, datetime as dt, os, json, wave
+from scipy.signal import fftconvolve
+import lameenc
+
+SR = 44100
+OUT = os.path.dirname(os.path.abspath(__file__))
+rng = np.random.default_rng(13)
+
+rows = [l.strip().split(",") for l in open(os.path.join(OUT, "days.csv"))]
+DATES = [dt.date.fromisoformat(r[0]) for r in rows]
+X = np.array([[int(v) for v in r[1:]] for r in rows], dtype=float)
+RO, OIL, BRAKE, DIAG, TIRE, AC, DRIVE, ENG, OTHER = X.T
+ND = len(DATES)
+CAP = np.percentile(RO[RO > 0], 99.5)           # the 43-RO paperwork day is capped here
+ROc = np.minimum(RO, CAP)
+
+DAY = 0.062
+INTRO = 3.0
+OUTRO = 14.0
+TOTAL = INTRO + ND * DAY + OUTRO
+N = int(TOTAL * SR)
+L = np.zeros(N); R = np.zeros(N)
+
+def mtof(m): return 440.0 * 2 ** ((m - 69) / 12)
+def smooth(x):
+    x = np.clip(x, 0, 1); return x * x * (3 - 2 * x)
+def tday(i): return INTRO + i * DAY
+def add(start, sig, p=0.0, g=1.0):
+    i = int(round(start * SR))
+    if i >= N or i < 0: return
+    j = min(N, i + len(sig)); a = (p + 1) * np.pi / 4
+    L[i:j] += g * np.cos(a) * sig[: j - i]; R[i:j] += g * np.sin(a) * sig[: j - i]
+
+# ── Harmony ──────────────────────────────────────────────────────────────────
+def key_root(year):                     # pitch class; D in 2013, up a fifth a year
+    return (2 + 7 * (year - 2013)) % 12
+
+def season_chord(d):
+    """Chord (list of pitch classes relative to C) for a given date."""
+    r = key_root(d.year)
+    q = (d.month - 1) // 3
+    if q == 0:  iv = [9, 0, 4, 7, 11]           # vi9 — winter, minor
+    elif q == 1: iv = [5, 9, 0, 4, 7]           # IVmaj9 — spring
+    elif q == 2: iv = [0, 4, 7, 11, 6 + 12]     # Imaj7#11 — summer, lydian
+    else:        iv = [7, 11, 2, 5 + 12, 9]     # V9 — autumn, leaning into next year
+    return [(r + x) for x in iv]
+
+def voiced(pcs, lo):
+    """Chord pitch classes → ascending MIDI notes starting at or above lo."""
+    out, m = [], lo
+    for pc in pcs:
+        n = m + ((pc - m) % 12)
+        out.append(n); m = n + 1
+    return out
+
+# ── Instruments ──────────────────────────────────────────────────────────────
+def marimba(m, vel, d=1.1):
+    f = mtof(m); t = np.arange(int(d * SR)) / SR
+    s = np.sin(2*np.pi*f*t)*np.exp(-t/0.32) + 0.25*np.sin(2*np.pi*3.93*f*t)*np.exp(-t/0.05)
+    return vel * np.minimum(1, t/0.002) * s
+
+def glass(m, vel):
+    f = mtof(m); t = np.arange(int(2.2 * SR)) / SR
+    mod = (1.1*np.exp(-t/0.3) + 0.2) * np.sin(2*np.pi*3.0*f*t)
+    return vel * np.minimum(1, t/0.004) * np.exp(-t/0.8) * np.sin(2*np.pi*f*t + mod)
+
+def bell(m, vel, d=1.4):
+    f = mtof(m); t = np.arange(int(d * SR)) / SR
+    mod = (1.5*np.exp(-t/0.25) + 0.3) * np.sin(2*np.pi*1.4*f*t)
+    return vel * np.minimum(1, t/0.003) * np.exp(-t/0.45) * np.sin(2*np.pi*f*t + mod)
+
+def deep_bell(m, vel):
+    f = mtof(m); t = np.arange(int(7 * SR)) / SR
+    s = sum(a*np.sin(2*np.pi*f*k*t)*np.exp(-t/dcy) for k, a, dcy in
+            [(1, 1, 3.2), (2.0, .5, 2.2), (2.76, .35, 1.4), (5.4, .2, .6), (0.5, .4, 4.0)])
+    return vel * np.minimum(1, t/0.004) * s
+
+def tick(vel):
+    """A tiny high tone, not noise: 13 years of oil changes as a faint clock."""
+    t = np.arange(int(0.03 * SR)) / SR
+    return vel * np.sin(2*np.pi*3520*t) * np.minimum(1, t/0.001) * np.exp(-t/0.006)
+
+def knock(vel):
+    t = np.arange(int(0.25 * SR)) / SR
+    f = 110 * np.exp(-t/0.05) + 70
+    return vel * np.sin(2*np.pi*np.cumsum(f)/SR) * np.exp(-t/0.06)
+
+def pad_voice(m, dur, amp_curve):
+    f = mtof(m); t = np.arange(int(dur * SR)) / SR
+    s = np.zeros_like(t)
+    for det in (-0.06, 0.0, 0.05):
+        ph = rng.uniform(0, 6.28)
+        for k in range(1, 6):
+            s += (1 / k**1.7) * np.sin(2*np.pi*f*2**(det/12)*k*t + ph*k)
+    env = smooth(t / 1.2) * smooth((dur - t) / 1.2)
+    return env * amp_curve[: len(t)] * s / 3
+
+# ── Tide: 8-week moving average, sampled at audio rate ───────────────────────
+tide = np.convolve(ROc, np.ones(56) / 56, mode="same")
+lo, hi = np.percentile(tide[56:-28], [2, 99.5])       # stretch: the lull to the peak
+tide = np.clip((tide - lo) / (hi - lo), 0, 1)
+tide_t = np.interp(np.arange(N) / SR, [tday(i) for i in range(ND)], tide, left=tide[0], right=tide[-1])
+tide_t *= smooth(np.arange(N) / SR / 4.0)
+
+# ── Pads and bass: one span per season ───────────────────────────────────────
+spans, cur, start = [], None, 0
+for i, d in enumerate(DATES):
+    k = (d.year, (d.month - 1) // 3)
+    if k != cur:
+        if cur is not None: spans.append((start, i, DATES[start]))
+        cur, start = k, i
+spans.append((start, ND, DATES[start]))
+for a, b, d in spans:
+    s0 = tday(a) - 0.8; s1 = tday(b) + (OUTRO - 2 if b == ND else 0.8)
+    dur = s1 - s0; i0 = int(max(0, s0) * SR)
+    curve = 0.12 + 0.88 * tide_t[i0: i0 + int(dur * SR) + 1]
+    curve = np.pad(curve, (0, max(0, int(dur * SR) + 1 - len(curve))), mode="edge")
+    chord = season_chord(d)
+    for m in voiced(chord[:4], 50):
+        add(max(0, s0), pad_voice(m, dur, curve), rng.uniform(-.6, .6), 0.05)
+    root = voiced([chord[0]], 36)[0]
+    t = np.arange(int(dur * SR)) / SR
+    bs = (np.sin(2*np.pi*mtof(root)*t) + .15*np.sin(4*np.pi*mtof(root)*t)) * smooth(t/1.0) * smooth((dur-t)/1.0)
+    add(max(0, s0), bs * curve[: len(bs)], 0, 0.16)
+
+# ── The days ─────────────────────────────────────────────────────────────────
+typ = np.median(RO[RO > 0])
+for i, d in enumerate(DATES):
+    t0 = tday(i)
+    chord = season_chord(d)
+    tones = voiced(chord, 62) + voiced(chord, 74)
+    wd = d.weekday()
+    c = ROc[i]
+    if c > 0:
+        step = min(len(tones) - 1, min(wd, 4) + (2 if c > 2 * typ else 1 if c > typ else 0))
+        vel = (0.10 + 0.34 * np.sqrt(c / CAP)) * (0.45 + 0.55 * tide[i])
+        if wd >= 5: vel *= 0.5
+        add(t0 + rng.normal(0, 0.002), marimba(tones[step], vel), -0.35 + 0.14 * min(wd, 5))
+    if OIL[i]:   add(t0 + 0.021, tick(0.022 * np.sqrt(OIL[i])), 0.55)
+    if BRAKE[i]: add(t0 + 0.031, knock(0.09 * np.sqrt(BRAKE[i])), -0.2)
+    if DIAG[i] >= 2:
+        add(t0 + 0.012, bell(voiced([chord[4]], 79)[0], 0.035 * np.sqrt(DIAG[i])), 0.25)
+    for k in range(int(AC[i])):
+        m = tones[5 + (i * 3 + k * 2) % 5] + 12
+        add(t0 + k * 0.017, glass(m, 0.06), rng.uniform(-0.8, 0.8))
+    if ENG[i] + DRIVE[i] >= 2:
+        add(t0, marimba(voiced([chord[0]], 38)[0], 0.07 * np.sqrt(ENG[i] + DRIVE[i]), 0.8), 0)
+    if d.month == 1 and d.day == 1:
+        add(t0, deep_bell(voiced([key_root(d.year)], 38)[0], 0.22), 0)
+
+# ── Last chord: 2026, in A, the dominant of home. Left open. ─────────────────
+tend = tday(ND) + 0.4
+last = season_chord(DATES[-1])
+for j, m in enumerate(voiced(last, 55) + [voiced([last[0]], 81)[0]]):
+    add(tend + j * 0.09, bell(m, 0.10, 3.0), -0.5 + j * 0.18)
+add(tend, deep_bell(voiced([last[0]], 33)[0], 0.25), 0)
+
+# ── Room + master ────────────────────────────────────────────────────────────
+def impulse(sec, seed):
+    g = np.random.default_rng(seed); t = np.arange(int(sec * SR)) / SR
+    n = g.normal(0, 1, len(t))
+    for _ in range(3): n = np.cumsum(n) - np.cumsum(np.concatenate([np.zeros(10), n[:-10]]))
+    ir = n / np.max(np.abs(n)) * np.exp(-t / 0.8)
+    ir[: int(.01 * SR)] *= np.linspace(0, 1, int(.01 * SR))
+    return ir / np.sqrt(np.sum(ir ** 2))
+wl = fftconvolve(L, impulse(2.8, 1))[:N]; wr = fftconvolve(R, impulse(2.8, 2))[:N]
+ML = .8 * L + .3 * wl; MR = .8 * R + .3 * wr
+t = np.arange(N) / SR
+master = smooth(t / 1.0) * smooth((TOTAL - t) / 5.0)
+ML *= master; MR *= master
+peak = max(np.abs(ML).max(), np.abs(MR).max())
+ML = np.tanh(0.7 * ML / peak) / np.tanh(0.7) * .89
+MR = np.tanh(0.7 * MR / peak) / np.tanh(0.7) * .89
+
+pcm = (np.stack([ML, MR], 1) * 32767).astype(np.int16)
+with wave.open(os.path.join(OUT, "thirteen-years.wav"), "wb") as w:
+    w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes(pcm.tobytes())
+enc = lameenc.Encoder(); enc.set_bit_rate(192); enc.set_in_sample_rate(SR); enc.set_channels(2); enc.set_quality(2)
+mp3 = enc.encode(pcm.tobytes()) + enc.flush()
+open(os.path.join(OUT, "thirteen-years.mp3"), "wb").write(mp3)
+
+# ── Data for the page: relative levels only (0–9), never absolute counts ─────
+lvl = np.round(9 * np.sqrt(ROc / CAP)).astype(int)
+kinds = ["oil", "brake", "diag", "tire", "ac", "drive", "engine"]
+dom = [int(np.argmax(X[i, 1:8])) if X[i, 1:8].sum() else -1 for i in range(ND)]
+json.dump({"start": DATES[0].isoformat(), "day": DAY, "intro": INTRO,
+           "lvl": "".join(map(str, lvl)),
+           "ac": "".join("1" if a else "0" for a in AC),
+           "dom": "".join("-" if k < 0 else str(k) for k in dom), "kinds": kinds},
+          open(os.path.join(OUT, "days.json"), "w"), separators=(",", ":"))
+print(f"{TOTAL:.1f}s  cap={CAP:.0f}  mp3={len(mp3)/1e6:.2f}MB  peak_pre={peak:.2f}")
