@@ -143,10 +143,11 @@
 
   // ── lengths: pick a human unit for any size ────────────────────────────────
   const L = 91.44                                         // 100 yards, in metres
-  // min: the smallest length still said in this unit (inches down to 0.1″, thou down to a tenth)
+  // min: the smallest length still said in this unit (inches to 0.1″, thou to 1, tenths to 0.1, as a machinist would)
   const UNITS = [
     { m: 0.9144, min: 0.9144, name: "yd", big: "yards" }, { m: 0.0254, min: 0.00254, name: "in", big: "inches" },
-    { m: 2.54e-5, min: 2.54e-6, name: "thou", big: "thou" }, { m: 1e-6, min: 1e-7, name: "µm", big: "microns" },
+    { m: 2.54e-5, min: 2.54e-5, name: "thou", big: "thou" }, { m: 2.54e-6, min: 2.54e-7, name: "tenths", big: "tenths" },
+    { m: 1e-6, min: 1e-7, name: "µm", big: "microns" },
     { m: 1e-9, min: 1e-10, name: "nm", big: "nanometres" }, { m: 1e-12, min: 1e-13, name: "pm", big: "picometres" },
     { m: 1e-15, min: 1e-16, name: "fm", big: "femtometres" },
   ]
