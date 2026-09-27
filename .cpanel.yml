@@ -8,10 +8,11 @@
 #   .htaccess    — security rules + a cPanel-managed PHP-handler footer; edit on the host
 #                  (the copy here is the reference)
 #   DEPLOY.md, config.example.php — docs; .htaccess denies them anyway
+#   archive/     — the previous homepage, kept in git as a fallback (not published)
 deployment:
   tasks:
     - export DEPLOYPATH=/home/roengine/public_html/
-    - /bin/cp -f index.html form.php leads.php robots.txt sitemap.xml $DEPLOYPATH
+    - /bin/cp -f index.html form.php leads.php robots.txt sitemap.xml llms.txt $DEPLOYPATH
     - /bin/cp -Rf assets $DEPLOYPATH
     - /bin/cp -Rf card-fees $DEPLOYPATH
     - /bin/cp -Rf new $DEPLOYPATH
