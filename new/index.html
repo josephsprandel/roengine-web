@@ -10,7 +10,7 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=STIX+Two+Text:ital,wght@1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ── Tokens ──────────────────────────────────────────────────────────── */
 :root{
@@ -36,13 +36,17 @@ section{padding:110px 0}
 
 /* ── Logo (direction A) ──────────────────────────────────────────────── */
 .mk{display:inline-flex;align-items:flex-start;font-family:var(--display);font-weight:900;font-stretch:118%;letter-spacing:-.035em;line-height:.8;color:var(--navy)}
-.mk .e{font-weight:800;font-stretch:100%;color:var(--teal);font-size:.44em;letter-spacing:0;margin-left:.08em;line-height:1}
+/* RO raised to the power e: a true math-italic exponent (STIX Two), a nod to AI's exponential curve. */
+.mk .e{font-family:'STIX Two Text',Georgia,serif;font-style:italic;font-weight:600;font-size:.72em;letter-spacing:0;color:var(--teal);line-height:.7;margin-left:.05em;transform:translateY(-.18em)}
 .on-dark .mk{color:#fff}.on-dark .mk .e{color:var(--teal-b)}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
 .brand .mk{font-size:30px}
 .brand .nm{font-family:var(--display);font-weight:700;font-size:19px;color:var(--ink);letter-spacing:-.01em;line-height:1}
 .brand .tg{display:block;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-top:4px}
 .on-dark .brand .nm{color:#fff}
+/* Automotive Intelligence — the initials are A.I. */
+.brand .tg b{color:var(--teal);font-weight:800}
+.on-dark .brand .tg b{color:var(--teal-b)}
 
 /* ── Buttons ─────────────────────────────────────────────────────────── */
 .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:700;font-size:16px;text-decoration:none;border-radius:12px;padding:15px 24px;transition:transform .2s var(--ease),box-shadow .2s var(--ease),background .2s}
@@ -69,7 +73,12 @@ section{padding:110px 0}
 /* ── Hero ────────────────────────────────────────────────────────────── */
 .hero{position:relative;background:radial-gradient(1200px 600px at 78% 20%,rgba(63,181,174,.18),transparent 60%),linear-gradient(180deg,var(--night),var(--night-2));color:#c8d6e6;margin-top:-72px;padding:150px 0 270px;overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 70% 60% at 60% 40%,#000 30%,transparent 80%);pointer-events:none}
-.hero .wrap{position:relative;display:grid;grid-template-columns:1fr 1.02fr;gap:56px;align-items:center}
+.curve{position:absolute;left:0;bottom:4%;width:100%;height:74%;pointer-events:none;z-index:0}
+.curve .glow{opacity:.2}
+.curve .line{fill:none;stroke-width:3;stroke-linecap:round;stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw 2.6s .3s cubic-bezier(.45,0,.2,1) forwards;filter:drop-shadow(0 0 10px rgba(79,209,201,.45))}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media (max-width:980px){.curve{height:46%;bottom:2%;opacity:.8}}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1.02fr;gap:56px;align-items:center}
 @media (max-width:980px){.hero .wrap{grid-template-columns:1fr}.hero{padding-top:130px;padding-bottom:110px}}
 .hero h1{color:#fff;font-size:clamp(40px,5.2vw,68px);font-weight:900;font-stretch:112%;letter-spacing:-.035em;line-height:.98}
 .hero h1 .hl{color:var(--teal-b)}
@@ -292,6 +301,7 @@ footer a{color:#b7c7da;text-decoration:none}
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .rv,.li,.rec,.veh,.scan,.tot,.phone,.replay{opacity:1!important;transform:none!important}
   .ro{transform:none!important}
+  .curve .line{stroke-dashoffset:0!important}
 }
 </style>
 </head>
@@ -313,7 +323,7 @@ footer a{color:#b7c7da;text-decoration:none}
 
 <nav class="nav on-dark" id="nav">
   <div class="wrap">
-    <a href="#top" class="brand" aria-label="RO Engine home"><span class="mk">RO<span class="e">e</span></span><span><span class="nm">RO Engine</span><span class="tg">Automotive Intelligence</span></span></a>
+    <a href="#top" class="brand" aria-label="RO Engine home"><span class="mk">RO<span class="e">e</span></span><span><span class="nm">RO Engine</span><span class="tg"><b>A</b>utomotive <b>I</b>ntelligence</span></span></a>
     <div class="links">
       <a href="#gap" class="hide-m">The problem</a>
       <a href="#story" class="hide-m">How it works</a>
@@ -325,6 +335,12 @@ footer a{color:#b7c7da;text-decoration:none}
 
 <!-- ═══ HERO ═══════════════════════════════════════════════════════════ -->
 <header class="hero" id="top">
+  <!-- The exponential curve from the original site, drawn in. -->
+  <svg class="curve" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
+    <defs><linearGradient id="cg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#1b3f86"/><stop offset=".5" stop-color="#0b8fd0"/><stop offset="1" stop-color="#10d9cc"/></linearGradient></defs>
+    <path class="glow" fill="url(#cg)" d="M 0.000,700.000 C 324.904,677.426 649.808,654.853 816.475,538.184 983.142,421.515 991.571,210.760 1000.000,0.000 994.891,214.450 989.783,428.899 823.113,545.566 656.443,662.233 328.225,681.116 0.000,700.000 Z"/>
+    <path class="line" stroke="url(#cg)" pathLength="1600" d="M 0,700 C 420,672 700,640 842,520 960,420 990,200 1000,0"/>
+  </svg>
   <div class="wrap">
     <div>
       <div class="eyebrow">The AI service advisor for independent shops</div>
@@ -594,7 +610,7 @@ footer a{color:#b7c7da;text-decoration:none}
 
 <footer class="on-dark">
   <div class="wrap">
-    <a href="#top" class="brand"><span class="mk" style="font-size:24px">RO<span class="e">e</span></span><span><span class="nm" style="font-size:16px">RO Engine</span><span class="tg">Automotive Intelligence</span></span></a>
+    <a href="#top" class="brand"><span class="mk" style="font-size:24px">RO<span class="e">e</span></span><span><span class="nm" style="font-size:16px">RO Engine</span><span class="tg"><b>A</b>utomotive <b>I</b>ntelligence</span></span></a>
     <span>© 2026 RO Engine · <a href="mailto:joe@roengine.com">joe@roengine.com</a> · Built by a shop owner, for shop owners.</span>
   </div>
 </footer>

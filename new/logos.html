@@ -7,7 +7,7 @@
 <title>RO Engine — logo directions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=STIX+Two+Text:ital,wght@1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{--navy:#14263f;--blue:#2d4d78;--teal:#3fb5ae;--ink:#101a26;--ink2:#4a5c70;--line:#e2ecf4;--paper:#f6f8fb}
   *{box-sizing:border-box}
@@ -31,6 +31,19 @@
   svg text{font-family:Archivo,sans-serif}
   .fav{width:56px;height:56px}
   .note{font-size:13px;color:var(--ink2);margin-top:26px}
+  /* A · refined: RO raised to the power e. The exponent is a true math italic
+     (STIX Two, the typeface of mathematical publishing), large enough to read
+     as an exponent rather than a (TM). */
+  .mkx{display:inline-flex;align-items:flex-start;font-family:Archivo,sans-serif;font-weight:900;font-stretch:118%;letter-spacing:-.035em;line-height:.8;color:var(--navy)}
+  .mkx .x{font-family:'STIX Two Text',Georgia,serif;font-style:italic;font-weight:600;letter-spacing:0;color:var(--teal);line-height:.7;margin-left:.05em;transform:translateY(-.18em)}
+  .mkx.x60 .x{font-size:.6em}
+  .mkx.x72 .x{font-size:.72em}
+  .dark .mkx,.ico .mkx{color:#fff}.dark .mkx .x,.ico .mkx .x{color:#4fd1c9}
+  .ico .mkx{font-size:25px}
+  .formula{display:flex;gap:46px;align-items:flex-end;flex-wrap:wrap;margin:6px 0 24px}
+  .formula .big{font-size:96px}
+  .formula .lbl{font-size:12px;color:var(--ink2);margin-top:14px;text-align:center}
+
   /* Marks built with real text layout, so nothing can collide at any size. */
   .mk{display:inline-flex;align-items:flex-start;font-family:Archivo,sans-serif;font-weight:900;font-stretch:118%;letter-spacing:-.035em;line-height:.8;color:var(--navy)}
   .mk .e{font-weight:800;font-stretch:100%;color:var(--teal);font-size:.42em;letter-spacing:0;margin-left:.08em;line-height:1}
@@ -56,12 +69,34 @@
   <h1>Logo directions</h1>
   <p class="lede">Three takes on the RO<sup>e</sup> mark with a mechanical, shop-floor feel instead of the thin italic serif. Each is shown the way it would actually be used: in the site header, on a dark background, and at favicon size. Pick one (or mix — "B's plate with A's letters") and I'll refine it and turn the letters into paths so it no longer depends on a web font.</p>
 
+
+  <!-- ── A refined · the exponent ──────────────────────────────── -->
+  <div class="opt" style="border:2px solid var(--teal)">
+    <h2>A · refined — RO to the power of e</h2>
+    <p>Same stamped RO, with the e set as a true exponent: a math-textbook italic (STIX Two — the typeface used for mathematical publishing), larger, and raised above the cap line so it reads as <i>RO raised to e</i>, not a trademark sign. Two sizes to compare, next to the first version.</p>
+    <div class="formula">
+      <div><div class="big"><span class="mk">RO<span class="e">e</span></span></div><div class="lbl">first version</div></div>
+      <div><div class="big"><span class="mkx x60">RO<span class="x">e</span></span></div><div class="lbl">exponent · 60%</div></div>
+      <div><div class="big"><span class="mkx x72">RO<span class="x">e</span></span></div><div class="lbl">exponent · 72%</div></div>
+    </div>
+    <div class="row">
+      <div class="tile"><span class="cap">Header · 60%</span><span class="nav-demo"><span class="s-nav"><span class="mkx x60">RO<span class="x">e</span></span></span><span><span class="nm">RO Engine</span><span class="tg"><b style="color:#3fb5ae;font-weight:800">A</b>utomotive <b style="color:#3fb5ae;font-weight:800">I</b>ntelligence</span></span></span></div>
+      <div class="tile dark"><span class="cap">On dark · 72%</span><span class="s-dark"><span class="mkx x72">RO<span class="x">e</span></span></span></div>
+      <div class="tile"><span class="cap">Icon</span><span class="ico"><span class="mkx x60">RO<span class="x">e</span></span></span></div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <div class="tile"><span class="cap">Header · 72%</span><span class="nav-demo"><span class="s-nav"><span class="mkx x72">RO<span class="x">e</span></span></span><span><span class="nm">RO Engine</span><span class="tg"><b style="color:#3fb5ae;font-weight:800">A</b>utomotive <b style="color:#3fb5ae;font-weight:800">I</b>ntelligence</span></span></span></div>
+      <div class="tile dark"><span class="cap">On dark · 60%</span><span class="s-dark"><span class="mkx x60">RO<span class="x">e</span></span></span></div>
+      <div class="tile"><span class="cap">Icon · 72%</span><span class="ico"><span class="mkx x72">RO<span class="x">e</span></span></span></div>
+    </div>
+  </div>
+
   <!-- ── A · Stamped ─────────────────────────────────────────── -->
   <div class="opt">
     <h2>A · Stamped</h2>
     <p>Extra-bold, slightly wide letters with tight spacing — the weight of a torque spec stamped into steel. The teal "e" stays as the signature. Plainest of the three; reads instantly at any size.</p>
     <div class="row">
-      <div class="tile"><span class="cap">Header</span><span class="nav-demo"><span class="s-nav"><span class="mk">RO<span class="e">e</span></span></span><span><span class="nm">RO Engine</span><span class="tg">Automotive Intelligence</span></span></span></div>
+      <div class="tile"><span class="cap">Header</span><span class="nav-demo"><span class="s-nav"><span class="mk">RO<span class="e">e</span></span></span><span><span class="nm">RO Engine</span><span class="tg"><b style="color:#3fb5ae;font-weight:800">A</b>utomotive <b style="color:#3fb5ae;font-weight:800">I</b>ntelligence</span></span></span></div>
       <div class="tile dark"><span class="cap">On dark</span><span class="s-dark"><span class="mk">RO<span class="e">e</span></span></span></div>
       <div class="tile"><span class="cap">Icon</span><span class="ico"><span class="mk">RO<span class="e">e</span></span></span></div>
     </div>
@@ -72,7 +107,7 @@
     <h2>B · Data plate</h2>
     <p>The mark sits on a small plate with two rivets, like the ID tag riveted to an engine or a door jamb VIN plate. Distinctive, very "shop", and it doubles as the app icon with no changes.</p>
     <div class="row">
-      <div class="tile"><span class="cap">Header</span><span class="nav-demo"><span class="s-nav"><span class="mk mB"><span class="rv tl"></span>RO<span class="e"><span>e</span></span><span class="rv br"></span></span></span><span><span class="nm">RO Engine</span><span class="tg">Automotive Intelligence</span></span></span></div>
+      <div class="tile"><span class="cap">Header</span><span class="nav-demo"><span class="s-nav"><span class="mk mB"><span class="rv tl"></span>RO<span class="e"><span>e</span></span><span class="rv br"></span></span></span><span><span class="nm">RO Engine</span><span class="tg"><b style="color:#3fb5ae;font-weight:800">A</b>utomotive <b style="color:#3fb5ae;font-weight:800">I</b>ntelligence</span></span></span></div>
       <div class="tile dark"><span class="cap">On dark</span><span class="s-dark"><span class="mk mB"><span class="rv tl"></span>RO<span class="e"><span>e</span></span><span class="rv br"></span></span></span></div>
       <div class="tile"><span class="cap">Icon</span><span class="ico bare"><span style="font-size:23px"><span class="mk mB"><span class="rv tl"></span>RO<span class="e"><span>e</span></span><span class="rv br"></span></span></span></span></div>
     </div>
@@ -83,13 +118,13 @@
     <h2>C · Gauge</h2>
     <p>The "O" becomes a dial with a teal needle swinging past the mark — the dashboard gauge every tech reads a hundred times a day, and a quiet nod to "intelligence". The most memorable; the needle can animate on the site.</p>
     <div class="row">
-      <div class="tile"><span class="cap">Header</span><span class="nav-demo"><span class="s-nav"><span class="mk mC">R<svg viewBox="-20 -20 40 40" aria-hidden="true"><circle r="16" fill="none" stroke="#14263f" stroke-width="6.5"/><g stroke="#14263f" stroke-width="1.6" stroke-linecap="round"><line x1="-8.6" y1="5.6" x2="-6.9" y2="4.5"/><line x1="0" y1="-9.2" x2="0" y2="-7.3"/><line x1="8.6" y1="5.6" x2="6.9" y2="4.5"/></g><line x1="0" y1="0" x2="7.2" y2="-7.2" stroke="#3fb5ae" stroke-width="3" stroke-linecap="round"/><circle r="2.6" fill="#3fb5ae"/></svg><span class="e">e</span></span></span><span><span class="nm">RO Engine</span><span class="tg">Automotive Intelligence</span></span></span></div>
+      <div class="tile"><span class="cap">Header</span><span class="nav-demo"><span class="s-nav"><span class="mk mC">R<svg viewBox="-20 -20 40 40" aria-hidden="true"><circle r="16" fill="none" stroke="#14263f" stroke-width="6.5"/><g stroke="#14263f" stroke-width="1.6" stroke-linecap="round"><line x1="-8.6" y1="5.6" x2="-6.9" y2="4.5"/><line x1="0" y1="-9.2" x2="0" y2="-7.3"/><line x1="8.6" y1="5.6" x2="6.9" y2="4.5"/></g><line x1="0" y1="0" x2="7.2" y2="-7.2" stroke="#3fb5ae" stroke-width="3" stroke-linecap="round"/><circle r="2.6" fill="#3fb5ae"/></svg><span class="e">e</span></span></span><span><span class="nm">RO Engine</span><span class="tg"><b style="color:#3fb5ae;font-weight:800">A</b>utomotive <b style="color:#3fb5ae;font-weight:800">I</b>ntelligence</span></span></span></div>
       <div class="tile dark"><span class="cap">On dark</span><span class="s-dark"><span class="mk mC">R<svg viewBox="-20 -20 40 40" aria-hidden="true"><circle r="16" fill="none" stroke="#fff" stroke-width="6.5"/><g stroke="#fff" stroke-width="1.6" stroke-linecap="round"><line x1="-8.6" y1="5.6" x2="-6.9" y2="4.5"/><line x1="0" y1="-9.2" x2="0" y2="-7.3"/><line x1="8.6" y1="5.6" x2="6.9" y2="4.5"/></g><line x1="0" y1="0" x2="7.2" y2="-7.2" stroke="#4fd1c9" stroke-width="3" stroke-linecap="round"/><circle r="2.6" fill="#4fd1c9"/></svg><span class="e">e</span></span></span></div>
       <div class="tile"><span class="cap">Icon</span><span class="ico"><svg viewBox="-20 -20 40 40" width="36" height="36" aria-hidden="true"><circle r="16" fill="none" stroke="#fff" stroke-width="6.5"/><g stroke="#fff" stroke-width="1.6" stroke-linecap="round"><line x1="-8.6" y1="5.6" x2="-6.9" y2="4.5"/><line x1="0" y1="-9.2" x2="0" y2="-7.3"/><line x1="8.6" y1="5.6" x2="6.9" y2="4.5"/></g><line x1="0" y1="0" x2="7.2" y2="-7.2" stroke="#4fd1c9" stroke-width="3" stroke-linecap="round"/><circle r="2.6" fill="#4fd1c9"/></svg></span></div>
     </div>
   </div>
 
-  <p class="note">Colors are the current brand navy and teal. The typeface is Archivo (free, variable width) — heavy and a little wide, which is what gives the mechanical feel. The sample homepage at <a href="./">/new/</a> uses option A in its header; switching is one line.</p>
+  <p class="note">Colors are the current brand navy and teal. The typeface is Archivo (free, variable width) — heavy and a little wide, which is what gives the mechanical feel. Chosen: <b>A · refined, exponent at 72%</b> — now in the sample homepage at <a href="./">/new/</a>, with the A.I. initials of Automotive Intelligence picked out in teal.</p>
 </div>
 </body>
 </html>
