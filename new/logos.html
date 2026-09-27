@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>RO Engine — logo directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#14263f;--blue:#2d4d78;--teal:#3fb5ae;--ink:#101a26;--ink2:#4a5c70;--line:#e2ecf4;--paper:#f6f8fb}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;line-height:1.5}
+  .wrap{max-width:1100px;margin:0 auto;padding:40px 20px 80px}
+  h1{font-family:Archivo,sans-serif;font-stretch:110%;font-weight:800;font-size:30px;margin:0 0 6px}
+  .lede{color:var(--ink2);margin:0 0 34px;max-width:680px}
+  .opt{background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px;margin-bottom:22px}
+  .opt h2{margin:0 0 4px;font-size:18px}
+  .opt p{margin:0 0 22px;color:var(--ink2);font-size:14.5px;max-width:720px}
+  .row{display:grid;grid-template-columns:1.4fr 1fr .5fr;gap:14px;align-items:stretch}
+  @media (max-width:760px){.row{grid-template-columns:1fr}}
+  .tile{border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;min-height:120px;padding:18px;position:relative}
+  .tile.dark{background:linear-gradient(135deg,#0c1626,#15294a);border-color:#0c1626}
+  .tile .cap{position:absolute;left:10px;top:8px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#8598ab}
+  .tile.dark .cap{color:#6f86a3}
+  .nav-demo{display:flex;align-items:center;gap:12px}
+  .nav-demo .nm{font-family:Archivo,sans-serif;font-stretch:100%;font-weight:700;font-size:20px;letter-spacing:-.01em;color:var(--ink)}
+  .nav-demo .tg{display:block;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:#8598ab;margin-top:2px;font-weight:600}
+  .dark .nm{color:#fff}
+  svg text{font-family:Archivo,sans-serif}
+  .fav{width:56px;height:56px}
+  .note{font-size:13px;color:var(--ink2);margin-top:26px}
+  /* Marks built with real text layout, so nothing can collide at any size. */
+  .mk{display:inline-flex;align-items:flex-start;font-family:Archivo,sans-serif;font-weight:900;font-stretch:118%;letter-spacing:-.035em;line-height:.8;color:var(--navy)}
+  .mk .e{font-weight:800;font-stretch:100%;color:var(--teal);font-size:.42em;letter-spacing:0;margin-left:.08em;line-height:1}
+  .dark .mk{color:#fff}.dark .mk .e{color:#4fd1c9}
+  .mB{position:relative;align-items:center;gap:.14em;background:var(--navy);color:#fff;border-radius:.2em;padding:.2em .26em .2em .28em}
+  .mB .e{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;width:.52em;height:.52em;border-radius:.13em;background:var(--teal);color:#0c1626;font-size:.8em;margin:0}
+  .mB .e span{font-size:.62em;line-height:1}
+  .mB .rv{position:absolute;width:.1em;height:.1em;border-radius:50%;background:#6f86a3}
+  .mB .rv.tl{left:.09em;top:.09em}.mB .rv.br{right:.09em;bottom:.09em}
+  .dark .mB{background:#fff;color:var(--navy)}.dark .mB .rv{background:#9fb0c4}.dark .mB .e{color:#fff}
+  .mC{align-items:center;gap:.04em}
+  .mC svg{width:.86em;height:.86em;display:block}
+  .mC .e{align-self:flex-start}
+  .s-nav{font-size:34px}.s-dark{font-size:64px}
+  .ico{width:56px;height:56px;border-radius:13px;background:var(--navy);display:flex;align-items:center;justify-content:center}
+  .ico .mk{font-size:26px;color:#fff}.ico .mk .e{color:#4fd1c9}
+  .ico.bare{background:none}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Logo directions</h1>
+  <p class="lede">Three takes on the RO<sup>e</sup> mark with a mechanical, shop-floor feel instead of the thin italic serif. Each is shown the way it would actually be used: in the site header, on a dark background, and at favicon size. Pick one (or mix — "B's plate with A's letters") and I'll refine it and turn the letters into paths so it no longer depends on a web font.</p>
+
+  <!-- ── A · Stamped ─────────────────────────────────────────── -->
+  <div class="opt">
+    <h2>A · Stamped</h2>
+    <p>Extra-bold, slightly wide letters with tight spacing — the weight of a torque spec stamped into steel. The teal "e" stays as the signature. Plainest of the three; reads instantly at any size.</p>
+    <div class="row">
+      <div class="tile"><span class="cap">Header</span><span class="nav-demo"><span class="s-nav"><span class="mk">RO<span class="e">e</span></span></span><span><span class="nm">RO Engine</span><span class="tg">Automotive Intelligence</span></span></span></div>
+      <div class="tile dark"><span class="cap">On dark</span><span class="s-dark"><span class="mk">RO<span class="e">e</span></span></span></div>
+      <div class="tile"><span class="cap">Icon</span><span class="ico"><span class="mk">RO<span class="e">e</span></span></span></div>
+    </div>
+  </div>
+
+  <!-- ── B · Data plate ──────────────────────────────────────── -->
+  <div class="opt">
+    <h2>B · Data plate</h2>
+    <p>The mark sits on a small plate with two rivets, like the ID tag riveted to an engine or a door jamb VIN plate. Distinctive, very "shop", and it doubles as the app icon with no changes.</p>
+    <div class="row">
+      <div class="tile"><span class="cap">Header</span><span class="nav-demo"><span class="s-nav"><span class="mk mB"><span class="rv tl"></span>RO<span class="e"><span>e</span></span><span class="rv br"></span></span></span><span><span class="nm">RO Engine</span><span class="tg">Automotive Intelligence</span></span></span></div>
+      <div class="tile dark"><span class="cap">On dark</span><span class="s-dark"><span class="mk mB"><span class="rv tl"></span>RO<span class="e"><span>e</span></span><span class="rv br"></span></span></span></div>
+      <div class="tile"><span class="cap">Icon</span><span class="ico bare"><span style="font-size:23px"><span class="mk mB"><span class="rv tl"></span>RO<span class="e"><span>e</span></span><span class="rv br"></span></span></span></span></div>
+    </div>
+  </div>
+
+  <!-- ── C · Gauge ───────────────────────────────────────────── -->
+  <div class="opt">
+    <h2>C · Gauge</h2>
+    <p>The "O" becomes a dial with a teal needle swinging past the mark — the dashboard gauge every tech reads a hundred times a day, and a quiet nod to "intelligence". The most memorable; the needle can animate on the site.</p>
+    <div class="row">
+      <div class="tile"><span class="cap">Header</span><span class="nav-demo"><span class="s-nav"><span class="mk mC">R<svg viewBox="-20 -20 40 40" aria-hidden="true"><circle r="16" fill="none" stroke="#14263f" stroke-width="6.5"/><g stroke="#14263f" stroke-width="1.6" stroke-linecap="round"><line x1="-8.6" y1="5.6" x2="-6.9" y2="4.5"/><line x1="0" y1="-9.2" x2="0" y2="-7.3"/><line x1="8.6" y1="5.6" x2="6.9" y2="4.5"/></g><line x1="0" y1="0" x2="7.2" y2="-7.2" stroke="#3fb5ae" stroke-width="3" stroke-linecap="round"/><circle r="2.6" fill="#3fb5ae"/></svg><span class="e">e</span></span></span><span><span class="nm">RO Engine</span><span class="tg">Automotive Intelligence</span></span></span></div>
+      <div class="tile dark"><span class="cap">On dark</span><span class="s-dark"><span class="mk mC">R<svg viewBox="-20 -20 40 40" aria-hidden="true"><circle r="16" fill="none" stroke="#fff" stroke-width="6.5"/><g stroke="#fff" stroke-width="1.6" stroke-linecap="round"><line x1="-8.6" y1="5.6" x2="-6.9" y2="4.5"/><line x1="0" y1="-9.2" x2="0" y2="-7.3"/><line x1="8.6" y1="5.6" x2="6.9" y2="4.5"/></g><line x1="0" y1="0" x2="7.2" y2="-7.2" stroke="#4fd1c9" stroke-width="3" stroke-linecap="round"/><circle r="2.6" fill="#4fd1c9"/></svg><span class="e">e</span></span></span></div>
+      <div class="tile"><span class="cap">Icon</span><span class="ico"><svg viewBox="-20 -20 40 40" width="36" height="36" aria-hidden="true"><circle r="16" fill="none" stroke="#fff" stroke-width="6.5"/><g stroke="#fff" stroke-width="1.6" stroke-linecap="round"><line x1="-8.6" y1="5.6" x2="-6.9" y2="4.5"/><line x1="0" y1="-9.2" x2="0" y2="-7.3"/><line x1="8.6" y1="5.6" x2="6.9" y2="4.5"/></g><line x1="0" y1="0" x2="7.2" y2="-7.2" stroke="#4fd1c9" stroke-width="3" stroke-linecap="round"/><circle r="2.6" fill="#4fd1c9"/></svg></span></div>
+    </div>
+  </div>
+
+  <p class="note">Colors are the current brand navy and teal. The typeface is Archivo (free, variable width) — heavy and a little wide, which is what gives the mechanical feel. The sample homepage at <a href="./">/new/</a> uses option A in its header; switching is one line.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Preview of a possible homepage redesign. Not the live site: kept out of search. -->
+<meta name="robots" content="noindex, nofollow">
+<title>RO Engine — The AI Service Advisor for Independent Shops (preview)</title>
+<meta name="description" content="Your best advisor, on every write-up. RO Engine gives every advisor veteran-level recommendations on every repair order. $349/month, everything included.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Tokens ──────────────────────────────────────────────────────────── */
+:root{
+  --night:#0b1524; --night-2:#12233d; --navy:#14263f; --blue:#2d4d78; --blue-v:#3f7fc4;
+  --teal:#3fb5ae; --teal-b:#4fd1c9; --teal-w:#e8f8f6;
+  --ink:#101a26; --ink-2:#4a5c70; --ink-3:#8598ab; --line:#e2ecf4; --paper:#f6f8fb; --w:#fff;
+  --red:#e0625c; --amber:#e3a33b; --green:#2f9e69;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --display:'Archivo',system-ui,sans-serif; --body:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--w);color:var(--ink-2);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img,svg{display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);color:var(--ink);margin:0;letter-spacing:-.02em;line-height:1.05}
+h2{font-size:clamp(32px,4.4vw,52px);font-weight:800;font-stretch:108%}
+.eyebrow{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal)}
+.lead{font-size:19px;color:var(--ink-2);max-width:640px}
+section{padding:110px 0}
+@media (max-width:720px){section{padding:76px 0}body{font-size:16px}}
+
+/* ── Logo (direction A) ──────────────────────────────────────────────── */
+.mk{display:inline-flex;align-items:flex-start;font-family:var(--display);font-weight:900;font-stretch:118%;letter-spacing:-.035em;line-height:.8;color:var(--navy)}
+.mk .e{font-weight:800;font-stretch:100%;color:var(--teal);font-size:.44em;letter-spacing:0;margin-left:.08em;line-height:1}
+.on-dark .mk{color:#fff}.on-dark .mk .e{color:var(--teal-b)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand .mk{font-size:30px}
+.brand .nm{font-family:var(--display);font-weight:700;font-size:19px;color:var(--ink);letter-spacing:-.01em;line-height:1}
+.brand .tg{display:block;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-top:4px}
+.on-dark .brand .nm{color:#fff}
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:700;font-size:16px;text-decoration:none;border-radius:12px;padding:15px 24px;transition:transform .2s var(--ease),box-shadow .2s var(--ease),background .2s}
+.btn svg{width:18px;height:18px}
+.btn-p{background:var(--teal);color:#062a28;box-shadow:0 10px 30px -10px rgba(63,181,174,.7)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 16px 36px -12px rgba(63,181,174,.8)}
+.btn-g{color:#fff;border:1px solid rgba(255,255,255,.22)}
+.btn-g:hover{background:rgba(255,255,255,.07)}
+.btn-d{background:var(--navy);color:#fff}
+.btn-d:hover{transform:translateY(-2px)}
+
+/* ── Nav ─────────────────────────────────────────────────────────────── */
+.nav{position:sticky;top:0;z-index:50;transition:background .3s,border-color .3s,backdrop-filter .3s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(11,21,36,.86);backdrop-filter:blur(14px);border-color:rgba(255,255,255,.08)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:72px}
+.nav .links{margin-left:auto;display:flex;gap:26px;align-items:center}
+.nav .links a{color:#c8d6e6;text-decoration:none;font-weight:600;font-size:15px}
+.nav .links a:hover{color:#fff}
+.nav .btn{padding:10px 18px;font-size:14.5px}
+@media (max-width:860px){.nav .links a.hide-m{display:none}}
+.nav .btn{white-space:nowrap}
+@media (max-width:520px){.brand .tg{display:none}.brand .nm{font-size:17px}.nav .btn{padding:9px 14px;font-size:13.5px}.nav .wrap{gap:14px}}
+
+/* ── Hero ────────────────────────────────────────────────────────────── */
+.hero{position:relative;background:radial-gradient(1200px 600px at 78% 20%,rgba(63,181,174,.18),transparent 60%),linear-gradient(180deg,var(--night),var(--night-2));color:#c8d6e6;margin-top:-72px;padding:150px 0 270px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 70% 60% at 60% 40%,#000 30%,transparent 80%);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1fr 1.02fr;gap:56px;align-items:center}
+@media (max-width:980px){.hero .wrap{grid-template-columns:1fr}.hero{padding-top:130px;padding-bottom:110px}}
+.hero h1{color:#fff;font-size:clamp(40px,5.2vw,68px);font-weight:900;font-stretch:112%;letter-spacing:-.035em;line-height:.98}
+.hero h1 .hl{color:var(--teal-b)}
+.hero .sub{font-size:19.5px;margin:26px 0 34px;max-width:540px;color:#b7c7da}
+.hero .sub b{color:#fff;font-weight:600}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px}
+.hero .fine{margin-top:18px;font-size:13.5px;color:#7f93aa}
+
+/* The self-building RO */
+.stage{position:relative;perspective:1400px}
+.ro{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:22px;box-shadow:0 40px 80px -30px rgba(0,0,0,.6);backdrop-filter:blur(6px);transform:rotateY(-9deg) rotateX(4deg);transform-style:preserve-3d;transition:transform 1s var(--ease)}
+.stage:hover .ro{transform:rotateY(-4deg) rotateX(2deg)}
+@media (max-width:980px){.ro{transform:none}.stage:hover .ro{transform:none}}
+.ro-head{display:flex;align-items:center;gap:10px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#8ea3bb;font-weight:700}
+.ro-head .dot{width:8px;height:8px;border-radius:50%;background:var(--teal-b);box-shadow:0 0 0 0 rgba(79,209,201,.6);animation:pulse 1.8s infinite}
+.ro-head .ro-no{margin-left:auto;font-family:var(--display);letter-spacing:.02em;text-transform:none;font-size:13px;color:#c8d6e6}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(79,209,201,.55)}70%{box-shadow:0 0 0 9px rgba(79,209,201,0)}100%{box-shadow:0 0 0 0 rgba(79,209,201,0)}}
+.field{margin-top:16px;display:flex;gap:10px;align-items:center;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;color:#fff;min-height:48px}
+.field .lbl{font-family:var(--body);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7f93aa;font-weight:700;margin-right:4px}
+.caret{display:inline-block;width:2px;height:18px;background:var(--teal-b);margin-left:1px;animation:blink 1s steps(1) infinite;vertical-align:-3px}
+@keyframes blink{50%{opacity:0}}
+.veh{display:flex;align-items:center;gap:12px;margin-top:12px;opacity:0;transform:translateY(8px);transition:all .6s var(--ease)}
+.veh.show{opacity:1;transform:none}
+.veh .car{font-family:var(--display);font-weight:800;font-size:21px;color:#fff;letter-spacing:-.01em}
+.veh .meta{font-size:13px;color:#8ea3bb}
+.veh .mi{margin-left:auto;text-align:right;font-family:var(--display);font-weight:800;color:#fff;font-size:22px;line-height:1}
+.veh .mi small{display:block;font-family:var(--body);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7f93aa;margin-top:4px}
+.scan{margin-top:14px;height:34px;display:flex;align-items:center;gap:10px;font-size:13.5px;color:#9fb3c8;opacity:0;transition:opacity .4s}
+.scan.show{opacity:1}
+.scan .bar{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.scan .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--blue-v));border-radius:4px;transition:width 1.4s var(--ease)}
+.recs{margin-top:6px;display:grid;gap:8px}
+.rec{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:11px 13px;opacity:0;transform:translateX(26px) translateZ(40px);transition:opacity .5s var(--ease),transform .6s var(--ease),background .4s,border-color .4s}
+.rec.show{opacity:1;transform:none}
+.rec .tag{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:6px;white-space:nowrap}
+.tag.od{background:rgba(224,98,92,.18);color:#ff9d97}.tag.due{background:rgba(227,163,59,.18);color:#ffc977}.tag.soon{background:rgba(63,127,196,.22);color:#9fc3ef}.tag.ask{background:rgba(255,255,255,.1);color:#c8d6e6}
+.rec .t{color:#fff;font-weight:600;font-size:14.5px;line-height:1.25}
+.rec .why{display:block;color:#8ea3bb;font-size:12.5px;font-weight:500;margin-top:2px}
+.rec .p{font-family:var(--display);font-weight:800;color:#fff;font-size:16px}
+.rec.ok{border-color:rgba(79,209,201,.45);background:rgba(79,209,201,.09)}
+.rec.dec{opacity:.45}
+.rec.dec .p{text-decoration:line-through}
+.tot{display:flex;align-items:baseline;gap:14px;margin-top:14px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.14);opacity:0;transition:opacity .5s}
+.tot.show{opacity:1}
+.tot span{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#8ea3bb;font-weight:700}
+.tot b{font-family:var(--display);font-size:32px;font-weight:900;color:#fff;letter-spacing:-.02em}
+/* phone */
+.phone{position:absolute;right:-34px;bottom:-236px;width:212px;background:#0a1220;border:1px solid rgba(255,255,255,.14);border-radius:30px;padding:12px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7);transform:translateZ(120px) translateY(40px) rotate(4deg);opacity:0;transition:opacity .6s var(--ease),transform .8s var(--ease)}
+.phone.show{opacity:1;transform:translateZ(120px) translateY(0) rotate(4deg)}
+.phone .scr{background:#f4f7fb;border-radius:20px;padding:14px 12px;color:var(--ink)}
+.phone .from{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.phone .msg{font-size:13px;line-height:1.4;margin:6px 0 10px;color:var(--ink)}
+.phone .row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:6px 0;border-top:1px solid #e3eaf2}
+.phone .row .y{color:var(--green);font-weight:700}.phone .row .n{color:var(--ink-3);font-weight:700}
+.phone .done{margin-top:10px;background:var(--green);color:#fff;text-align:center;border-radius:10px;font-weight:700;font-size:12.5px;padding:8px}
+@media (max-width:980px){.phone{position:relative;right:auto;bottom:auto;margin:-40px 0 0 auto;transform:translateY(20px) rotate(3deg)}.phone.show{transform:rotate(3deg)}}
+.replay{position:absolute;left:0;bottom:-44px;background:none;border:0;color:#7f93aa;font:600 13px var(--body);cursor:pointer;display:flex;gap:6px;align-items:center;opacity:0;transition:opacity .4s}
+.replay.show{opacity:1}.replay:hover{color:#fff}
+@media (max-width:980px){.replay{position:static;margin-top:14px}}
+
+/* strip */
+.strip{background:var(--night-2);border-top:1px solid rgba(255,255,255,.06)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.strip .s{padding:30px 22px;border-right:1px solid rgba(255,255,255,.07)}
+.strip .s:last-child{border-right:0}
+.strip b{display:block;font-family:var(--display);font-weight:900;font-size:40px;color:#fff;letter-spacing:-.02em;line-height:1}
+.strip span{font-size:13.5px;color:#8ea3bb}
+@media (max-width:760px){.strip .wrap{grid-template-columns:1fr 1fr}.strip .s:nth-child(2){border-right:0}.strip .s{border-bottom:1px solid rgba(255,255,255,.07)}}
+
+/* ── Reveal on scroll ───────────────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+/* ── Knowledge gap ──────────────────────────────────────────────────── */
+.gap-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:26px;align-items:stretch;margin-top:54px}
+@media (max-width:900px){.gap-grid{grid-template-columns:1fr}}
+.adv{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 20px 50px -34px rgba(16,26,38,.35)}
+.adv .who{display:flex;gap:14px;align-items:center;margin-bottom:18px}
+.adv .av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:800;color:#fff}
+.adv h3{font-size:19px;font-weight:800}
+.adv .sen{font-size:13.5px;color:var(--ink-3)}
+.li{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid var(--line);font-size:15px;color:var(--ink);opacity:.25;transition:opacity .5s var(--ease)}
+.li.in{opacity:1}
+.li .ic{width:20px;height:20px;border-radius:50%;display:inline-grid;place-items:center;margin-right:10px;font-size:12px;color:#fff;flex:none}
+.li .l{display:flex;align-items:center}
+.li.miss{color:var(--ink-3)}
+.li.miss .v{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+.adv .sum{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px;padding-top:16px;border-top:2px solid var(--ink)}
+.adv .sum b{font-family:var(--display);font-size:34px;font-weight:900;color:var(--ink);letter-spacing:-.02em}
+.adv .sum span{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--ink-3)}
+.delta{align-self:center;text-align:center;padding:26px 14px}
+.delta b{display:block;font-family:var(--display);font-weight:900;font-size:clamp(46px,6vw,70px);color:var(--red);letter-spacing:-.03em;line-height:1}
+.delta span{display:block;font-size:14px;color:var(--ink-2);max-width:170px;margin:10px auto 0}
+.fine-print{font-size:13px;color:var(--ink-3);margin-top:26px;max-width:760px}
+
+/* ── Scroll story ───────────────────────────────────────────────────── */
+.story{background:linear-gradient(180deg,var(--paper),#fff)}
+.story-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;margin-top:40px}
+.steps .st{min-height:62vh;display:flex;flex-direction:column;justify-content:center;opacity:.28;transition:opacity .5s var(--ease)}
+.steps .st.on{opacity:1}
+.steps .n{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.2em;color:var(--teal)}
+.steps h3{font-size:30px;font-weight:800;margin:8px 0 12px;font-stretch:104%}
+.steps p{margin:0;max-width:440px}
+.steps ul{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:6px;font-size:15px}
+.steps li{display:flex;gap:10px;align-items:flex-start}
+.steps li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:10px;flex:none}
+.pin{position:sticky;top:110px;height:calc(100vh - 170px);min-height:480px;display:flex;align-items:center;justify-content:center;perspective:1600px}
+.deck{position:relative;width:100%;max-width:520px;height:440px;transform-style:preserve-3d}
+.card{position:absolute;inset:0;background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 40px 80px -40px rgba(16,26,38,.45);transition:transform .9s var(--ease),opacity .7s var(--ease),filter .7s;transform-origin:50% 50%;overflow:hidden}
+.card[data-pos="0"]{transform:translate3d(0,0,0) rotateY(0);opacity:1;z-index:5}
+.card[data-pos="1"]{transform:translate3d(46px,-26px,-140px) rotateY(-14deg);opacity:.55;z-index:4;filter:saturate(.6)}
+.card[data-pos="2"]{transform:translate3d(86px,-50px,-280px) rotateY(-20deg);opacity:.25;z-index:3;filter:saturate(.4)}
+.card[data-pos="past"]{transform:translate3d(-120px,40px,160px) rotateY(18deg);opacity:0;z-index:6;pointer-events:none}
+.card[data-pos="far"]{transform:translate3d(120px,-70px,-420px) rotateY(-24deg);opacity:0;z-index:1}
+.card .ch{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);font-weight:700;margin-bottom:16px}
+.card .ch i{width:30px;height:30px;border-radius:9px;background:var(--teal-w);color:var(--teal);display:grid;place-items:center;font-style:normal}
+.card .ch i svg{width:17px;height:17px}
+.inline-card{display:none}
+@media (max-width:900px){
+  .story-grid{grid-template-columns:1fr}
+  .pin{display:none}
+  .steps .st{min-height:0;opacity:1;margin-bottom:56px}
+  .inline-card{display:block;position:relative;margin-top:22px;height:auto;min-height:0}
+  .inline-card .card{position:relative;inset:auto;transform:none!important;opacity:1!important;filter:none!important}
+}
+/* card contents */
+.jamb{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.sticker{background:#fbfbf7;border:1px solid #dcd8c8;border-radius:10px;padding:14px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#5b5a50;position:relative;overflow:hidden}
+.sticker .bc{height:34px;margin:10px 0;background:repeating-linear-gradient(90deg,#222 0 2px,transparent 2px 4px,#222 4px 5px,transparent 5px 8px,#222 8px 11px,transparent 11px 12px)}
+.sticker .scanline{position:absolute;left:0;right:0;height:2px;background:var(--teal-b);box-shadow:0 0 12px var(--teal-b);top:10%;animation:scan 2.4s var(--ease) infinite}
+@keyframes scan{0%{top:8%}50%{top:88%}100%{top:8%}}
+.kv{display:grid;gap:10px;align-content:start}
+.kv div{background:var(--paper);border-radius:10px;padding:10px 12px}
+.kv small{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.kv b{font-family:var(--display);color:var(--ink);font-size:16px}
+.mini-rec{display:grid;gap:8px}
+.mini-rec div{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14.5px;color:var(--ink)}
+.mini-rec em{font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:6px;margin-right:8px}
+.mini-rec .od{background:#fdeceb;color:#c2413b}.mini-rec .due{background:#fff3df;color:#a8650b}.mini-rec .soon{background:#e7f0fb;color:#2d5f9c}
+.mini-rec b{font-family:var(--display)}
+.why-box{margin-top:12px;background:var(--teal-w);border-radius:12px;padding:12px 14px;font-size:13.5px;color:#23615d}
+.ph{margin:0 auto;width:220px;background:#0a1220;border-radius:30px;padding:10px}
+.ph .in{background:#f4f7fb;border-radius:22px;padding:14px 12px;font-size:12.5px;color:var(--ink)}
+.ph .in h4{margin:0 0 2px;font-family:var(--display);font-size:15px}
+.ph .it{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid #e3eaf2}
+.tg2{display:inline-flex;border:1px solid #d5dfea;border-radius:8px;overflow:hidden;font-size:11px;font-weight:700}
+.tg2 span{padding:3px 7px}.tg2 .a{background:var(--green);color:#fff}.tg2 .d{background:#fff;color:var(--ink-3)}
+.tg2.decl .a{background:#fff;color:var(--ink-3)}.tg2.decl .d{background:#eef2f6;color:var(--ink)}
+.po div{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:14px;color:var(--ink)}
+.po small{color:var(--ink-3);display:block;font-size:12px}
+.po .m{font-weight:700;color:var(--green);font-size:12.5px}
+.marg{margin-top:16px}
+.marg .bar{height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.marg .bar i{display:block;height:100%;width:47%;background:linear-gradient(90deg,var(--teal),var(--blue-v))}
+.marg p{margin:8px 0 0;font-size:13px;color:var(--ink-2)}
+.decal{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+.dec{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:14px;text-align:center;box-shadow:6px 6px 0 var(--teal)}
+.dec small{display:block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.dec b{display:block;font-family:var(--display);font-size:26px;font-weight:900;color:var(--ink);letter-spacing:-.02em}
+.dec .sp{font-size:11.5px;color:var(--ink-2);margin-top:6px}
+.paid{border:1px solid var(--line);border-radius:14px;padding:16px}
+.paid .row2{display:flex;justify-content:space-between;font-size:14px;padding:5px 0;color:var(--ink)}
+.stamp{margin-top:10px;display:inline-block;border:2px solid var(--green);color:var(--green);font-family:var(--display);font-weight:900;letter-spacing:.2em;padding:4px 12px;border-radius:8px;transform:rotate(-6deg)}
+
+/* ── Everything included ────────────────────────────────────────────── */
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:46px}
+@media (max-width:900px){.feat{grid-template-columns:1fr 1fr}}@media (max-width:560px){.feat{grid-template-columns:1fr}}
+.f{border:1px solid var(--line);border-radius:18px;padding:22px;background:#fff;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+.f:hover{transform:translateY(-4px);box-shadow:0 24px 50px -30px rgba(16,26,38,.4);border-color:#cfe0ee}
+.f i{width:40px;height:40px;border-radius:12px;background:var(--teal-w);color:var(--teal);display:grid;place-items:center;margin-bottom:14px}
+.f i svg{width:21px;height:21px}
+.f h3{font-size:18px;font-weight:800;margin-bottom:6px}
+.f p{margin:0;font-size:15px}
+
+/* ── Pricing ────────────────────────────────────────────────────────── */
+.pricing{background:linear-gradient(180deg,var(--night),var(--night-2));color:#b7c7da}
+.pricing h2{color:#fff}
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:48px;align-items:start}
+@media (max-width:900px){.price-grid{grid-template-columns:1fr}}
+.pc{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:32px;position:relative;overflow:hidden}
+.pc::after{content:"";position:absolute;inset:-1px;border-radius:24px;padding:1px;background:linear-gradient(135deg,rgba(79,209,201,.7),transparent 40%,transparent 60%,rgba(63,127,196,.6));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.pc .amt{display:flex;align-items:baseline;gap:10px;color:#fff}
+.pc .amt b{font-family:var(--display);font-size:78px;font-weight:900;letter-spacing:-.04em;line-height:1}
+.pc .amt span{font-size:15px;color:#9fb3c8}
+.pc .fnd{margin-top:16px;background:rgba(79,209,201,.12);border:1px solid rgba(79,209,201,.3);color:#bdf0ec;border-radius:12px;padding:12px 14px;font-size:14.5px}
+.pc .fnd b{color:#fff}
+.pc ul{list-style:none;margin:22px 0 26px;padding:0;display:grid;gap:9px}
+.pc li{display:flex;gap:10px;align-items:flex-start;color:#dbe6f2;font-size:15.5px}
+.pc li svg{width:18px;height:18px;color:var(--teal-b);flex:none;margin-top:4px}
+.pc .usage{font-size:13.5px;color:#8ea3bb;margin-top:18px}
+.promise{display:grid;gap:14px}
+.promise div{border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px 20px;background:rgba(255,255,255,.03)}
+.promise h3{color:#fff;font-size:17px;font-weight:800;margin-bottom:4px}
+.promise p{margin:0;font-size:15px}
+
+/* ── Founder ────────────────────────────────────────────────────────── */
+.founder{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+@media (max-width:900px){.founder{grid-template-columns:1fr}}
+.quote{font-family:var(--display);font-size:clamp(24px,2.6vw,32px);font-weight:700;color:var(--ink);line-height:1.3;letter-spacing:-.015em;font-stretch:100%}
+.quote em{font-style:normal;color:var(--teal)}
+.facts{display:grid;gap:12px}
+.facts div{display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-weight:600;color:var(--ink);font-size:15.5px}
+.facts b{font-family:var(--display);font-size:22px;color:var(--teal);min-width:62px}
+
+/* ── Fact sheet teaser + CTA ────────────────────────────────────────── */
+.teaser{display:flex;gap:24px;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:20px;padding:26px 30px;background:var(--paper)}
+@media (max-width:760px){.teaser{flex-direction:column;align-items:flex-start}}
+.teaser h3{font-size:22px;font-weight:800}
+.teaser p{margin:4px 0 0;font-size:15px}
+.final{text-align:center;background:radial-gradient(800px 380px at 50% 0,rgba(63,181,174,.22),transparent 70%),var(--night);color:#b7c7da}
+.final h2{color:#fff;max-width:760px;margin:0 auto}
+.final p{margin:18px auto 30px;max-width:560px}
+.final .ctas{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+footer{background:var(--night);border-top:1px solid rgba(255,255,255,.07);color:#7f93aa;font-size:14px;padding:30px 0}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+footer a{color:#b7c7da;text-decoration:none}
+
+/* ── Reduced motion: everything visible, nothing moves ─────────────── */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .rv,.li,.rec,.veh,.scan,.tot,.phone,.replay{opacity:1!important;transform:none!important}
+  .ro{transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5"/><path d="M12 13v8"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
+  <symbol id="i-call" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></symbol>
+</defs></svg>
+
+<nav class="nav on-dark" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="RO Engine home"><span class="mk">RO<span class="e">e</span></span><span><span class="nm">RO Engine</span><span class="tg">Automotive Intelligence</span></span></a>
+    <div class="links">
+      <a href="#gap" class="hide-m">The problem</a>
+      <a href="#story" class="hide-m">How it works</a>
+      <a href="#pricing" class="hide-m">Pricing</a>
+      <a href="https://app.roengine.com/signup" class="btn btn-p">Start free trial</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════════════ -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">The AI service advisor for independent shops</div>
+      <h1 style="margin-top:16px">Your best advisor.<br><span class="hl">Every</span> <span style="white-space:nowrap">write&#8209;up.</span></h1>
+      <p class="sub">Your veteran advisor catches what's due on every car. Your new hire just does what's asked. <b>RO Engine closes that gap</b> — on every repair order, for every advisor on your team.</p>
+      <div class="ctas">
+        <a class="btn btn-p" href="https://app.roengine.com/signup">Start your 90-day test drive <svg><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-g" href="#story">See how it works</a>
+      </div>
+      <p class="fine">Your own working shop, not a demo · nothing charges for 90 days · cancel online anytime</p>
+    </div>
+
+    <div class="stage" id="stage" aria-label="Animated example: RO Engine building a repair order">
+      <div class="ro">
+        <div class="ro-head"><span class="dot"></span>AI service advisor <span class="ro-no">RO-10482</span></div>
+        <div class="field"><span class="lbl">VIN</span><span id="vin"></span><span class="caret" id="caret"></span></div>
+        <div class="veh" id="veh">
+          <div><div class="car">2019 Honda Accord EX-L</div><div class="meta">1.5L turbo · last visit 11 months ago</div></div>
+          <div class="mi"><span id="mi">87,432</span><small>miles</small></div>
+        </div>
+        <div class="scan" id="scan"><span>Checking the factory schedule and this car's history</span><span class="bar"><i id="bar"></i></span></div>
+        <div class="recs" id="recs">
+          <div class="rec" data-p="89"><span class="tag ask">Asked</span><span class="t">Oil &amp; filter<span class="why">What the customer came in for</span></span><span class="p">$89</span></div>
+          <div class="rec" data-p="189"><span class="tag od">Overdue</span><span class="t">Transmission fluid<span class="why">27,432 mi past due — shift quality and clutch wear</span></span><span class="p">$189</span></div>
+          <div class="rec" data-p="95"><span class="tag due">Due now</span><span class="t">Brake fluid flush<span class="why">3-year mark — moisture lowers the boiling point</span></span><span class="p">$95</span></div>
+          <div class="rec" data-p="145"><span class="tag soon">Coming due</span><span class="t">Spark plugs<span class="why">Due at 90K — worth doing while it's here</span></span><span class="p">$145</span></div>
+          <div class="rec" data-p="38"><span class="tag soon">Coming due</span><span class="t">Cabin air filter<span class="why">8,000 miles since the last one</span></span><span class="p">$38</span></div>
+        </div>
+        <div class="tot" id="tot"><span>Recommended</span><b id="total">$0</b></div>
+      </div>
+      <div class="phone" id="phone" aria-hidden="true">
+        <div class="scr">
+          <div class="from">Estimate · approved from the couch</div>
+          <div class="msg">"Do the trans fluid, brakes and plugs. Filter next time 👍"</div>
+          <div class="row"><span>Transmission fluid</span><span class="y">Approved</span></div>
+          <div class="row"><span>Brake fluid flush</span><span class="y">Approved</span></div>
+          <div class="row"><span>Spark plugs</span><span class="y">Approved</span></div>
+          <div class="row"><span>Cabin filter</span><span class="n">Next visit</span></div>
+          <div class="done">$518 approved · in writing</div>
+        </div>
+      </div>
+      <button class="replay" id="replay" type="button">↻ Watch it again</button>
+    </div>
+  </div>
+</header>
+
+<div class="strip on-dark">
+  <div class="wrap">
+    <div class="s rv"><b data-count="349" data-prefix="$">$349</b><span>a month, everything in it</span></div>
+    <div class="s rv"><b data-count="54823">54,823</b><span>OEM service intervals</span></div>
+    <div class="s rv"><b data-count="6900">6,900</b><span>customers migrated off Shop-Ware</span></div>
+    <div class="s rv"><b data-count="90">90</b><span>days free to try it</span></div>
+  </div>
+</div>
+
+<!-- ═══ THE GAP ════════════════════════════════════════════════════════ -->
+<section id="gap">
+  <div class="wrap">
+    <div class="eyebrow rv">The advisor knowledge gap</div>
+    <h2 class="rv" style="margin-top:12px;max-width:820px">Same car. Two advisors. <span style="color:var(--red)">$722</span> apart.</h2>
+    <p class="lead rv" style="margin-top:18px">A car comes in for a routine oil change. Here's what gets written up, depending on who's at the counter.</p>
+
+    <div class="gap-grid" id="gapGrid">
+      <div class="adv rv">
+        <div class="who"><span class="av" style="background:var(--navy)">MV</span><div><h3>Your veteran advisor</h3><div class="sen">8+ years on the counter</div></div></div>
+        <div class="li"><span class="l"><span class="ic" style="background:var(--green)">✓</span>Oil &amp; filter</span><span>$89</span></div>
+        <div class="li"><span class="l"><span class="ic" style="background:var(--green)">✓</span>Transmission fluid — overdue</span><span>$189</span></div>
+        <div class="li"><span class="l"><span class="ic" style="background:var(--green)">✓</span>Brake fluid flush — 3 yr</span><span>$95</span></div>
+        <div class="li"><span class="l"><span class="ic" style="background:var(--green)">✓</span>Spark plugs — due at 90K</span><span>$145</span></div>
+        <div class="li"><span class="l"><span class="ic" style="background:var(--green)">✓</span>Rear diff service</span><span>$120</span></div>
+        <div class="li"><span class="l"><span class="ic" style="background:var(--green)">✓</span>Cabin + engine filters</span><span>$72</span></div>
+        <div class="li"><span class="l"><span class="ic" style="background:var(--green)">✓</span>Deferred from last visit</span><span>$137</span></div>
+        <div class="sum"><span>Ticket written</span><b data-count="847" data-prefix="$" data-gap>$847</b></div>
+      </div>
+      <div class="delta rv"><b data-count="722" data-prefix="$" data-gap>$722</b><span>missed on a single car — not for lack of effort</span></div>
+      <div class="adv rv">
+        <div class="who"><span class="av" style="background:#9aa8b8">NH</span><div><h3>Your new hire</h3><div class="sen">4 months on the counter</div></div></div>
+        <div class="li"><span class="l"><span class="ic" style="background:var(--green)">✓</span>Oil &amp; filter</span><span>$89</span></div>
+        <div class="li"><span class="l"><span class="ic" style="background:var(--green)">✓</span>Wiper blades</span><span>$36</span></div>
+        <div class="li miss"><span class="l"><span class="ic" style="background:#cfd8e2">–</span>Transmission fluid</span><span class="v">Missed</span></div>
+        <div class="li miss"><span class="l"><span class="ic" style="background:#cfd8e2">–</span>Brake fluid flush</span><span class="v">Missed</span></div>
+        <div class="li miss"><span class="l"><span class="ic" style="background:#cfd8e2">–</span>Spark plugs</span><span class="v">Missed</span></div>
+        <div class="li miss"><span class="l"><span class="ic" style="background:#cfd8e2">–</span>Rear diff service</span><span class="v">Missed</span></div>
+        <div class="li miss"><span class="l"><span class="ic" style="background:#cfd8e2">–</span>Deferred services</span><span class="v">Never surfaced</span></div>
+        <div class="sum"><span>Ticket written</span><b data-count="125" data-prefix="$" data-gap>$125</b></div>
+      </div>
+    </div>
+    <p class="fine-print rv">Nobody handed your new advisor twelve years of pattern recognition on day one. RO Engine does — on every RO. Illustrative example using typical labor and parts pricing, not a guaranteed result.</p>
+  </div>
+</section>
+
+<!-- ═══ SCROLL STORY ═══════════════════════════════════════════════════ -->
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="eyebrow rv">How it works</div>
+    <h2 class="rv" style="margin-top:12px">One repair order, start to finish.</h2>
+
+    <div class="story-grid">
+      <div class="steps" id="steps">
+        <div class="st" data-step="0">
+          <span class="n">01 · INTAKE</span>
+          <h3>Snap the door jamb. The RO fills itself.</h3>
+          <p>Your tech photographs the car. RO Engine reads the VIN sticker, the odometer and the plate, and builds the record — with timestamped photos of the car's condition before you touch it.</p>
+          <div class="inline-card" data-card="0"></div>
+        </div>
+        <div class="st" data-step="1">
+          <span class="n">02 · RECOMMEND</span>
+          <h3>Veteran-level recommendations, on every car.</h3>
+          <p>The factory schedule, the car's own history and the model's known failure patterns — cross-checked the moment it's written up. Normal or severe service, your call.</p>
+          <ul><li>Overdue and coming-due work surfaced automatically</li><li>Deferred work remembered from past visits</li><li>Plain-language reasons the customer understands</li></ul>
+          <div class="inline-card" data-card="1"></div>
+        </div>
+        <div class="st" data-step="2">
+          <span class="n">03 · APPROVE</span>
+          <h3>They approve it from the couch.</h3>
+          <p>A private link — no app, no login. Line by line, approve or decline. The answer lands on the RO, timestamped and in writing, and declines become next visit's reminders.</p>
+          <div class="inline-card" data-card="2"></div>
+        </div>
+        <div class="st" data-step="3">
+          <span class="n">04 · PARTS</span>
+          <h3>Order against the job. Know your margin before you start.</h3>
+          <p>Parts attach to the job that needs them, purchase orders and receiving are built in, and your margin is on screen before the customer says yes.</p>
+          <div class="inline-card" data-card="3"></div>
+        </div>
+        <div class="st" data-step="4">
+          <span class="n">05 · CLOSE</span>
+          <h3>Paid, closed, and the right sticker on the windshield.</h3>
+          <p>Invoice, payment and the oil-change decal — next service calculated from the actual oil spec and the factory time interval. Printed the moment the job is done.</p>
+          <div class="inline-card" data-card="4"></div>
+        </div>
+      </div>
+
+      <div class="pin" aria-hidden="true">
+        <div class="deck" id="deck">
+          <div class="card" data-card="0">
+            <div class="ch"><i><svg><use href="#i-camera"/></svg></i>Photo intake</div>
+            <div class="jamb">
+              <div class="sticker"><div>MFD BY HONDA OF AMERICA</div><div>GVWR 4,409 LB</div><div class="bc"></div><div>1HGCV1F5·KA····8821</div><div class="scanline"></div></div>
+              <div class="kv"><div><small>VIN</small><b>1HGCV1F5·KA····8821</b></div><div><small>Odometer</small><b>87,432 mi</b></div><div><small>Plate</small><b>BKT·4417</b></div></div>
+            </div>
+            <div class="why-box">4 condition photos attached · 9:02 AM</div>
+          </div>
+          <div class="card" data-card="1">
+            <div class="ch"><i><svg><use href="#i-spark"/></svg></i>AI recommendations</div>
+            <div class="mini-rec">
+              <div><span><em class="od">Overdue</em>Transmission fluid</span><b>$189</b></div>
+              <div><span><em class="due">Due now</em>Brake fluid flush</span><b>$95</b></div>
+              <div><span><em class="soon">Coming due</em>Spark plugs</span><b>$145</b></div>
+              <div><span><em class="soon">Coming due</em>Cabin air filter</span><b>$38</b></div>
+            </div>
+            <div class="why-box">"Your transmission fluid is 27,000 miles past due. Old fluid is the most common cause of the hesitation you mentioned."</div>
+          </div>
+          <div class="card" data-card="2">
+            <div class="ch"><i><svg><use href="#i-phone"/></svg></i>Estimate approval</div>
+            <div class="ph"><div class="in">
+              <h4>Your estimate is ready</h4><div style="color:var(--ink-3);margin-bottom:6px">2019 Honda Accord</div>
+              <div class="it"><span>Transmission fluid</span><span class="tg2"><span class="a">Yes</span><span class="d">No</span></span></div>
+              <div class="it"><span>Brake fluid flush</span><span class="tg2"><span class="a">Yes</span><span class="d">No</span></span></div>
+              <div class="it"><span>Spark plugs</span><span class="tg2"><span class="a">Yes</span><span class="d">No</span></span></div>
+              <div class="it"><span>Cabin filter</span><span class="tg2 decl"><span class="a">Yes</span><span class="d">Later</span></span></div>
+            </div></div>
+          </div>
+          <div class="card" data-card="3">
+            <div class="ch"><i><svg><use href="#i-box"/></svg></i>Parts &amp; purchase order</div>
+            <div class="po">
+              <div><span>ATF DW-1, 4 qt<small>PO-10482-01 · on its way</small></span><span>$38.40</span><span class="m">+52%</span></div>
+              <div><span>DOT 3 brake fluid<small>PO-10482-01 · on its way</small></span><span>$9.80</span><span class="m">+61%</span></div>
+              <div><span>Iridium plugs ×4<small>PO-10482-01 · on its way</small></span><span>$41.60</span><span class="m">+48%</span></div>
+            </div>
+            <div class="marg"><div class="bar"><i></i></div><p>Job margin <b>47%</b> — visible before anyone picks up a wrench.</p></div>
+          </div>
+          <div class="card" data-card="4">
+            <div class="ch"><i><svg><use href="#i-tag"/></svg></i>Close &amp; decal</div>
+            <div class="decal">
+              <div class="dec"><small>Next service</small><b>97,432 mi</b><small style="margin-top:4px">or Mar 2027</small><div class="sp">0W-20 · API SP · full synthetic</div></div>
+              <div class="paid"><div class="row2"><span>Approved work</span><b>$518.00</b></div><div class="row2"><span>Tax</span><span>$41.44</span></div><div class="row2" style="border-top:1px solid var(--line);margin-top:4px;padding-top:9px"><span>Total</span><b>$559.44</b></div><span class="stamp">PAID</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EVERYTHING INCLUDED ════════════════════════════════════════════ -->
+<section id="features">
+  <div class="wrap">
+    <div class="eyebrow rv">Everything in it</div>
+    <h2 class="rv" style="margin-top:12px;max-width:760px">The rest of the shop, without the add-ons.</h2>
+    <div class="feat">
+      <div class="f rv"><i><svg><use href="#i-call"/></svg></i><h3>AI phone answering</h3><p>Answers when the counter is buried, takes the details, and the transcript lands on the customer record. Included, not a $99 add-on.</p></div>
+      <div class="f rv"><i><svg><use href="#i-msg"/></svg></i><h3>Two-way texting</h3><p>Text customers from the RO, with a local shop number and click-to-call. The whole conversation stays on the record.</p></div>
+      <div class="f rv"><i><svg><use href="#i-clip"/></svg></i><h3>Multi-point inspection</h3><p>Green, yellow, red — with photos. Tech shorthand rewritten for customers, and red findings become recommendations.</p></div>
+      <div class="f rv"><i><svg><use href="#i-camera"/></svg></i><h3>Photo intake</h3><p>VIN from the door jamb, mileage from the dash, plate from the bumper — and timestamped damage photos before service.</p></div>
+      <div class="f rv"><i><svg><use href="#i-box"/></svg></i><h3>Parts &amp; purchase orders</h3><p>Order, receive, track cores and returns, and see what a ticket actually cost you.</p></div>
+      <div class="f rv"><i><svg><use href="#i-wrench"/></svg></i><h3>Built by a shop, for shops</h3><p>Every feature runs in a real, working shop every day before it ships to yours.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ════════════════════════════════════════════════════════ -->
+<section class="pricing on-dark" id="pricing">
+  <div class="wrap">
+    <div class="eyebrow rv">Pricing</div>
+    <h2 class="rv" style="margin-top:12px">One price. Everything in it.</h2>
+    <p class="lead rv" style="color:#b7c7da;margin-top:16px">No tiers to upgrade into. No per-user fees. No add-on for the phone to answer itself.</p>
+    <div class="price-grid">
+      <div class="pc rv">
+        <div class="amt"><b>$349</b><span>per month<br>unlimited users · month to month</span></div>
+        <div class="fnd"><b>Founding shop pricing:</b> join before July 1, 2027 and pay <b>$261.75 a month</b> — 25% less, for as long as you stay.</div>
+        <ul>
+          <li><svg><use href="#i-check"/></svg>AI service recommendations on every RO</li>
+          <li><svg><use href="#i-check"/></svg>AI phone answering and two-way texting</li>
+          <li><svg><use href="#i-check"/></svg>Digital estimate approval</li>
+          <li><svg><use href="#i-check"/></svg>54,000+ OEM maintenance schedule entries</li>
+          <li><svg><use href="#i-check"/></svg>Parts ordering, POs and receiving</li>
+          <li><svg><use href="#i-check"/></svg>Work orders, invoicing, customers, inspections</li>
+        </ul>
+        <a class="btn btn-p" href="https://app.roengine.com/signup">Start your 90-day test drive <svg><use href="#i-arrow"/></svg></a>
+        <p class="usage">Includes 300 AI phone minutes, 300 calls on your shop line and 1,500 texts a month. Past that: $0.35 a minute, 10¢ a call, 2¢ a text — most shops never get there.</p>
+      </div>
+      <div class="promise">
+        <div class="rv"><h3>The test drive is the real thing</h3><p>Your own shop at yourshop.roengine.com — not a sandbox. Everything you enter carries forward when you stay.</p></div>
+        <div class="rv"><h3>Nothing charges for 90 days</h3><p>Card on file to start. Cancel online in a few clicks — there's no one to call.</p></div>
+        <div class="rv"><h3>We move your history over</h3><p>Customers, vehicles and repair history, migrated free. Coming off Shop-Ware? We've already done it — for ourselves.</p></div>
+        <div class="rv"><h3>No sales calls. Ever.</h3><p>If you want to talk, you ask — and the shop owner who built it answers.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOUNDER ════════════════════════════════════════════════════════ -->
+<section id="about">
+  <div class="wrap founder">
+    <div>
+      <div class="eyebrow rv">Built different</div>
+      <p class="quote rv" style="margin-top:14px">RO Engine wasn't built by a software company that read about auto repair. It was built by a working shop owner who <em>still explains a $1,900 estimate to somebody every week.</em></p>
+    </div>
+    <div class="facts">
+      <div class="rv"><b>13+</b>years on the shop floor</div>
+      <div class="rv"><b>2013</b>built his first custom shop system</div>
+      <div class="rv"><b>6,000</b>repair orders carried over from Shop-Ware</div>
+      <div class="rv"><b>1</b>real shop running it every single day</div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="teaser rv">
+      <div><div class="eyebrow">The shop owner's fact sheet</div><h3 style="margin-top:6px">Where does shop software really make its money?</h3><p>We read the public filings. Follow the card fees.</p></div>
+      <a class="btn btn-d" href="/card-fees/">Read it <svg><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="final on-dark">
+  <div class="wrap">
+    <h2 class="rv">Give every advisor your best advisor's eye.</h2>
+    <p class="rv">Ninety days, your own working shop, nothing charged. If it doesn't earn its keep, you walk away.</p>
+    <div class="ctas rv">
+      <a class="btn btn-p" href="https://app.roengine.com/signup">Start your 90-day test drive <svg><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-g" href="/#demo">Ask the shop owner a question</a>
+    </div>
+  </div>
+</section>
+
+<footer class="on-dark">
+  <div class="wrap">
+    <a href="#top" class="brand"><span class="mk" style="font-size:24px">RO<span class="e">e</span></span><span><span class="nm" style="font-size:16px">RO Engine</span><span class="tg">Automotive Intelligence</span></span></a>
+    <span>© 2026 RO Engine · <a href="mailto:joe@roengine.com">joe@roengine.com</a> · Built by a shop owner, for shop owners.</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+  const $ = (s, r = document) => r.querySelector(s)
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)]
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+  // Nav turns solid once you leave the hero.
+  const nav = $('#nav')
+  const onScroll = () => nav.classList.toggle('solid', scrollY > 40)
+  addEventListener('scroll', onScroll, { passive: true }); onScroll()
+
+  // Count-ups.
+  const fmt = (n, prefix = '') => prefix + Math.round(n).toLocaleString()
+  function countUp(el, to, ms = 1100) {
+    const prefix = el.dataset.prefix || ''
+    if (reduce) { el.textContent = fmt(to, prefix); return }
+    const t0 = performance.now()
+    const tick = (t) => {
+      const k = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - k, 3)
+      el.textContent = fmt(to * e, prefix)
+      if (k < 1) requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+  }
+
+  // Reveal-on-scroll (+ count-ups inside).
+  const io = new IntersectionObserver((entries) => {
+    for (const en of entries) {
+      if (!en.isIntersecting) continue
+      en.target.classList.add('in')
+      $$('[data-count]:not([data-gap])', en.target).concat(en.target.matches('[data-count]:not([data-gap])') ? [en.target] : [])
+        .forEach((c) => countUp(c, +c.dataset.count))
+      io.unobserve(en.target)
+    }
+  }, { threshold: .18, rootMargin: '0px 0px -8% 0px' })
+  $$('.rv').forEach((el) => io.observe(el))
+
+  // The knowledge gap: lines tick in, then the totals run.
+  const gap = $('#gapGrid')
+  new IntersectionObserver(async ([en], obs) => {
+    if (!en.isIntersecting) return
+    obs.disconnect()
+    const cols = $$('.adv', gap)
+    const lines = Math.max(...cols.map((c) => $$('.li', c).length))
+    for (let i = 0; i < lines; i++) {
+      cols.forEach((c) => $$('.li', c)[i]?.classList.add('in'))
+      if (!reduce) await sleep(170)
+    }
+    $$('[data-gap]', gap).forEach((c) => countUp(c, +c.dataset.count, 1300))
+  }, { threshold: .3 }).observe(gap)
+
+  // ── Hero: the RO builds itself ─────────────────────────────────────
+  const VIN = '1HGCV1F5·KA····8821'
+  const el = { vin: $('#vin'), caret: $('#caret'), veh: $('#veh'), scan: $('#scan'), bar: $('#bar'), recs: $$('#recs .rec'),
+               tot: $('#tot'), total: $('#total'), phone: $('#phone'), replay: $('#replay') }
+  let run = 0
+  function reset() {
+    el.vin.textContent = ''; el.caret.style.display = ''
+    ;[el.veh, el.scan, el.tot, el.phone, el.replay].forEach((x) => x.classList.remove('show'))
+    el.bar.style.width = '0'
+    el.recs.forEach((r) => r.classList.remove('show', 'ok', 'dec'))
+    el.total.textContent = '$0'
+  }
+  function finalState() {
+    el.vin.textContent = VIN; el.caret.style.display = 'none'
+    ;[el.veh, el.scan, el.tot, el.phone, el.replay].forEach((x) => x.classList.add('show'))
+    el.bar.style.width = '100%'
+    el.recs.forEach((r, i) => { r.classList.add('show'); r.classList.add(i === 4 ? 'dec' : 'ok') })
+    el.total.textContent = '$556'
+  }
+  async function play() {
+    const me = ++run
+    const alive = () => me === run
+    reset()
+    await sleep(500)
+    for (const ch of VIN) { if (!alive()) return; el.vin.textContent += ch; await sleep(55 + Math.random() * 45) }
+    el.caret.style.display = 'none'
+    await sleep(250); if (!alive()) return
+    el.veh.classList.add('show')
+    await sleep(700); if (!alive()) return
+    el.scan.classList.add('show'); requestAnimationFrame(() => (el.bar.style.width = '100%'))
+    await sleep(1500); if (!alive()) return
+    let sum = 0
+    el.tot.classList.add('show')
+    for (const r of el.recs) {
+      if (!alive()) return
+      r.classList.add('show')
+      const from = sum; sum += +r.dataset.p
+      const t0 = performance.now(), to = sum
+      const tick = (t) => { const k = Math.min(1, (t - t0) / 450); el.total.textContent = '$' + Math.round(from + (to - from) * k); if (k < 1 && alive()) requestAnimationFrame(tick) }
+      requestAnimationFrame(tick)
+      await sleep(520)
+    }
+    await sleep(900); if (!alive()) return
+    el.phone.classList.add('show')
+    await sleep(900); if (!alive()) return
+    el.recs.forEach((r, i) => r.classList.add(i === 4 ? 'dec' : 'ok'))
+    await sleep(600); if (!alive()) return
+    el.replay.classList.add('show')
+  }
+  el.replay.addEventListener('click', () => play())
+  if (reduce) finalState()
+  else new IntersectionObserver(([en], obs) => { if (en.isIntersecting) { obs.disconnect(); play() } }, { threshold: .35 }).observe($('#stage'))
+
+  // ── Scroll story: the deck turns as you scroll ─────────────────────
+  const cards = $$('#deck .card')
+  // Phones get each card inline under its step instead of the pinned deck.
+  $$('.inline-card').forEach((slot) => slot.appendChild(cards[+slot.dataset.card].cloneNode(true)))
+  function setActive(i) {
+    $$('#steps .st').forEach((s) => s.classList.toggle('on', +s.dataset.step === i))
+    cards.forEach((c, k) => {
+      const d = k - i
+      c.dataset.pos = d < 0 ? 'past' : d > 2 ? 'far' : String(d)
+    })
+  }
+  setActive(0)
+  const stepIO = new IntersectionObserver((entries) => {
+    for (const en of entries) if (en.isIntersecting) setActive(+en.target.dataset.step)
+  }, { rootMargin: '-45% 0px -45% 0px' })
+  $$('#steps .st').forEach((s) => stepIO.observe(s))
+})()
+</script>
+</body>
+</html>
