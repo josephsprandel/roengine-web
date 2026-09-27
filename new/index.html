@@ -85,7 +85,10 @@ section{padding:110px 0}
 .hero h1 .hl{color:var(--teal-b)}
 .hero .sub{font-size:19.5px;margin:26px 0 34px;max-width:540px;color:#b7c7da}
 .hero .sub b{color:#fff;font-weight:600}
-.hero .ctas{display:flex;flex-wrap:wrap;gap:12px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center}
+.tlink{display:inline-flex;align-items:center;gap:6px;color:#c8d6e6;font-weight:600;font-size:15.5px;text-decoration:none;border-bottom:1px solid rgba(200,214,230,.35);padding-bottom:2px}
+.tlink svg{width:15px;height:15px}
+.tlink:hover{color:#fff;border-color:#fff}
 .hero .fine{margin-top:18px;font-size:13.5px;color:#7f93aa}
 
 /* The self-building RO */
@@ -297,6 +300,64 @@ footer{background:var(--night);border-top:1px solid rgba(255,255,255,.07);color:
 footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
 footer a{color:#b7c7da;text-decoration:none}
 
+
+/* ── "It's real": live address + your-shop-in-minutes ─────────────── */
+.addr{display:inline-flex;align-items:center;gap:10px;margin-top:22px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:9px 16px 9px 12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14.5px;color:#9fb3c8;max-width:100%}
+.addr .lock{width:14px;height:14px;color:#7f93aa;flex:none}
+.addr .shopname{color:#fff;white-space:nowrap}
+.addr .dom{color:#9fb3c8;white-space:nowrap}
+.addr .live{display:inline-flex;align-items:center;gap:6px;margin-left:6px;font-family:var(--body);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#7dffb0}
+.addr .live i{width:8px;height:8px;border-radius:50%;background:#35e08a;box-shadow:0 0 0 0 rgba(53,224,138,.6);animation:pulse-g 1.8s infinite}
+@keyframes pulse-g{0%{box-shadow:0 0 0 0 rgba(53,224,138,.55)}70%{box-shadow:0 0 0 8px rgba(53,224,138,0)}100%{box-shadow:0 0 0 0 rgba(53,224,138,0)}}
+.hero .realnote{margin-top:10px;font-size:14.5px;color:#b7c7da}
+.hero .realnote b{color:#fff}
+@media (max-width:520px){.addr{font-size:12.5px;padding:8px 12px}.addr .live span{display:none}}
+
+.real{background:#fff}
+.real-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:56px;align-items:center;margin-top:44px}
+@media (max-width:980px){.real-grid{grid-template-columns:1fr}}
+.rsteps{display:grid;gap:14px}
+.rs{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:18px 20px;border:1px solid var(--line);border-radius:16px;background:#fff;transition:border-color .4s,box-shadow .4s,transform .4s var(--ease)}
+.rs.on{border-color:var(--teal);box-shadow:0 18px 40px -28px rgba(63,181,174,.9);transform:translateX(4px)}
+.rs .num{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-family:var(--display);font-weight:900;color:var(--teal);background:var(--teal-w);transition:background .4s,color .4s}
+.rs.on .num{background:var(--teal);color:#fff}
+.rs h3{font-size:18px;font-weight:800}
+.rs p{margin:4px 0 0;font-size:15px}
+.rs code{font-family:ui-monospace,Menlo,monospace;font-size:13.5px;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--ink)}
+.realfacts{display:flex;flex-wrap:wrap;gap:8px 18px;margin:22px 0 26px;padding:0;list-style:none;font-size:14.5px;color:var(--ink)}
+.realfacts li{display:flex;gap:8px;align-items:center}
+.realfacts svg{width:16px;height:16px;color:var(--green)}
+.real .btn-p{font-size:17px;padding:17px 28px}
+.real .later{font-size:13px;color:var(--ink-3);margin-top:14px;max-width:520px}
+
+/* the browser that boots */
+.browser{border-radius:16px;overflow:hidden;background:#fff;border:1px solid #d7e2ee;box-shadow:0 50px 90px -40px rgba(16,26,38,.5),0 0 0 8px rgba(63,181,174,.06)}
+.bbar{display:flex;align-items:center;gap:10px;background:#eef3f8;padding:10px 14px;border-bottom:1px solid #dbe5ef}
+.bbar .dots{display:flex;gap:6px}.bbar .dots i{width:10px;height:10px;border-radius:50%;background:#cfd9e4}
+.bbar .url{flex:1;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #d7e2ee;border-radius:9px;padding:6px 12px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--ink-3);min-height:31px}
+.bbar .url b{color:var(--ink);font-weight:600}
+.bload{height:3px;background:transparent}
+.bload i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--blue-v));transition:width 1.2s var(--ease)}
+.bapp{display:grid;grid-template-columns:150px 1fr;min-height:330px;opacity:0;transition:opacity .5s}
+.bapp.show{opacity:1}
+.bside{background:#f6f9fc;border-right:1px solid var(--line);padding:14px 12px}
+.bside .shop{font-family:var(--display);font-weight:800;color:var(--ink);font-size:13.5px;line-height:1.2;margin-bottom:12px}
+.bside .shop small{display:block;font-family:var(--body);font-weight:600;font-size:10px;color:var(--ink-3);letter-spacing:.06em}
+.bside div.n{font-size:12.5px;color:var(--ink-2);padding:6px 8px;border-radius:7px}
+.bside div.n.a{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 2px rgba(16,26,38,.06)}
+.bmain{padding:18px 20px}
+.bmain h4{margin:0;font-family:var(--display);font-size:18px;color:var(--ink)}
+.bmain .hi{font-size:12.5px;color:var(--ink-3);margin:2px 0 12px}
+.wz{display:grid;gap:6px}
+.wz div{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-3);padding:7px 10px;border:1px solid var(--line);border-radius:9px;transition:all .35s}
+.wz div i{width:18px;height:18px;border-radius:50%;border:2px solid #cfd9e4;display:grid;place-items:center;flex:none;font-style:normal;font-size:11px;color:#fff;transition:all .35s}
+.wz div.done{color:var(--ink);border-color:#cdeee9;background:#f4fcfb}
+.wz div.done i{background:var(--green);border-color:var(--green)}
+.first{margin-top:12px;display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;font-weight:700;font-size:13px;border-radius:9px;padding:9px 14px;opacity:0;transform:translateY(6px);transition:all .5s var(--ease)}
+.first.show{opacity:1;transform:none}
+@media (max-width:560px){.bapp{grid-template-columns:1fr}.bside{display:none}}
+@media (prefers-reduced-motion:reduce){.bapp,.first{opacity:1!important;transform:none!important}}
+
 /* ── Reduced motion: everything visible, nothing moves ─────────────── */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -320,6 +381,7 @@ footer a{color:#b7c7da;text-decoration:none}
   <symbol id="i-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
   <symbol id="i-clip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></symbol>
   <symbol id="i-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
 </defs></svg>
 
 <nav class="nav on-dark" id="nav">
@@ -327,9 +389,10 @@ footer a{color:#b7c7da;text-decoration:none}
     <a href="#top" class="brand" aria-label="RO Engine home"><img src="/assets/brand/roe-mark-on-dark.svg" alt="" width="77" height="30" style="height:30px;width:auto"><span><span class="nm">RO Engine</span><span class="tg"><b>A</b>utomotive <b>I</b>ntelligence</span></span></a>
     <div class="links">
       <a href="#gap" class="hide-m">The problem</a>
+      <a href="#live" class="hide-m">Free trial</a>
       <a href="#story" class="hide-m">How it works</a>
       <a href="#pricing" class="hide-m">Pricing</a>
-      <a href="https://app.roengine.com/signup" class="btn btn-p">Start free trial</a>
+      <a href="https://app.roengine.com/signup" class="btn btn-p">Set up my shop</a>
     </div>
   </div>
 </nav>
@@ -348,10 +411,12 @@ footer a{color:#b7c7da;text-decoration:none}
       <h1 style="margin-top:16px">Your best advisor.<br><span class="hl">Every</span> <span style="white-space:nowrap">write&#8209;up.</span></h1>
       <p class="sub">Your veteran advisor catches what's due on every car. Your new hire just does what's asked. <b>RO Engine closes that gap</b> — on every repair order, for every advisor on your team.</p>
       <div class="ctas">
-        <a class="btn btn-p" href="https://app.roengine.com/signup">Start your 90-day test drive <svg><use href="#i-arrow"/></svg></a>
-        <a class="btn btn-g" href="#story">See how it works</a>
+        <a class="btn btn-p" href="https://app.roengine.com/signup">Set up my shop — free for 90 days <svg><use href="#i-arrow"/></svg></a>
+        <a class="tlink" href="#live">How the trial works <svg><use href="#i-arrow"/></svg></a>
       </div>
-      <p class="fine">Your own working shop, not a demo · nothing charges for 90 days · cancel online anytime</p>
+      <div class="addr" aria-label="Your shop gets its own address"><svg class="lock"><use href="#i-lock"/></svg><span><span class="shopname" id="sub">your-shop</span><span class="dom">.roengine.com</span></span><span class="live"><i></i><span>Live</span></span></div>
+      <p class="realnote"><b>Your own RO Engine, live in minutes.</b> Not a demo — the real app, with your shop's data.</p>
+      <p class="fine">Nothing charges for 90 days · cancel online anytime · no sales call</p>
     </div>
 
     <div class="stage" id="stage" aria-label="Animated example: RO Engine building a repair order">
@@ -396,6 +461,55 @@ footer a{color:#b7c7da;text-decoration:none}
     <div class="s rv"><b data-count="90">90</b><span>days free to try it</span></div>
   </div>
 </div>
+
+
+<!-- ═══ IT'S REAL ══════════════════════════════════════════════════════ -->
+<section class="real" id="live">
+  <div class="wrap">
+    <div class="eyebrow rv">The free trial</div>
+    <h2 class="rv" style="margin-top:12px;max-width:860px">Not a demo. <span style="color:var(--teal)">Your shop, live in minutes.</span></h2>
+    <p class="lead rv" style="margin-top:18px">Most "free trials" are a sandbox with fake data and a salesperson waiting at the end. This is the actual RO Engine — your own copy, at your own address, running your shop from the first repair order.</p>
+
+    <div class="real-grid">
+      <div>
+        <div class="rsteps" id="rsteps">
+          <div class="rs rv" data-rs="0"><span class="num">1</span><div><h3>Pick your shop's address</h3><p>Choose your name and get your own <code>yourshop.roengine.com</code> — checked and reserved on the spot.</p></div></div>
+          <div class="rs rv" data-rs="1"><span class="num">2</span><div><h3>Start your 90 days</h3><p>Card or bank account on file. Nothing charges for 90 days, and you can cancel online in a few clicks.</p></div></div>
+          <div class="rs rv" data-rs="2"><span class="num">3</span><div><h3>Check your email — you're in</h3><p>"Your RO Engine shop is ready." Set your password and a short setup walks you through hours, labor rates, your team and payments. Skip anything you want.</p></div></div>
+        </div>
+        <ul class="realfacts rv">
+          <li><svg><use href="#i-check"/></svg>Real repair orders from day one</li>
+          <li><svg><use href="#i-check"/></svg>Everything carries forward when you stay</li>
+          <li><svg><use href="#i-check"/></svg>Your whole team — unlimited users</li>
+          <li><svg><use href="#i-check"/></svg>We move your history over, free</li>
+        </ul>
+        <div class="rv"><a class="btn btn-p" href="https://app.roengine.com/signup">Set up my shop now <svg><use href="#i-arrow"/></svg></a></div>
+        <p class="later rv">Texting and the AI phone switch on once your shop's number clears carrier registration — usually within two weeks. Everything else works the day you sign up.</p>
+      </div>
+
+      <div class="browser rv" id="browser" aria-label="Animated example: a new shop's RO Engine opening for the first time">
+        <div class="bbar"><span class="dots"><i></i><i></i><i></i></span><span class="url"><svg style="width:13px;height:13px;color:#7f93aa"><use href="#i-lock"/></svg><span><b id="burl"></b></span></span></div>
+        <div class="bload"><i id="bload"></i></div>
+        <div class="bapp" id="bapp">
+          <div class="bside"><div class="shop">Main Street Auto<small>MAIN-STREET-AUTO.ROENGINE.COM</small></div><div class="n a">Setup</div><div class="n">Dashboard</div><div class="n">Schedule</div><div class="n">Repair Orders</div><div class="n">Customers</div><div class="n">Settings</div></div>
+          <div class="bmain">
+            <h4>Welcome to your shop</h4>
+            <div class="hi">Let's get the basics in — about ten minutes.</div>
+            <div class="wz" id="wz">
+              <div><i>✓</i>Shop identity</div>
+              <div><i>✓</i>Your team</div>
+              <div><i>✓</i>Labor rates</div>
+              <div><i>✓</i>Payment methods</div>
+              <div><i>✓</i>RO numbering</div>
+              <div><i>✓</i>Business hours</div>
+            </div>
+            <span class="first" id="first">Write your first RO <svg style="width:15px;height:15px"><use href="#i-arrow"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══ THE GAP ════════════════════════════════════════════════════════ -->
 <section id="gap">
@@ -560,7 +674,7 @@ footer a{color:#b7c7da;text-decoration:none}
           <li><svg><use href="#i-check"/></svg>Parts ordering, POs and receiving</li>
           <li><svg><use href="#i-check"/></svg>Work orders, invoicing, customers, inspections</li>
         </ul>
-        <a class="btn btn-p" href="https://app.roengine.com/signup">Start your 90-day test drive <svg><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-p" href="https://app.roengine.com/signup">Set up my shop — free for 90 days <svg><use href="#i-arrow"/></svg></a>
         <p class="usage">Includes 300 AI phone minutes, 300 calls on your shop line and 1,500 texts a month. Past that: $0.35 a minute, 10¢ a call, 2¢ a text — most shops never get there.</p>
       </div>
       <div class="promise">
@@ -601,9 +715,9 @@ footer a{color:#b7c7da;text-decoration:none}
 <section class="final on-dark">
   <div class="wrap">
     <h2 class="rv">Give every advisor your best advisor's eye.</h2>
-    <p class="rv">Ninety days, your own working shop, nothing charged. If it doesn't earn its keep, you walk away.</p>
+    <p class="rv">Your own RO Engine at your own address, live in minutes. Ninety days free — if it doesn't earn its keep, you walk away.</p>
     <div class="ctas rv">
-      <a class="btn btn-p" href="https://app.roengine.com/signup">Start your 90-day test drive <svg><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-p" href="https://app.roengine.com/signup">Set up my shop — free for 90 days <svg><use href="#i-arrow"/></svg></a>
       <a class="btn btn-g" href="/#demo">Ask the shop owner a question</a>
     </div>
   </div>
@@ -720,6 +834,40 @@ footer a{color:#b7c7da;text-decoration:none}
   el.replay.addEventListener('click', () => play())
   if (reduce) finalState()
   else new IntersectionObserver(([en], obs) => { if (en.isIntersecting) { obs.disconnect(); play() } }, { threshold: .35 }).observe($('#stage'))
+
+
+  // ── Hero: the shop address types out, one real-looking shop after another.
+  const subEl = $('#sub')
+  const names = ['main-street-auto', 'bobs-country-auto', 'precision-imports', 'hilltop-tire', 'your-shop']
+  if (!reduce && subEl) (async () => {
+    let i = 0
+    await sleep(1400)
+    for (;;) {
+      const word = names[i++ % names.length]
+      while (subEl.textContent.length) { subEl.textContent = subEl.textContent.slice(0, -1); await sleep(28) }
+      for (const ch of word) { subEl.textContent += ch; await sleep(60) }
+      await sleep(word === 'your-shop' ? 3200 : 1700)
+    }
+  })()
+
+  // ── "Your shop, live in minutes": the browser boots, setup ticks off.
+  const browser = $('#browser'), rs = $$('#rsteps .rs')
+  const lit = (k) => rs.forEach((r, j) => r.classList.toggle('on', j === k))
+  async function boot() {
+    const url = $('#burl'), load = $('#bload'), app = $('#bapp'), wz = $$('#wz div'), first = $('#first')
+    const host = 'main-street-auto.roengine.com'
+    if (reduce) { url.textContent = host; load.style.width = '100%'; app.classList.add('show'); wz.forEach((w) => w.classList.add('done')); first.classList.add('show'); lit(2); return }
+    lit(0)
+    for (const ch of host) { url.textContent += ch; await sleep(38) }
+    await sleep(500); lit(1)
+    load.style.width = '100%'
+    await sleep(1300); lit(2)
+    app.classList.add('show')
+    await sleep(600)
+    for (const w of wz) { w.classList.add('done'); await sleep(420) }
+    await sleep(300); first.classList.add('show')
+  }
+  if (browser) new IntersectionObserver(([en], obs) => { if (en.isIntersecting) { obs.disconnect(); boot() } }, { threshold: .45 }).observe(browser)
 
   // ── Scroll story: the deck turns as you scroll ─────────────────────
   const cards = $$('#deck .card')
