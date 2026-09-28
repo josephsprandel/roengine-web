@@ -18,3 +18,7 @@ deployment:
     - /bin/cp -Rf new $DEPLOYPATH
     - /bin/cp -Rf claude $DEPLOYPATH
     - /bin/cp -Rf shop-ware $DEPLOYPATH
+    - /bin/cp -Rf privacy $DEPLOYPATH
+    # Lead retention job, run by a cPanel cron — lives OUTSIDE public_html.
+    - /bin/mkdir -p /home/roengine/ops
+    - /bin/cp -f ops/lead-retention.php /home/roengine/ops/
