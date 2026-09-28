@@ -15,15 +15,19 @@
 <script>
 (function () {
   var MAXAGE = 60 * 60 * 24 * 90;
-  var KEYS = ['gclid','gbraid','wbraid','utm_source','utm_medium','utm_campaign'];
+  var CLICK = ['gclid','gbraid','wbraid'], UTM = ['utm_source','utm_medium','utm_campaign'];
   var qs = new URLSearchParams(window.location.search);
-  var found = {};
-  KEYS.forEach(function (k) { if (qs.get(k)) found[k] = qs.get(k); });
-  if (Object.keys(found).length) {
-    found._ts = new Date().toISOString();
-    document.cookie = 're_attr=' + encodeURIComponent(JSON.stringify(found)) +
-      ';max-age=' + MAXAGE + ';path=/;domain=.roengine.com;samesite=lax;secure';
-  }
+  var has = function (keys) { return keys.some(function (k) { return qs.get(k); }); };
+  if (!has(CLICK) && !has(UTM)) return;
+  var cur = {};
+  try { var m = document.cookie.match(/(?:^|; )re_attr=([^;]*)/); if (m) cur = JSON.parse(decodeURIComponent(m[1])) || {}; } catch (e) { cur = {}; }
+  // Only a newer ad click replaces an ad-click ID. A later non-ad visit (a newsletter link with
+  // utm_* tags) updates the campaign tags but must not erase the click Google Ads credits.
+  if (has(CLICK)) { CLICK.forEach(function (k) { delete cur[k]; if (qs.get(k)) cur[k] = qs.get(k); }); cur._ts = new Date().toISOString(); }
+  if (has(UTM)) { UTM.forEach(function (k) { delete cur[k]; if (qs.get(k)) cur[k] = qs.get(k); }); }
+  if (!cur._ts) cur._ts = new Date().toISOString();
+  document.cookie = 're_attr=' + encodeURIComponent(JSON.stringify(cur)) +
+    ';max-age=' + MAXAGE + ';path=/;domain=.roengine.com;samesite=lax;secure';
 })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
