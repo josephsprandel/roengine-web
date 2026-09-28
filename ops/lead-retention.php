@@ -5,7 +5,8 @@
  *   - the IP address, browser and referring page stored with them are removed after 90 days.
  *
  * Deployed by .cpanel.yml to /home/roengine/ops/ (outside public_html). Run daily by a cPanel cron:
- *   php /home/roengine/ops/lead-retention.php --apply
+ *   /usr/local/bin/php /home/roengine/ops/lead-retention.php --apply
+ * (full PHP path: cron's PATH may not include php)
  * Without --apply it only reports what it would do.
  *
  * A lead that became a customer is kept: add "keep": true to its line in leads.jsonl (leads.php shows
@@ -15,10 +16,14 @@ if (PHP_SAPI !== 'cli') { http_response_code(404); exit; }
 
 $apply = in_array('--apply', $argv, true);
 $cfg = [];
-foreach (['/home/roengine/public_html/config.php', '/home/roengine/config.php'] as $p) {
+// Paths relative to this script (<home>/ops/), not a hard-coded home: the account lives at /home2/roengine
+// (/home/roengine points there). Mirrors form.php: config.php in public_html or one level above it, and
+// the lead log beside public_html.
+$home = dirname(__DIR__);
+foreach (["$home/public_html/config.php", "$home/config.php"] as $p) {
     if (is_readable($p)) { $cfg = require $p; break; }
 }
-$leadLog = (is_array($cfg) && !empty($cfg['lead_log'])) ? $cfg['lead_log'] : '/home/roengine/leads.jsonl';
+$leadLog = (is_array($cfg) && !empty($cfg['lead_log'])) ? $cfg['lead_log'] : "$home/leads.jsonl";
 foreach ($argv as $a) { if (strpos($a, '--file=') === 0) $leadLog = substr($a, 7); } // for testing
 
 const KEEP_DAYS    = 730; // 24 months
