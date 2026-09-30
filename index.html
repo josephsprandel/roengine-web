@@ -428,6 +428,48 @@ footer a{color:#b7c7da;text-decoration:none}
   .ro{transform:none!important}
   .curve .line{stroke-dashoffset:0!important}
 }
+/* Mnemos section */
+.mn{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.mn .claude{margin-top:18px;font-size:14px;color:var(--ink-2)}
+.mn .claude b{color:var(--ink)}
+.mn ul{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:14px}
+.mn li{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start}
+.mn li svg{width:20px;height:20px;color:var(--teal);margin-top:2px}
+.mn li b{display:block;font-family:var(--display);font-size:16.5px;color:var(--ink)}
+.mn li span{color:var(--ink-2);font-size:15.5px}
+.chat{background:linear-gradient(180deg,var(--night),var(--night-2));border-radius:22px;padding:22px;box-shadow:0 30px 70px -30px rgba(11,21,36,.55);display:grid;gap:12px}
+.chat .hd{display:flex;align-items:center;gap:9px;font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#9fb3c8}
+.chat .hd i{width:8px;height:8px;border-radius:50%;background:var(--teal-b)}
+.chat .u,.chat .a{max-width:88%;padding:11px 14px;border-radius:14px;font-size:14.5px;line-height:1.45}
+.chat .u{justify-self:end;background:var(--teal);color:#062a28;border-bottom-right-radius:4px;font-weight:600}
+.chat .a{background:rgba(255,255,255,.07);color:#e4edf6;border-bottom-left-radius:4px}
+.chat .svc{margin-top:8px;border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:10px 12px;display:grid;gap:3px;font-size:13.5px;color:#c8d6e6}
+.chat .svc b{color:#fff;font-family:var(--display)}
+.chat .svc .ap{justify-self:start;margin-top:6px;background:var(--teal-b);color:#062a28;font-weight:700;border-radius:7px;padding:4px 12px;font-size:12.5px}
+.mn .fine{margin-top:14px;font-size:12.5px;color:var(--ink-3)}
+@media (max-width:900px){.mn{grid-template-columns:1fr;gap:36px}}
+
+/* comparison table (pricing section) */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cmp{margin-top:56px;border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:30px 0 22px;background:rgba(255,255,255,.035)}
+.cmp h3{color:#fff;font-size:clamp(22px,2.6vw,28px);font-weight:800;padding:0 32px}
+.cmp .sub2{margin:8px 0 18px;color:#9fb3c8;font-size:15.5px;padding:0 32px;max-width:760px}
+.cmp .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.cmp table{border-collapse:collapse;width:100%;min-width:900px;font-size:14px}
+.cmp th,.cmp td{padding:12px 14px;text-align:left;vertical-align:top;border-top:1px solid rgba(255,255,255,.09)}
+.cmp thead th{border-top:0;font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.07em;text-transform:uppercase;color:#9fb3c8;white-space:nowrap}
+.cmp thead th.us{color:var(--teal-b)}
+.cmp tbody th{color:#dbe6f2;font-weight:600;min-width:170px}
+.cmp th:first-child,.cmp td:first-child{position:sticky;left:0;background:#101e33;padding-left:32px}
+.cmp td{color:#9fb3c8;line-height:1.35}
+.cmp td.us{color:#fff;background:rgba(79,209,201,.07)}
+.cmp .y{color:#dbe6f2}
+.cmp .y::before,.cmp td.us::before{content:"✓ ";color:var(--teal-b);font-weight:800}
+.cmp td.us.plain::before{content:""}
+.cmp .x{color:#6f849b}
+.cmp .note{margin:16px 0 0;font-size:13px;color:#8fa4ba;padding:0 32px;max-width:900px}
+@media (max-width:720px){.cmp{padding:24px 0 18px}.cmp h3,.cmp .sub2,.cmp .note{padding:0 20px}.cmp th:first-child,.cmp td:first-child{padding-left:20px}}
+
 /* same-price comparison (pricing section) */
 .vs{margin-top:56px;border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:30px 32px 24px;background:rgba(255,255,255,.035)}
 .vs h3{color:#fff;font-size:clamp(22px,2.6vw,28px);font-weight:800}
@@ -722,6 +764,37 @@ footer a{color:#b7c7da;text-decoration:none}
 </section>
 
 <!-- ═══ EVERYTHING INCLUDED ════════════════════════════════════════════ -->
+<!-- ═══ MNEMOS ═════════════════════════════════════════════════════════ -->
+<section id="mnemos">
+  <div class="wrap mn">
+    <div>
+      <div class="eyebrow rv">Mnemos</div>
+      <h2 class="rv" style="margin-top:12px;max-width:560px">An assistant that knows your shop.</h2>
+      <p class="lead rv" style="margin-top:16px">Mnemos lives on every page of RO Engine. Ask it anything, hand it the busywork, and it works from your real customers, vehicles and repair history &mdash; not a generic chatbot guessing.</p>
+      <p class="claude rv">Built on <b>Claude</b>, by Anthropic.</p>
+      <ul>
+        <li class="rv"><svg><use href="#i-msg"/></svg><div><b>Ask it anything about the shop</b><span>&ldquo;Who with an XC90 hasn&rsquo;t been in for a year?&rdquo; &ldquo;What did we sell in brakes last month?&rdquo; Plain English in, straight answers out.</span></div></li>
+        <li class="rv"><svg><use href="#i-wrench"/></svg><div><b>It builds the job</b><span>Finds the parts across your suppliers by VIN, pulls book labor time, and hands you the finished service. One click to add it &mdash; nothing changes until you say so.</span></div></li>
+        <li class="rv"><svg><use href="#i-box"/></svg><div><b>It fills the parts cart</b><span>Turns the parts it found into a cart with your supplier. You check out.</span></div></li>
+        <li class="rv"><svg><use href="#i-spark"/></svg><div><b>It speaks up when it matters</b><span>A customer texts back, a car is ready, a booking comes in, stock runs low &mdash; you hear about it once, and not otherwise.</span></div></li>
+        <li class="rv"><svg><use href="#i-lock"/></svg><div><b>It plays by your rules</b><span>Every change goes through the same checks and activity log as your staff.</span></div></li>
+      </ul>
+    </div>
+    <div class="rv">
+      <div class="chat" aria-label="Example conversation with Mnemos">
+        <div class="hd"><i></i>Mnemos</div>
+        <div class="u">Who with a 2016 XC90 hasn&rsquo;t been in for over a year?</div>
+        <div class="a">Seven customers. The three biggest spenders: D. Harper, M. Ortiz and K. Lee &mdash; all three are past due for their 60k service. Want a reminder text drafted for them?</div>
+        <div class="u">Add front brakes to this RO.</div>
+        <div class="a">Pads and rotors in stock at two of your suppliers, 1.8 hours book time.
+          <div class="svc"><b>Front brake pads &amp; rotors</b><span>Parts $214 &middot; Labor 1.8 h</span><span class="ap">Apply</span></div>
+        </div>
+      </div>
+      <p class="fine">Example conversation. Book labor times come from your ALLDATA subscription.</p>
+    </div>
+  </div>
+</section>
+
 <section id="features">
   <div class="wrap">
     <div class="eyebrow rv">Everything in it</div>
@@ -749,6 +822,7 @@ footer a{color:#b7c7da;text-decoration:none}
         <div class="fnd"><b>Founding shop pricing:</b> join before July 1, 2027 and pay <b>$261.75 a month</b> — 25% less, for as long as you stay.</div>
         <ul>
           <li><svg><use href="#i-check"/></svg>AI service recommendations on every RO</li>
+          <li><svg><use href="#i-check"/></svg>Mnemos, the AI assistant built on Claude</li>
           <li><svg><use href="#i-check"/></svg>AI phone answering and two-way texting</li>
           <li><svg><use href="#i-check"/></svg>Digital estimate approval</li>
           <li><svg><use href="#i-check"/></svg>54,000+ OEM service intervals</li>
@@ -766,16 +840,27 @@ footer a{color:#b7c7da;text-decoration:none}
       </div>
     </div>
 
-    <div class="vs rv">
-      <h3>Same $349 as Tekmetric's GROW plan. Here's what's in it.</h3>
-      <p class="sub2">They make good software. We just don't think texting your customers should be a premium tier.</p>
-      <div class="row hd"><span class="lbl"></span><span class="us">RO Engine · $349</span><span class="them">Tekmetric GROW · $349</span></div>
-      <div class="row"><span class="lbl">Two-way texting with customers</span><span class="us yes">Included — 1,500 texts a month</span><span class="them">Starts at SCALE, $439</span></div>
-      <div class="row"><span class="lbl">AI phone answering</span><span class="us yes">Included — 300 minutes a month</span><span class="them">Not on their pricing page</span></div>
-      <div class="row"><span class="lbl">Factory maintenance schedules</span><span class="us yes">Included, on every RO</span><span class="them">Included</span></div>
-      <div class="row"><span class="lbl">Users</span><span class="us yes">Unlimited</span><span class="them">Unlimited</span></div>
-      <div class="row"><span class="lbl">Contract</span><span class="us yes">Month to month</span><span class="them">No long-term contract</span></div>
-      <p class="note">From Tekmetric's public pricing page, checked September 27, 2026, at monthly billing (annual billing is $309 for GROW and $409 for SCALE). Prices change, so check theirs before you decide.</p>
+    <div class="cmp rv">
+      <h3>Everything in one plan. Here&rsquo;s where it lives elsewhere.</h3>
+      <p class="sub2">Every row in our column comes with the $349 plan. On the others, the same things are spread across higher tiers and add-ons &mdash; straight from their own price lists.</p>
+      <div class="scroll">
+        <table>
+          <thead><tr><th scope="col"><span class="sr-only">Feature</span></th><th scope="col" class="us">RO Engine</th><th scope="col">Tekmetric</th><th scope="col">Shop-Ware</th><th scope="col">Shopmonkey</th><th scope="col">AutoLeap</th><th scope="col">Mitchell 1 SE</th></tr></thead>
+          <tbody>
+          <tr><th scope="row">Price, monthly billing</th><td class="us plain">$349 &mdash; everything below</td><td>$199 entry plan</td><td>$279 entry plan</td><td>$239 entry plan</td><td>$199 entry plan</td><td class="x">Not published</td></tr>
+          <tr><th scope="row">AI phone answering</th><td class="us">300 minutes a month</td><td class="x">Not offered</td><td class="x">Not listed</td><td class="x">Not listed</td><td>$99/mo add-on</td><td class="x">Not listed</td></tr>
+          <tr><th scope="row">Two-way texting</th><td class="us">1,500 texts a month</td><td>Scale plan, $439</td><td class="y">Limited; unlimited on Pro, $389</td><td class="y">Unlimited</td><td>Pro plan, $349</td><td>$39/mo add-on</td></tr>
+          <tr><th scope="row">Online booking</th><td class="us">Included</td><td>$345/mo Marketing add-on</td><td>$249/mo add-on</td><td>$349/mo add-on</td><td>Add-on, price not listed</td><td class="x">Not listed</td></tr>
+          <tr><th scope="row">Factory maintenance schedules</th><td class="us">On every RO</td><td>Grow plan, $349</td><td class="y">Maintenance Builder</td><td class="x">Not clearly listed</td><td>Pro plan + extra fee</td><td class="x">Not listed</td></tr>
+          <tr><th scope="row">Digital inspections with photos</th><td class="us">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">2 templates on Basic</td><td class="y">Included</td><td>Optional, price not listed</td></tr>
+          <tr><th scope="row">Parts ordering</th><td class="us">PartsTech, Worldpac and more</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td></tr>
+          <tr><th scope="row">Labor times</th><td class="us plain">Connects your ALLDATA</td><td>Grow plan, $349</td><td>Pro plan, $389</td><td>Clever plan, $399</td><td>Pro plan, $349</td><td>TeamWorks bundle, $348</td></tr>
+          <tr><th scope="row">Users</th><td class="us">Unlimited</td><td class="y">Unlimited</td><td class="y">Unlimited</td><td>3&ndash;5, then $20/user</td><td class="y">Unlimited</td><td>$15/mo per extra user</td></tr>
+          <tr><th scope="row">Contract and setup</th><td class="us">Month to month; history moved free</td><td class="y">No contract</td><td>No annual; migration fee may apply</td><td>$500 data migration</td><td>One-time setup fee</td><td>12-month lease</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">From each company&rsquo;s own pricing page, checked September 29, 2026, at monthly billing. &ldquo;Not listed&rdquo; means we couldn&rsquo;t find it on their pricing page &mdash; ask them, they may offer it. Mitchell 1 sells Manager SE on a 12-month lease and doesn&rsquo;t publish the car-shop price. Prices change, so check theirs before you decide.</p>
     </div>
   </div>
 </section>
