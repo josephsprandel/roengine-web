@@ -527,6 +527,28 @@ footer a{color:#b7c7da;text-decoration:none}
   .vs .row.hd .lbl{display:none}
 }
 </style>
+<!-- Meta Pixel (dataset 1693754829035693 · ad account 3514465940926) -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1693754829035693');
+fbq('track', 'PageView');
+// Any "Set up my shop" link → InitiateCheckout (the trial itself finishes on app.roengine.com).
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="https://app.roengine.com/signup"]');
+  if (a) fbq('track', 'InitiateCheckout');
+}, true);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel -->
 </head>
 <body>
 
@@ -1043,7 +1065,7 @@ footer a{color:#b7c7da;text-decoration:none}
       try {
         const r = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
         const d = await r.json()
-        if (r.ok && d.ok) { form.innerHTML = '<div class="sent"><b>Got it.</b><p>I\'ll be in touch within one business day — usually sooner.</p></div>'; return }
+        if (r.ok && d.ok) { window.fbq && fbq('track', 'Lead'); form.innerHTML = '<div class="sent"><b>Got it.</b><p>I\'ll be in touch within one business day — usually sooner.</p></div>'; return }
         throw new Error(d.error || 'Something went wrong.')
       } catch (err) {
         msg.textContent = err.message + ' You can also email joe@roengine.com.'

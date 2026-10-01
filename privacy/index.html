@@ -38,12 +38,34 @@ code{font-size:14.5px;background:var(--paper);padding:1px 5px;border-radius:4px}
 footer{border-top:1px solid var(--line);padding:24px 0;color:var(--ink-3);font-size:14px}
 @media (max-width:560px){table{font-size:14.5px}th,td{padding:8px 6px}}
 </style>
+<!-- Meta Pixel (dataset 1693754829035693 · ad account 3514465940926) -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1693754829035693');
+fbq('track', 'PageView');
+// Any "Set up my shop" link → InitiateCheckout (the trial itself finishes on app.roengine.com).
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="https://app.roengine.com/signup"]');
+  if (a) fbq('track', 'InitiateCheckout');
+}, true);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel -->
 </head>
 <body>
 <div class="top"><div class="wrap"><a href="/"><img src="/assets/brand/roe-mark-on-dark.svg" alt="">RO Engine</a></div></div>
 <main class="wrap">
 <h1>Privacy Policy</h1>
-<p class="meta">Effective September 28, 2026 · SPRANDEL LLC ("RO Engine", "we")</p>
+<p class="meta">Effective October 1, 2026 · SPRANDEL LLC ("RO Engine", "we")</p>
 
 <p>RO Engine is shop-management software for independent auto repair shops. This policy covers information
 about <b>the people we deal with directly</b>: visitors to roengine.com, people who ask us for a demo, and shop
@@ -63,6 +85,9 @@ view, how you arrived, your approximate location (from your IP address), and you
 named <code>re_attr</code> for 90 days: Google's click IDs (<code>gclid</code>, <code>gbraid</code>,
 <code>wbraid</code>), campaign tags (<code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>) and
 when we saw them.</li>
+<li><b>Meta Pixel.</b> Meta (Facebook and Instagram) sets cookies (<code>_fbp</code>, and <code>_fbc</code> when you arrive
+from one of our Meta ads) and receives the pages you view, when you click "Set up my shop", and when you send the
+question form — not what you type in it — along with your IP address and browser.</li>
 </ul>
 <h3>When you ask for a demo</h3>
 <p>Your name, shop name, email, phone, number of bays, current software and anything you write in the form, plus your
@@ -83,16 +108,20 @@ support, usage counts for billing and fair-use limits, and the messages you send
 <li>To understand which pages and campaigns bring shops to us, including telling <b>Google Ads</b> that an ad click
 led to a trial or a paid subscription so the ad is credited. We send the click ID and the conversion, not your name
 or email.</li>
+<li>To measure our <b>Meta</b> ads and help Meta show them to people likely to be interested, using the Meta Pixel
+events described above.</li>
 <li>To keep the service secure, prevent abuse, and meet legal and tax obligations.</li>
 </ul>
-<p>We don't sell your personal information, don't share it for cross-context behavioral advertising beyond the ad
-measurement described here, and don't use it to train AI models.</p>
+<p>We don't sell your personal information or use it to train AI models. The Meta Pixel does share website activity
+with Meta for advertising, which some state laws call "sharing" for cross-context behavioral advertising; see section 4
+to opt out.</p>
 
 <h2>3. Who we share it with</h2>
 <p>Only the service providers we use to run RO Engine, each bound to protect it:</p>
 <table>
 <tr><th>Provider</th><th>What for</th></tr>
 <tr><td>Google</td><td>Website analytics and ad measurement (Google Analytics, Google Ads); AI features</td></tr>
+<tr><td>Meta</td><td>Ad measurement and delivery for our Facebook and Instagram ads (Meta Pixel)</td></tr>
 <tr><td>Stripe</td><td>Payments and subscriptions</td></tr>
 <tr><td>Mailgun</td><td>Sending email</td></tr>
 <tr><td>HostGator</td><td>Hosting roengine.com and the demo form</td></tr>
@@ -107,6 +136,10 @@ of the business, who will be bound by this policy. We'll keep this list current.
 <li><b>Google Analytics:</b> you can block it with your browser's cookie settings or
 <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">Google's opt-out add-on</a>. How Google uses the data:
 <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">policies.google.com/technologies/partner-sites</a>.</li>
+<li><b>Meta Pixel:</b> you can block it with your browser's cookie or tracking settings, and control how Meta uses
+activity from other websites in your Facebook or Instagram settings under <i>Ad preferences</i> → <i>Activity
+information from ad partners</i>. How Meta uses the data:
+<a href="https://www.facebook.com/privacy/policy" rel="noopener">facebook.com/privacy/policy</a>.</li>
 <li><b><code>re_attr</code>:</b> first-party, expires after 90 days, and is only read when you sign up. Clearing cookies
 for roengine.com removes it.</li>
 <li>Blocking these cookies doesn't affect the website or signup.</li>

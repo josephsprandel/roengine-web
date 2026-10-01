@@ -503,6 +503,28 @@ footer a{color:#b7c7da;text-decoration:none}
 .sw-final .ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:28px}
 .cmp{margin-top:0}
 </style>
+<!-- Meta Pixel (dataset 1693754829035693 · ad account 3514465940926) -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1693754829035693');
+fbq('track', 'PageView');
+// Any "Set up my shop" link → InitiateCheckout (the trial itself finishes on app.roengine.com).
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="https://app.roengine.com/signup"]');
+  if (a) fbq('track', 'InitiateCheckout');
+}, true);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel -->
 </head>
 <body>
 
