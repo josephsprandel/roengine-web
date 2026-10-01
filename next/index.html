@@ -66,7 +66,7 @@
   --display:'Archivo',system-ui,sans-serif; --body:'Plus Jakarta Sans',system-ui,sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:84px} /* nav links land below the fixed bar */
 body{margin:0;background:var(--w);color:var(--ink-2);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
 a{color:inherit}
 img,svg{display:block}
@@ -82,16 +82,28 @@ section{padding:110px 0}
 .vstage{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px}
 .vphone{width:min(100%,340px);padding:11px;border-radius:50px;background:linear-gradient(160deg,#25395a,#0a1322);box-shadow:0 50px 90px -40px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.08),0 0 80px -10px rgba(63,181,174,.35);transform:rotate(-2deg);transition:transform .6s var(--ease)}
 .vstage:hover .vphone{transform:rotate(0)}
-.vphone video{display:block;width:100%;height:auto;aspect-ratio:780/1688;border-radius:40px;background:#fff}
+.vphone video{display:block;width:100%;height:auto;aspect-ratio:720/1560;border-radius:40px;background:#fff}
 .vcap{font-size:13.5px;color:#8ea3bb;text-align:center;max-width:320px}
 .vcap b{color:#dbe6f2;font-weight:600}
-@media (max-width:980px){.vphone{transform:none;width:min(100%,300px)}}
+/* Phones: as wide as the screen allows, so the estimate's own text reads near full size. */
+@media (max-width:980px){.vphone{transform:none;width:min(100%,360px);padding:8px;border-radius:42px}.vphone video{border-radius:34px}}
 .hero .wrap.vh{grid-template-columns:1.15fr .85fr;grid-template-areas:"head video" "body video";row-gap:0}
 .vh .h-head{grid-area:head;align-self:end}.vh .h-body{grid-area:body;align-self:start}.vh .vstage{grid-area:video}
 /* Phones: the video is the proof — show it right under the headline, before the paragraph. */
 @media (max-width:980px){.hero .wrap.vh{grid-template-columns:1fr;grid-template-areas:"head" "video" "body";row-gap:28px}}
 .hero .sub .edu{color:var(--teal-b);font-weight:600}
 .hero{padding-bottom:180px}
+.roi{background:var(--paper);padding:84px 0}
+.roi h2{font-size:clamp(28px,3.6vw,44px);text-wrap:balance;max-width:880px}
+.roi .math{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin:30px 0 26px}
+.roi .amt{display:flex;flex-direction:column;gap:2px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 22px}
+.roi .amt b{font-family:var(--display);font-weight:900;font-size:clamp(28px,3.4vw,40px);letter-spacing:-.02em;color:var(--ink);line-height:1}
+.roi .amt.later b{color:var(--red)}
+.roi .amt small{font-size:13.5px;color:var(--ink-3);font-weight:600}
+.roi .or{font-family:var(--display);font-weight:800;color:var(--ink-3);letter-spacing:.12em;text-transform:uppercase;font-size:13px}
+.roi p{max-width:680px;font-size:18px;margin:0}
+.roi p b{color:var(--ink)}
+@media (max-width:720px){.roi{padding:64px 0}}
 .oneline{max-width:820px;margin:0 auto;text-align:center;font-size:18px}
 .oneline b{color:var(--ink)}
 .cmp .more{display:inline-flex;gap:8px;align-items:center;margin-top:14px;color:var(--teal-b);font-weight:700;text-decoration:none}
@@ -530,7 +542,7 @@ footer a{color:#b7c7da;text-decoration:none}
   <div class="wrap">
     <a href="#top" class="brand" aria-label="RO Engine home"><img src="/assets/brand/roe-mark-on-dark.svg" alt="" width="77" height="30" style="height:30px;width:auto"><span><span class="nm">RO Engine</span><span class="tg"><b>A</b>utomotive <b>I</b>ntelligence</span></span></a>
     <div class="links">
-      <a href="#gap" class="hide-m">Why it matters</a>
+      <a href="#why" class="hide-m">Why it matters</a>
       <a href="#story" class="hide-m">How it works</a>
       <a href="#live" class="hide-m">Free trial</a>
       <a href="#pricing" class="hide-m">Pricing</a>
@@ -553,10 +565,10 @@ footer a{color:#b7c7da;text-decoration:none}
       <h1 style="margin-top:16px">The estimate that <span class="hl">explains</span> itself.</h1>
     </div>
     <div class="h-body">
-      <p class="sub">Customer education is the hardest part of selling maintenance. <b>RO Engine does it on every car</b>: <span class="edu">what each service is, why it's due now, and what happens if they wait</span>, written for the customer's own vehicle and sent to their phone. They understand it. They decide. They come back.</p>
+      <p class="sub">Customer education is the hardest part of selling maintenance. <b>RO Engine does it on every car</b>: <span class="edu">what each service is, why it's due now, and what happens if they wait</span>, written for the customer's own vehicle and sent to their phone. They understand it. They choose the maintenance that saves them from expensive repairs.</p>
       <div class="ctas">
         <a class="btn btn-p" href="https://app.roengine.com/signup">Set up my shop — free for 90 days <svg><use href="#i-arrow"/></svg></a>
-        <a class="tlink" href="#gap">See why it matters <svg><use href="#i-arrow"/></svg></a>
+        <a class="tlink" href="#why">See why it matters <svg><use href="#i-arrow"/></svg></a>
       </div>
       <div class="addr" aria-label="Your shop gets its own address"><svg class="lock"><use href="#i-lock"/></svg><span><span class="shopname" id="sub">your-shop</span><span class="dom">.roengine.com</span></span><span class="live"><i></i><span>Live</span></span></div>
       <p class="fine">Your own live shop in minutes · nothing charges for 90 days · no sales call</p>
@@ -585,6 +597,20 @@ footer a{color:#b7c7da;text-decoration:none}
 
 
 
+
+<!-- ═══ MAINTENANCE PAYS ═══════════════════════════════════════════════ -->
+<section class="roi" id="why">
+  <div class="wrap">
+    <div class="eyebrow rv">Why it matters</div>
+    <h2 class="rv" style="margin-top:12px">Maintenance is the best money your customers will ever spend on their car.</h2>
+    <div class="math rv" aria-label="Spark plugs now for $160, or a catalytic converter later for $1,000 to $2,500">
+      <div class="amt"><b>$160</b><small>spark plugs, today</small></div>
+      <span class="or">or</span>
+      <div class="amt later"><b>$1,000–$2,500</b><small>catalytic converter, later</small></div>
+    </div>
+    <p class="rv">That's the estimate in the video, written for a real 2013 Highlander. When a customer says no because nobody explained it, nobody wins. <b>RO Engine makes sure every customer hears why, on every car.</b></p>
+  </div>
+</section>
 
 <!-- ═══ THE GAP ════════════════════════════════════════════════════════ -->
 <section id="gap">
