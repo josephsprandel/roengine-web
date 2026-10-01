@@ -17,6 +17,7 @@ deployment:
     - /bin/cp -Rf card-fees $DEPLOYPATH
     - /bin/cp -Rf new $DEPLOYPATH
     - /bin/cp -Rf next $DEPLOYPATH
+    - /bin/cp -Rf compare $DEPLOYPATH
     - /bin/cp -Rf claude $DEPLOYPATH
     - /bin/cp -Rf shop-ware $DEPLOYPATH
     - /bin/cp -Rf privacy $DEPLOYPATH
