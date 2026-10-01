@@ -100,6 +100,11 @@ store your full card or bank account number.</p>
 <h3>When your shop uses RO Engine</h3>
 <p>Account details for each staff login (name, email, role), sign-in and activity records needed for security and
 support, usage counts for billing and fair-use limits, and the messages you send us.</p>
+<p><b>Product analytics.</b> To learn how shops use RO Engine and where it's confusing, we record which pages staff
+open and which actions they take (for example "created a repair order", without its contents), and we use
+<b>PostHog</b> to record clicks and session replays of the staff screens. Replays mask everything typed and all text on
+the page, so they show layout and clicks, not your customers' names, phone numbers, vehicles or prices. Nothing is
+recorded on the pages your customers see (estimates, online booking).</p>
 
 <h2>2. How we use it</h2>
 <ul>
@@ -110,6 +115,7 @@ led to a trial or a paid subscription so the ad is credited. We send the click I
 or email.</li>
 <li>To measure our <b>Meta</b> ads and help Meta show them to people likely to be interested, using the Meta Pixel
 events described above.</li>
+<li>To improve RO Engine, using the product analytics described above.</li>
 <li>To keep the service secure, prevent abuse, and meet legal and tax obligations.</li>
 </ul>
 <p>We don't sell your personal information or use it to train AI models. The Meta Pixel does share website activity
@@ -122,6 +128,7 @@ to opt out.</p>
 <tr><th>Provider</th><th>What for</th></tr>
 <tr><td>Google</td><td>Website analytics and ad measurement (Google Analytics, Google Ads); AI features</td></tr>
 <tr><td>Meta</td><td>Ad measurement and delivery for our Facebook and Instagram ads (Meta Pixel)</td></tr>
+<tr><td>PostHog</td><td>Product analytics and masked session replays of staff screens in the service</td></tr>
 <tr><td>Stripe</td><td>Payments and subscriptions</td></tr>
 <tr><td>Mailgun</td><td>Sending email</td></tr>
 <tr><td>HostGator</td><td>Hosting roengine.com and the demo form</td></tr>
@@ -151,7 +158,8 @@ for roengine.com removes it.</li>
 ends, except billing and tax records we must keep by law.</li>
 <li><b>Demo requests</b> that don't become customers: 24 months. The IP address, browser and referring page stored
 with them: 90 days.</li>
-<li><b>Analytics:</b> Google Analytics keeps event-level data for 2 months.</li>
+<li><b>Analytics:</b> Google Analytics keeps event-level data for 2 months. In-app usage records: 12 months.
+PostHog session replays: 30 days.</li>
 </ul>
 
 <h2>6. Security</h2>
