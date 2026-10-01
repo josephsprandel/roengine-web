@@ -1,12 +1,13 @@
 # RO Engine
 
-> RO Engine is shop management software for independent auto repair shops, built by a working shop owner. Its AI service advisor gives every advisor veteran-level maintenance recommendations on every repair order. One plan: $349/month, everything included, unlimited users, month to month. Each shop gets its own live copy of the app at its own address (yourshop.roengine.com), set up in minutes, free for 90 days.
+> RO Engine is shop management software for independent auto repair shops, built by a working shop owner. Its tagline is "The estimate that explains itself": the AI writes the maintenance recommendations on every repair order, and the customer's estimate explains each service in plain language — what it is, why it's due now, and what happens if they wait — written for the customer's own vehicle and sent to their phone. Customer education is the hardest part of selling maintenance; RO Engine does it on every car. One plan: $349/month, everything included, unlimited users, month to month. Each shop gets its own live copy of the app at its own address (yourshop.roengine.com), set up in minutes, free for 90 days.
 
 ## What it does
 - **AI service recommendations on every repair order** — cross-checks the manufacturer maintenance schedule (54,000+ OEM service intervals), the vehicle's own history and known failure patterns; surfaces overdue and coming-due work, remembers deferred work from past visits, and explains it in plain language. Advisors choose normal or severe service schedules.
 - **AI phone answering** — answers when the counter is busy, takes vehicle and customer details, and puts the call transcript on the customer record. Included, not an add-on.
 - **Two-way texting** with a local shop number and click-to-call.
-- **Digital estimate approval** — customers approve or decline line by line from a private link (no app, no login); declines are saved as deferred work for the next visit.
+- **Digital estimate approval** — customers approve or decline line by line from a private link (no app, no login), with an AI-written explanation of each service ("What is it?", "Why now?", "What happens if you wait?") and a diagram of the car showing where each service is; declines are saved as deferred work for the next visit.
+- **Full comparison** with Tekmetric, Shop-Ware, Shopmonkey, AutoLeap and Mitchell 1 SE: https://roengine.com/compare/
 - **Parts and purchase orders** — parts attached to the job, purchase orders and receiving, core charges and returns, margin visible before approval.
 - **Photo intake** — VIN from the door jamb sticker, mileage from the dashboard, plate capture, timestamped condition photos.
 - **Multi-point inspections** — green/yellow/red ratings with photos; tech notes rewritten for customers; red findings become recommendations.
