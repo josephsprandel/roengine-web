@@ -112,9 +112,9 @@
 
   // vowel path ah → oh → oo (alto/tenor singing formants), interpolated in log-frequency
   const VOW = [
-    { f: [800, 1150, 2800], g: [1, 0.55, 0.18] },   // ah
-    { f: [450, 800, 2830], g: [1, 0.35, 0.10] },    // oh
-    { f: [325, 700, 2700], g: [1, 0.22, 0.05] },    // oo
+    { f: [800, 1150, 2800], g: [1, 0.75, 0.32] },   // ah
+    { f: [450, 800, 2830], g: [1, 0.45, 0.14] },    // oh
+    { f: [325, 700, 2700], g: [1, 0.28, 0.06] },    // oo
   ];
   function vowelAt(m) {                               // m: 0 = ah … 1 = oo
     const x = Math.min(1, Math.max(0, m)) * 2, i = Math.min(1, Math.floor(x)), t = x - i;
@@ -138,28 +138,51 @@
     return buf;
   }
   function buildGraph(ctx) {
-    const master = ctx.createGain(); master.gain.value = 1.6; master.connect(ctx.destination);
+    const master = ctx.createGain(); master.gain.value = 2.4; master.connect(ctx.destination);
     const verb = ctx.createConvolver(); verb.buffer = hallIR(ctx, 3.2);
     const wet = ctx.createGain(); wet.gain.value = 0.42; verb.connect(wet); wet.connect(master);
+    // the vocal folds: one period of a Rosenberg glottal pulse (flow derivative), as a waveform
+    const N = 1024, oq = 0.6, tp = oq * 0.65, tn = oq * 0.35, H = 96;
+    const flow = Array.from({ length: N }, (_, i) => {
+      const ph = i / N;
+      return ph < tp ? 0.5 * (1 - Math.cos(Math.PI * ph / tp)) : ph < tp + tn ? Math.cos(Math.PI * (ph - tp) / (2 * tn)) : 0;
+    });
+    const dflow = flow.map((v, i) => v - flow[(i + N - 1) % N]);
+    const re = new Float32Array(H + 1), im = new Float32Array(H + 1);
+    for (let k = 1; k <= H; k++) for (let i = 0; i < N; i++) {
+      re[k] += dflow[i] * Math.cos(2 * Math.PI * k * i / N); im[k] += dflow[i] * Math.sin(2 * Math.PI * k * i / N);
+    }
+    const folds = ctx.createPeriodicWave(re, im);
+    // breath: white noise, shaped by the same mouth as the pitch
+    const nbuf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate), nd = nbuf.getChannelData(0);
+    for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
     const mkVoice = (vibRate, pan) => {
-      const osc = ctx.createOscillator(); osc.type = 'sawtooth';
-      const lfo = ctx.createOscillator(); lfo.frequency.value = vibRate;
-      const lfoAmt = ctx.createGain(); lfoAmt.gain.value = 16; lfo.connect(lfoAmt); lfoAmt.connect(osc.detune);
-      const tilt = ctx.createBiquadFilter(); tilt.type = 'lowpass'; tilt.frequency.value = 3200; tilt.Q.value = 0.3;
-      osc.connect(tilt);
+      const pitch = ctx.createConstantSource(); pitch.offset.value = mtof(AXIS);
+      const tilt = ctx.createBiquadFilter(); tilt.type = 'lowpass'; tilt.frequency.value = 4500; tilt.Q.value = 0.4;
+      // three singers per voice: own detune, own vibrato
+      [[-9, 0, 15], [0, 0.37, 19], [8, -0.29, 13]].forEach(([cents, dr, depth]) => {
+        const osc = ctx.createOscillator(); osc.setPeriodicWave(folds); osc.frequency.value = 0; osc.detune.value = cents;
+        pitch.connect(osc.frequency);
+        const lfo = ctx.createOscillator(); lfo.frequency.value = vibRate + dr;
+        const amt = ctx.createGain(); amt.gain.value = depth; lfo.connect(amt); amt.connect(osc.detune);
+        const g = ctx.createGain(); g.gain.value = 0.42; osc.connect(g); g.connect(tilt);
+        osc.start(); lfo.start();
+      });
+      const noise = ctx.createBufferSource(); noise.buffer = nbuf; noise.loop = true;
+      const ng = ctx.createGain(); ng.gain.value = 0.05; noise.connect(ng); ng.connect(tilt); noise.start();
       const sum = ctx.createGain(); sum.gain.value = 0;
       const forms = [0, 1, 2].map(() => {
         const bp = ctx.createBiquadFilter(); bp.type = 'bandpass';
         const g = ctx.createGain(); tilt.connect(bp); bp.connect(g); g.connect(sum);
         return { bp, g };
       });
-      // chest: the fundamental and first harmonics a real voice carries under its formants
-      const body = ctx.createBiquadFilter(); body.type = 'lowpass'; body.frequency.value = 420; body.Q.value = 0.5;
-      const bodyG = ctx.createGain(); bodyG.gain.value = 0.32; tilt.connect(body); body.connect(bodyG); bodyG.connect(sum);
+      // chest: the fundamental a real voice carries under its formants
+      const body = ctx.createBiquadFilter(); body.type = 'lowpass'; body.frequency.value = 380; body.Q.value = 0.5;
+      const bodyG = ctx.createGain(); bodyG.gain.value = 0.22; tilt.connect(body); body.connect(bodyG); bodyG.connect(sum);
       const panner = ctx.createStereoPanner(); panner.pan.value = pan;
       sum.connect(panner); panner.connect(master); panner.connect(verb);
-      osc.start(); lfo.start();
-      return { osc, forms, sum, panner };
+      pitch.start();
+      return { osc: { frequency: pitch.offset }, forms, sum, panner };
     };
     const A = mkVoice(5.3, -0.35), B = mkVoice(5.75, 0.35);
     // the strip: a low hum on the axis, two sines a hair apart so it slowly breathes
@@ -183,11 +206,12 @@
           const s = ((lap + off) % 2) + inLap;                     // place on the doubled path
           const sign = s < 1 ? 1 : -1;                             // lap 2 of the strip = the mirror
           const midi = AXIS + sign * PHRASE[k];
-          v.osc.frequency.setTargetAtTime(mtof(midi), t, 0.025);
+          v.osc.frequency.setTargetAtTime(mtof(midi) * 0.982, t, 0.014);   // a singer's scoop…
+          v.osc.frequency.setTargetAtTime(mtof(midi), t + 0.05, 0.05);       // …up into the note
           const vw = vowelAt(morph(s));
           v.forms.forEach((fm, i) => {
             fm.bp.frequency.setTargetAtTime(vw.f[i], t, 0.12);
-            fm.bp.Q.setTargetAtTime(vw.f[i] / [80, 90, 120][i], t, 0.12);
+            fm.bp.Q.setTargetAtTime(vw.f[i] / [70, 80, 110][i], t, 0.12);
             fm.g.gain.setTargetAtTime(vw.g[i], t, 0.12);
           });
           v.sum.gain.setTargetAtTime(level * 0.55, t - 0.05, 0.02);  // a breath between notes
