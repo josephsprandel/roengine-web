@@ -1,0 +1,37 @@
+"""How loud each pitch comes out of each vowel. A narrow formant makes a note whose harmonic lands on
+it ring far louder than its neighbours (the made's F3: its 2nd harmonic sits on 'oo' F1 at 350 Hz).
+note_gain() returns a per-note trim that pulls only those outliers back toward the line's median."""
+import numpy as np
+from functools import lru_cache
+from voice import V, glottal, formant_bank, mtof, BLOCK
+
+SR = 44100
+
+
+@lru_cache(maxsize=None)
+def response(part, vowel, midi):
+    n = int(1.0 * SR)
+    src = glottal(np.full(n, mtof(midi)), breath=0.05, seed=5)
+    nb = int(np.ceil(n / BLOCK))
+    f, a, b = V[part][vowel]
+    y = formant_bank(src, np.tile(f, (nb, 1)).astype(float), np.tile(10 ** (np.array(a) / 20), (nb, 1)), np.tile(b, (nb, 1)).astype(float))
+    return float(np.sqrt(np.mean(y[n // 4:] ** 2)))
+
+
+def note_gain(part, vowel, notes, allow_db=2.0):
+    """{midi: gain}: notes louder than the median by more than allow_db are trimmed to that ceiling."""
+    r = {m: response(part, vowel, m) for m in sorted(set(notes))}
+    med = np.median(list(r.values()))
+    ceil = med * 10 ** (allow_db / 20)
+    return {m: min(1.0, ceil / v) for m, v in r.items()}, r
+
+
+if __name__ == '__main__':
+    MAKER = [50, 53, 57, 55, 53, 52]; AXIS = 55
+    made = [2 * AXIS - m for m in MAKER]
+    for label, part, vowel, notes in [('maker  bass a', 'bass', 'a', MAKER), ('made   bass u', 'bass', 'u', made),
+                                      ('x2 maker alto a', 'alto', 'a', [m + 12 for m in MAKER]), ('x2 made alto u', 'alto', 'u', [m + 12 for m in made]),
+                                      ('x4 maker sop a', 'soprano', 'a', [m + 24 for m in MAKER]), ('x4 made sop u', 'soprano', 'u', [m + 24 for m in made])]:
+        g, r = note_gain(part, vowel, notes)
+        med = np.median(list(r.values()))
+        print(f'{label:16s}', '  '.join(f'{m}:{20*np.log10(v/med):+.1f}dB→{20*np.log10(g[m]):+.1f}' for m, v in sorted(r.items())))

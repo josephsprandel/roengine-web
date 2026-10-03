@@ -1,0 +1,60 @@
+"""The Seam: Clay (ends in A-U-M) → the study (in, A-U-M, out) → Home (M-U-A, then apart). Loops forever."""
+import numpy as np, json, os
+from seam_study import dry_mix, finish, T_IN, HOLD, DUR as STUDY
+from clay import clay, CL
+from env import envelope
+
+SR = 44100
+CALM = 2.6
+
+
+def ground(L, R, windows):
+    """The whole loop at once: noise shaped by the piece's long-term average spectrum.
+    Inaudible under the music; it surfaces in the quiet places — the empty church at both ends
+    and the silence after the M — because it was there all along."""
+    n = len(L)
+    mono = (L + R) / 2
+    seg = 8192
+    frames = mono[: (n // seg) * seg].reshape(-1, seg) * np.hanning(seg)
+    ltas = np.sqrt(np.mean(np.abs(np.fft.rfft(frames, axis=1)) ** 2, axis=0))      # average magnitude spectrum
+    fr = np.fft.rfftfreq(seg, 1 / SR)
+    rng = np.random.default_rng(77)
+    out = []
+    for ch in range(2):
+        X = np.fft.rfft(rng.standard_normal(n))
+        shape = np.interp(np.fft.rfftfreq(n, 1 / SR), fr, ltas)
+        y = np.fft.irfft(X * shape, n)
+        y /= np.sqrt(np.mean(y ** 2))
+        out.append(y)
+    peak = max(np.abs(L).max(), np.abs(R).max())
+    base = peak * 10 ** (-58 / 20)
+    t = np.arange(n) / SR
+    from voice import smooth
+    swell = np.ones(n)
+    for (a, b), gain in windows:                      # the ground surfaces in every silence
+        swell += gain * smooth((t - a + 0.6) / 1.4) * (1 - smooth((t - b + 0.4) / 0.8))
+    return out[0] * base * swell, out[1] * base * swell
+
+
+def main():
+    cL, cR, sparks_in = clay('in')
+    sL, sR = dry_mix(recursion=True)
+    hL, hR, sparks_out = clay('out')
+    calm = np.zeros(int(CALM * SR))                      # a breath between the born voice and the first call (and its mirror)
+    L = np.concatenate([cL, calm, sL, calm, hL]); R = np.concatenate([cR, calm, sR, calm, hR])
+    STUDY_AT = CL + CALM; HOME_AT = STUDY_AT + STUDY + CALM
+    sil = (STUDY_AT + T_IN + 5.2, STUDY_AT + T_IN + HOLD)   # the hum is gone; the room and the ground remain
+    gL, gR = ground(L, R, [(sil, 11), ((CL - 0.4, STUDY_AT + 0.2), 4), ((STUDY_AT + STUDY - 0.2, HOME_AT + 0.4), 4)])
+    L += gL; R += gR
+    meta = {
+        'dur': len(L) / SR, 'clay': CL, 'study': STUDY, 'home': CL,
+        'singularity': STUDY_AT + T_IN, 'hold': HOLD, 'silence': list(sil), 'calm': CALM, 'study_at': STUDY_AT, 'home_at': HOME_AT,
+        'sparks_in': [round(t, 4) for t in sparks_in], 'sparks_out': [round(HOME_AT + t, 4) for t in sparks_out],
+    }
+    finish(L, R, 'seam_v1', meta)
+    meta['env'] = envelope(np.load(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'seam_v1.npy')))
+    json.dump(meta, open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'seam_v1.json'), 'w'))
+
+
+if __name__ == '__main__':
+    main()

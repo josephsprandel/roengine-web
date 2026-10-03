@@ -1,0 +1,148 @@
+"""
+Clay — before anything is made, and Home, the same thing in mirror.
+
+White noise holds every frequency at once: every possible sound, unshaped, the way a lump of
+clay holds every pot. Noise through a vowel filter is a whisper: a mouth with no voice behind it.
+
+  room      the empty cathedral (turiya: the ground the rest happens on)
+  breath    six whispering voices enter one by one, each breathing at its own pace, drifting
+            through vowels; then their breathing falls into step and their vowels converge on A
+  sparks    glottal clicks appear in the noise at random, grow denser, lock into a rhythm,
+            and the rhythm becomes D on "ah": the first maker's first note
+
+Home runs the same curves backwards: the last voice comes apart into random clicks, the breath
+falls out of step, the whispers leave, and the room is empty again.
+"""
+import numpy as np
+from scipy.signal import butter, sosfilt
+from voice import V, formant_bank, smooth, BLOCK
+from seam_study import PULSE, F_END
+
+# the voice clay gives birth to sings what the voice at the singularity sings: A-U-M, on the same clock
+AUM_KEYS = [(0.0, 'a'), (1.7, 'a'), (2.6, 'u'), (3.5, 'm')]
+AUM_AMP = ([0, 1.7, 2.6, 3.5], [2.6, 2.6, 1.2, 0.5])
+AUM_END = 5.2
+
+SR = 44100
+CL = 52.0
+LOCK = 0.86          # sparks lock into a rhythm here
+BORN = 0.89          # ...and the rhythm is a voice here
+NC = int(CL * SR)
+VOWELS = ['a', 'e', 'i', 'o', 'u']
+
+
+def interp_vowel(part, weights_over_time):
+    """weights_over_time: list of (vowel, weight array per block). Log-frequency blend."""
+    nb = len(weights_over_time[0][1])
+    F = np.zeros((nb, 5)); A = np.zeros((nb, 5)); B = np.zeros((nb, 5))
+    tot = sum(w for _, w in weights_over_time) + 1e-9
+    for v, w in weights_over_time:
+        f, a, b = V[part][v]
+        F += np.outer(w / tot, np.log(f)); A += np.outer(w / tot, a); B += np.outer(w / tot, b)
+    return np.exp(F), 10 ** (A / 20), B
+
+
+def aum_amp(u):
+    """The singularity's A-U-M envelope (seam_study.new_voice_source): A fullest, U softer, M a hum, then gone."""
+    return float(np.interp(u, *AUM_AMP)) * smooth(u / 0.15) * (1 - smooth((u - 4.4) / 0.8))
+
+
+def clay(direction='in', seed=5):
+    rng = np.random.default_rng(seed)
+    t = np.arange(NC) / SR
+    x = t / CL if direction == 'in' else 1 - t / CL          # Home walks the same curves backwards
+    nb = int(np.ceil(NC / BLOCK))
+    xb = ((np.arange(nb) + 0.5) * BLOCK / SR) / CL
+    if direction != 'in':
+        xb = 1 - xb
+    L = np.zeros(NC); R = np.zeros(NC)
+
+    # ── room: soft pink-ish air, always there ────────────────────────────────────────────
+    air = sosfilt(butter(1, 350, 'low', fs=SR, output='sos'), rng.standard_normal(NC)) * 0.02
+    L += air; R += sosfilt(butter(1, 350, 'low', fs=SR, output='sos'), rng.standard_normal(NC)) * 0.02
+
+    # ── breath: six whispers ─────────────────────────────────────────────────────────────
+    sync = smooth((x - 0.40) / 0.20)                          # 0 = each on its own, 1 = in step (by 0:31)
+    syncb = smooth((xb - 0.40) / 0.20)
+    toA = smooth((xb - 0.45) / 0.20)                          # vowels converge on A
+    fade_for_voice = 1 - smooth((x - 0.88) / 0.1)             # the whispers recede as the voice is born
+    parts = ['bass', 'tenor', 'alto', 'bass', 'tenor', 'alto']
+    pans = [-0.8, -0.45, -0.15, 0.15, 0.45, 0.8]
+    for i in range(6):
+        enter = 0.08 + 0.055 * i
+        P = rng.uniform(2.8, 5.2)
+        own = np.cumsum(np.full(NC, 1 / (P * SR))) + rng.uniform(0, 1)
+        common = t / 4.0 if direction == 'in' else (CL - t) / 4.0
+        common = common if direction == 'in' else -common      # keep phase running forward
+        phase = (1 - sync) * own + sync * (t / 4.0)
+        p = phase % 1.0
+        exhale = smooth(p / 0.12) * (1 - smooth((p - 0.5) / 0.32))
+        inhale = 0.18 * smooth((p - 0.82) / 0.08) * (1 - smooth((p - 0.96) / 0.04))
+        level = smooth((x - enter) / 0.08) * (0.55 + 0.45 * sync) * fade_for_voice
+        src = rng.standard_normal(NC) * (exhale + inhale) * level
+        # each whisper wanders through vowels (a new target every ~2.5 s), then converges on A
+        k = max(2, int(CL / 2.5) + 2)
+        targets = rng.integers(0, 5, k)
+        pos = np.clip(xb * CL / 2.5, 0, k - 1.001)
+        lo = np.floor(pos).astype(int); frac = smooth(pos - lo)
+        ws = []
+        for vi, v in enumerate(VOWELS):
+            w = (targets[lo] == vi) * (1 - frac) + (targets[np.minimum(lo + 1, k - 1)] == vi) * frac
+            ws.append((v, w * (1 - toA) + (toA if v == 'a' else 0)))
+        F, A, B = interp_vowel(parts[i], ws)
+        y = formant_bank(src, F, A, B * 1.6) * 0.5           # whispers: wider resonances than voice
+        g = (pans[i] + 1) * np.pi / 4
+        L += y * np.cos(g); R += y * np.sin(g)
+
+    # ── sparks: random clicks → rhythm → pitch (D on "ah") ───────────────────────────────
+    clicks = []
+    if direction == 'in':
+        tt = (LOCK - 0.20) * CL
+        while tt < LOCK * CL:                                  # random, denser and denser
+            lam = 0.35 * np.exp(np.log(18) * (tt / CL - (LOCK - 0.20)) / 0.20)
+            tt += rng.exponential(1 / lam)
+            if tt < LOCK * CL:
+                clicks.append((tt, rng.uniform(0.25, 0.7), rng.uniform(-0.6, 0.6)))
+        tt, T = LOCK * CL, 0.16                                # they lock into a rhythm that tightens
+        while tt < BORN * CL:
+            clicks.append((tt, 0.55, 0.0)); T = max(1 / F_END, T * 0.93); tt += T
+        while tt < BORN * CL + AUM_END:                        # a voice on D, and it sings A-U-M
+            u = tt - BORN * CL
+            clicks.append((tt, 0.27 * aum_amp(u), 0.0))
+            tt += (1 / F_END) / (1 + 0.012 * np.sin(2 * np.pi * 5.3 * u) * smooth(u / 0.5))
+    else:
+        tt = (1 - BORN) * CL - AUM_END                         # the last voice rises out of the silence: M-U-A
+        while tt < (1 - BORN) * CL:
+            u = (1 - BORN) * CL - tt
+            clicks.append((tt, 0.27 * aum_amp(u), 0.0))
+            tt += (1 / F_END) / (1 + 0.012 * np.sin(2 * np.pi * 5.3 * tt))
+        T = 1 / F_END
+        while tt < (1 - LOCK) * CL:                            # loosens into a rhythm
+            clicks.append((tt, 0.55, 0.0)); T = min(0.16, T / 0.93); tt += T
+        while tt < (1 - LOCK + 0.20) * CL:                     # comes apart into sparks, sparser and sparser
+            xr = 1 - tt / CL
+            lam = 0.35 * np.exp(np.log(18) * (xr - (LOCK - 0.20)) / 0.20)
+            tt += rng.exponential(1 / lam)
+            if tt < (1 - LOCK + 0.20) * CL:
+                clicks.append((tt, rng.uniform(0.25, 0.7), rng.uniform(-0.6, 0.6)))
+    src = np.zeros(NC)
+    pan_track = np.zeros(NC)
+    for (tc, a, pn) in clicks:
+        j = int(tc * SR)
+        if 0 <= j < NC - len(PULSE):
+            src[j:j + len(PULSE)] += PULSE * a
+            src[j:j + len(PULSE)] += rng.normal(0, 0.06, len(PULSE)) * np.hanning(len(PULSE)) * a
+            pan_track[j:j + len(PULSE)] = pn
+    tb = (np.arange(nb) + 0.5) * BLOCK / SR
+    u = tb - BORN * CL if direction == 'in' else (1 - BORN) * CL - tb   # time since the voice was born (mirrored home)
+    xs = [k for k, _ in AUM_KEYS]
+    F = np.zeros((nb, 5)); A = np.zeros((nb, 5)); B = np.zeros((nb, 5))
+    for j in range(5):                                         # before birth, the clicks speak through A
+        F[:, j] = np.exp(np.interp(u, xs, [np.log(V['tenor'][v][0][j]) for _, v in AUM_KEYS]))
+        A[:, j] = 10 ** (np.interp(u, xs, [V['tenor'][v][1][j] for _, v in AUM_KEYS]) / 20)
+        B[:, j] = np.interp(u, xs, [V['tenor'][v][2][j] for _, v in AUM_KEYS])
+    voice = formant_bank(src, F, A, B)
+    voice *= 0.95 / (np.abs(voice).max() + 1e-9)
+    g = (pan_track + 1) * np.pi / 4
+    L += voice * np.cos(g); R += voice * np.sin(g)
+    return L, R, [c[0] for c in clicks]

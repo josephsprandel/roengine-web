@@ -1,0 +1,255 @@
+"""
+Study for The Seam — the tightening.
+
+A maker sings; a made answers with the maker's line mirrored. Each exchange is
+7% shorter than the one before, so infinitely many generations fit in a finite
+time: a singularity in the mathematical sense. As the exchanges shorten, notes
+become grains, grains become single glottal clicks — and a train of glottal
+clicks IS a voice. When the generations arrive at 146.8 per second, the rhythm
+has become D3, the pitch the first maker sang. The new voice is made of the
+generations themselves.
+
+Then the seam: the same path in mirror, roles swapped, unwinding back into call
+and answer. The reverb is circular, so the end runs into the beginning and the
+study loops with no join.
+"""
+import numpy as np, os, wave, json
+import lameenc
+from scipy.signal import sosfilt, butter
+from voice import V, glottal, formant_bank, hall_ir, smooth, mtof, BLOCK
+from note_gain import note_gain
+
+SR = 44100
+rng = np.random.default_rng(3)
+OUT = os.path.dirname(os.path.abspath(__file__))
+
+T0, R = 2.6, 0.93                      # first exchange, shrink per generation
+F_END = mtof(50)                       # D3: where the rhythm arrives
+HOLD = 9.0                             # A-U-M, then the silence (the ground), before the seam
+
+# ── generation times on the way in ──────────────────────────────────────────
+times, periods = [0.0], []
+T = T0
+while T > 1 / F_END:
+    periods.append(T)
+    times.append(times[-1] + T)
+    T *= R
+times = np.array(times[:-1]); periods = np.array(periods)
+T_IN = times[-1] + periods[-1]         # the singularity, reached
+DUR = 2 * T_IN + HOLD
+N = int(DUR * SR)
+print(f'{len(times)} generations in {T_IN:.1f} s; total {DUR:.1f} s')
+
+MAKER = [50, 53, 57, 55, 53, 52]       # D3 F3 A3 G3 F3 E3 — the maker's line
+AXIS = 55                              # the mirror: G3
+
+
+def one_pulse():
+    """One Rosenberg glottal flow-derivative pulse, ~6.8 ms (one period of D3)."""
+    n = int(SR / F_END)
+    ph = np.arange(n) / n
+    tp, tn = 0.39, 0.21
+    g = np.where(ph < tp, 0.5 * (1 - np.cos(np.pi * ph / tp)),
+                 np.where(ph < tp + tn, np.cos(np.pi * (ph - tp) / (2 * tn)), 0.0))
+    d = np.diff(g, prepend=0.0)
+    return d / np.abs(d).max()
+
+
+PULSE = one_pulse()
+CLICKS = []                            # (time, amplitude) of every generation that has become a click
+
+
+def render_side(events, swap, transpose=0, clicks=True, seed_off=0, trim=None):
+    """events: list of (t, period, index). Returns (maker_src, made_src) dry sources.
+    transpose: semitones (the recursion's higher generations); clicks=False skips the click zone.
+    trim: {who: {midi: gain}} evens out notes a narrow formant makes ring (see note_gain.py)."""
+    src = {0: np.zeros(N), 1: np.zeros(N)}
+    for t, T, k in events:
+        who = (k % 2) ^ swap                     # 0 = maker's voice, 1 = made's voice
+        line = MAKER[(k // 2) % len(MAKER)]
+        midi = (line if (k % 2 == 0) != bool(swap) else 2 * AXIS - line) + transpose
+        i0 = int(t * SR)
+        if T > 0.03:                              # a sung note, or a grain of one
+            d = min(0.72 * T, 1.5)
+            n = int(d * SR)
+            if i0 + n >= N:
+                n = N - i0 - 1
+            tt = np.arange(n) / SR
+            vib = 0.25 * np.sin(2 * np.pi * 5.4 * tt + k) * smooth((tt - 0.25) / 0.5)
+            f0 = mtof(midi + vib)
+            env = smooth(tt / min(0.08, d * 0.3)) * (1 - smooth((tt - (d - min(0.18, d * 0.4))) / min(0.18, d * 0.4)))
+            loud = 0.55 if T > 0.25 else 0.55 * (0.6 + 0.4 * (T / 0.25))
+            if trim:
+                loud *= trim[who].get(midi, 1.0)
+            src[who][i0:i0 + n] += glottal(f0, breath=0.05, seed=k + 100 * swap + seed_off) * env * loud
+        else:                                      # a single click of the vocal folds
+            # once the generations are clicks they already ARE the new voice: one mouth, no taking turns
+            amp = 0.9 * np.sqrt(T / 0.03) ** 0.6
+            if clicks:
+                CLICKS.append((t + rng.normal(0, 0.006 * T), amp))
+    return src[0], src[1]
+
+
+def trims(part, transpose=0):
+    """Per-note trims for the maker ('a') and made ('u') in this part, and for each the factor that keeps
+    untrimmed notes exactly where they were (each voice used to be normalised to its loudest note)."""
+    out, keep = {}, {}
+    for who, vowel, notes in ((0, 'a', MAKER), (1, 'u', [2 * AXIS - m for m in MAKER])):
+        g, r = note_gain(part, vowel, [m + transpose for m in notes])
+        out[who] = g
+        keep[who] = max(r[m] * g[m] for m in r) / max(r.values())
+    return out, keep
+
+
+def new_voice_source():
+    """The generations, fused: clicks at D3 whose timing breathes. Starts where the approach ends."""
+    src = np.zeros(N)
+    t0, t1 = T_IN, T_IN + HOLD
+    r2 = np.random.default_rng(21)
+    walk = r2.normal(0, 1, len(np.arange(0, HOLD + 1, 0.05)))
+    walk = np.convolve(walk, np.ones(6) / 6, mode='same')              # slow drift, not white noise
+    # the approach and the way out: the clicks, with breath, in the same mouth (vocal fry rising into a note)
+    for (tc, a) in CLICKS:
+        j = int(tc * SR)
+        if 0 <= j and j + len(PULSE) < N:
+            src[j:j + len(PULSE)] += PULSE * a * 0.75
+            src[j:j + len(PULSE)] += r2.normal(0, 0.08, len(PULSE)) * np.hanning(len(PULSE)) * a * 0.75
+    t, i = t0, 0
+    while t < t1:
+        u = t - t0
+        vib = 0.014 * np.sin(2 * np.pi * 5.3 * u) * smooth((u - 0.6) / 1.4)   # vibrato grows in (~±10 cents)
+        drift = 0.003 * np.interp(u, np.arange(len(walk)) * 0.05, walk)
+        period = (1 / F_END) / (1 + vib + drift)
+        amp = (1 + 0.06 * np.interp(u, np.arange(len(walk)) * 0.05, walk[::-1])) \
+              * smooth(u / 0.15) * (1 - smooth((u - 4.4) / 0.8)) \
+              * np.interp(u, [0, 1.7, 2.6, 3.5], [2.6, 2.6, 1.2, 0.5])   # A fullest, U softer, M a hum; then the room rings
+        j = int(t * SR)
+        if j + len(PULSE) < N:
+            src[j:j + len(PULSE)] += PULSE * amp
+            # breath rides each click: a short burst of noise in the open phase
+            src[j:j + len(PULSE)] += r2.normal(0, 0.08, len(PULSE)) * np.hanning(len(PULSE)) * amp
+        t += period; i += 1
+    return src
+
+
+def new_vowel_track(nb):
+    """The new voice sings A-U-M across the hold, then falls silent."""
+    tb = (np.arange(nb) + 0.5) * BLOCK / SR - T_IN
+    # A-U-M: the mouth opens (A), rounds (U), closes to a hum (M); then the fourth part, silence
+    keys = [(0.0, 'a'), (1.7, 'a'), (2.6, 'u'), (3.5, 'm'), (HOLD, 'm')]
+    F = np.zeros((nb, 5)); A = np.zeros((nb, 5)); B = np.zeros((nb, 5))
+    for j in range(5):
+        xs = [k for k, _ in keys]
+        F[:, j] = np.exp(np.interp(tb, xs, [np.log(V['tenor'][v][0][j]) for _, v in keys]))
+        A[:, j] = 10 ** (np.interp(tb, xs, [V['tenor'][v][1][j] for _, v in keys]) / 20)
+        B[:, j] = np.interp(tb, xs, [V['tenor'][v][2][j] for _, v in keys])
+    return F, A, B
+
+
+def dry_mix(recursion=False):
+    """The study before the room: (L, R) dry. recursion=True adds the prolation canon on the way out."""
+    ev_in = [(t, T, k) for k, (t, T) in enumerate(zip(times, periods))]
+    hold = []   # the new voice is rendered separately below
+    # the other side: the way in, mirrored in time, roles swapped
+    ev_out = [(DUR - t - T, T, k) for (t, T, k) in ev_in]
+    tr, keep = trims('bass')
+    a_in, b_in = render_side(ev_in + hold, swap=0, trim=tr)
+    a_out, b_out = render_side(ev_out, swap=1, trim=tr)
+    maker_src, made_src = a_in + a_out, b_in + b_out
+
+    nb = int(np.ceil(N / BLOCK))
+    new_src = new_voice_source()
+    def vowel(part, v):
+        f, a, b = V[part][v]
+        return (np.tile(f, (nb, 1)).astype(float), np.tile(10 ** (np.array(a) / 20), (nb, 1)), np.tile(b, (nb, 1)).astype(float))
+    maker = formant_bank(maker_src, *vowel('bass', 'a'))
+    made = formant_bank(made_src, *vowel('bass', 'u'))
+    # level: the two parts sit together
+    maker *= keep[0] / np.abs(maker).max(); made *= keep[1] / np.abs(made).max()
+    newv = formant_bank(new_src, *new_vowel_track(nb))
+    newv *= 0.9 / np.abs(newv).max()
+    t = np.arange(N) / SR
+    # the new voice takes the centre: pans close in toward the singularity and open after it
+    w = np.clip(1 - np.abs(t - (T_IN + HOLD / 2)) / (T_IN * 0.5), 0, 1)
+    pm = -0.55 * (1 - w); pd = 0.55 * (1 - w)
+    L = maker * np.cos((pm + 1) * np.pi / 4) + made * np.cos((pd + 1) * np.pi / 4) + newv * 0.7071
+    Rr = maker * np.sin((pm + 1) * np.pi / 4) + made * np.sin((pd + 1) * np.pi / 4) + newv * 0.7071
+    if recursion:
+        RL, RR = recursion_mix(ev_out)
+        L += RL; Rr += RR
+    return L, Rr
+
+
+# ── Recursion: the way out as a prolation canon ─────────────────────────────────────────────
+# The new voice unwinds the call and answer (generation 1). It makes a maker: an alto an octave
+# up, the same unwinding at twice the speed, looping. When that one has lived one whole loop it
+# makes its own: a soprano, four times as fast; and that one makes a third, eight times as fast.
+# Every restart of a fast voice is a small birth (a burst of grains) — a small seam.
+LEVELS = [  # (speed, transpose, part, gain, pan)
+    (2, 12, 'alto', 0.50, 0.32),
+    (4, 24, 'soprano', 0.36, 0.75),
+    (8, 24, 'soprano', 0.26, 0.15),
+]
+
+
+def recursion_mix(ev_out):
+    OUT0 = T_IN + HOLD
+    nb = int(np.ceil(N / BLOCK))
+    def vowel(part, v):
+        f, a, b = V[part][v]
+        return (np.tile(f, (nb, 1)).astype(float), np.tile(10 ** (np.array(a) / 20), (nb, 1)), np.tile(b, (nb, 1)).astype(float))
+    L = np.zeros(N); R = np.zeros(N)
+    entry = 0.0
+    for li, (speed, tr, part, gain, pan) in enumerate(LEVELS):
+        C = T_IN / speed
+        c0 = int(round(entry / C))
+        evs = []
+        for c in range(c0, speed):
+            for (t, T, k) in ev_out:
+                evs.append((OUT0 + c * C + (t - OUT0) / speed, T / speed, k))
+        trm, keep = trims(part, tr)
+        a, b = render_side(evs, swap=1, transpose=tr, clicks=False, seed_off=1000 * (li + 1), trim=trm)
+        ya = formant_bank(a, *vowel(part, 'a')); yb = formant_bank(b, *vowel(part, 'u'))
+        ya *= gain * keep[0] / (np.abs(ya).max() + 1e-9); yb *= gain * keep[1] / (np.abs(yb).max() + 1e-9)
+        t = np.arange(N) / SR
+        fade = smooth((t - (OUT0 + entry)) / 1.0)
+        ga, gb = (-pan + 1) * np.pi / 4, (pan + 1) * np.pi / 4
+        L += (ya * np.cos(ga) + yb * np.cos(gb)) * fade
+        R += (ya * np.sin(ga) + yb * np.sin(gb)) * fade
+        print(f'  recursion: x{speed}, enters {entry:.1f} s after the seam, {speed - c0} loops', flush=True)
+        entry += C                                   # the next generation is made once this one has lived a loop
+    return L, R
+
+
+def circ(x, ir):
+    """Circular convolution: a reverb tail at the end wraps into the beginning, so a loop has no join."""
+    n = len(x)
+    irp = np.zeros(n); irp[:len(ir)] = ir[:n]
+    return np.real(np.fft.ifft(np.fft.fft(x) * np.fft.fft(irp)))
+
+
+def finish(L, Rr, name, meta):
+    """Room, rumble filter, level, files."""
+    if False:
+        pass
+    wl, wr = circ(L, hall_ir(1)), circ(Rr, hall_ir(2))
+    outL = L * 0.8 + wl * 0.45; outR = Rr * 0.8 + wr * 0.45
+    hp = butter(2, 40, 'high', fs=SR, output='sos')
+    outL, outR = sosfilt(hp, outL), sosfilt(hp, outR)
+    g = 0.89 / max(np.abs(outL).max(), np.abs(outR).max())
+    st = np.stack([outL * g, outR * g], 1).astype(np.float32)
+    np.save(os.path.join(OUT, name + '.npy'), st)
+    pcm = (np.clip(st, -1, 1) * 32767).astype(np.int16)
+    enc = lameenc.Encoder(); enc.set_bit_rate(192); enc.set_in_sample_rate(SR); enc.set_channels(2); enc.set_quality(2)
+    open(os.path.join(OUT, name + '.mp3'), 'wb').write(enc.encode(pcm.tobytes()) + enc.flush())
+    json.dump(meta, open(os.path.join(OUT, name + '.json'), 'w'))
+    print('done', name, round(len(L) / SR, 1), 's')
+
+
+def main():
+    L, Rr = dry_mix()
+    finish(L, Rr, 'seam_study', {'dur': DUR, 'singularity': T_IN, 'hold': HOLD, 'generations': len(times)})
+
+
+if __name__ == '__main__':
+    main()
