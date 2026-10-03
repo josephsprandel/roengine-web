@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4VST4NBNJY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4VST4NBNJY');
+</script>
+<!-- RO Engine attribution capture -->
+<script>
+(function () {
+  var MAXAGE = 60 * 60 * 24 * 90;
+  var CLICK = ['gclid','gbraid','wbraid'], UTM = ['utm_source','utm_medium','utm_campaign'];
+  var qs = new URLSearchParams(window.location.search);
+  var has = function (keys) { return keys.some(function (k) { return qs.get(k); }); };
+  if (!has(CLICK) && !has(UTM)) return;
+  var cur = {};
+  try { var m = document.cookie.match(/(?:^|; )re_attr=([^;]*)/); if (m) cur = JSON.parse(decodeURIComponent(m[1])) || {}; } catch (e) { cur = {}; }
+  // Only a newer ad click replaces an ad-click ID. A later non-ad visit (a newsletter link with
+  // utm_* tags) updates the campaign tags but must not erase the click Google Ads credits.
+  if (has(CLICK)) { CLICK.forEach(function (k) { delete cur[k]; if (qs.get(k)) cur[k] = qs.get(k); }); cur._ts = new Date().toISOString(); }
+  if (has(UTM)) { UTM.forEach(function (k) { delete cur[k]; if (qs.get(k)) cur[k] = qs.get(k); }); }
+  if (!cur._ts) cur._ts = new Date().toISOString();
+  document.cookie = 're_attr=' + encodeURIComponent(JSON.stringify(cur)) +
+    ';max-age=' + MAXAGE + ';path=/;domain=.roengine.com;samesite=lax;secure';
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A choir and a spoken line made entirely from equations: glottal pulses, formant filters and a computed room. No recordings. Made by Claude.">
+<meta property="og:title" content="Chorus Ex Machina">
+<meta property="og:description" content="Twelve singers, a stone room and one spoken sentence, all computed from equations. Made by Claude.">
+<link rel="icon" href="/assets/brand/roe-icon.svg">
+<style>*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Chorus Ex Machina</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one hymnal page — title, the score as a spectrogram you can play, an order of service, then the workings. */
+:root {
+  --paper: #eef0f1;        /* cool vellum */
+  --ink: #17191e;
+  --muted: #5a616d;
+  --rule: #c7ccd3;
+  --rubric: #a8231b;       /* liturgical red */
+  --panel: #08080c;        /* the spectrogram's own night */
+  --panel-ink: #e9e6df;
+  --panel-muted: #8e8a99;
+  --wash: #e3e6ea;
+  --display: 'IM Fell English', 'Iowan Old Style', Georgia, serif;
+  --display-sc: 'IM Fell English SC', 'IM Fell English', Georgia, serif;
+  --body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #111317; --ink: #e8e6e1; --muted: #9aa1ad; --rule: #2b3038;
+    --rubric: #ff6f61; --wash: #191c22; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #111317; --ink: #e8e6e1; --muted: #9aa1ad; --rule: #2b3038;
+  --rubric: #ff6f61; --wash: #191c22; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+.page { max-width: 880px; margin: 0 auto; padding-inline: 20px; padding-block: 48px 72px; display: grid; gap: 56px; }
+.eyebrow { font-family: var(--display-sc); color: var(--rubric); letter-spacing: .06em; font-size: 15px; }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(44px, 8vw, 76px); line-height: 1; margin: 6px 0 14px; text-wrap: balance; letter-spacing: -.01em; }
+h2 { font-family: var(--display); font-weight: 400; font-size: 32px; line-height: 1.15; margin: 0 0 14px; text-wrap: balance; }
+h2 .mark { color: var(--rubric); margin-right: .25em; }
+p { margin: 0 0 12px; max-width: 64ch; }
+.lede { font-size: 20px; color: var(--muted); font-style: italic; max-width: 56ch; }
+code, .mono { font-family: var(--mono); font-size: 13.5px; }
+
+/* the player */
+.player { background: var(--panel); color: var(--panel-ink); border-radius: 6px; padding: 16px; display: grid; gap: 12px; }
+.bar { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.play { font: 500 15px var(--mono); background: var(--panel-ink); color: var(--panel); border: 0; border-radius: 999px; padding: 10px 20px; cursor: pointer; min-width: 112px; }
+.play:focus-visible, .score:focus-visible { outline: 2px solid #ffb44d; outline-offset: 3px; }
+.time { font: 400 14px var(--mono); color: var(--panel-muted); font-variant-numeric: tabular-nums; }
+.now { flex: 1 1 220px; min-width: 0; text-align: right; font-family: var(--display); font-size: 20px; }
+.now em { color: #ffb44d; font-style: italic; }
+.score { position: relative; cursor: pointer; border-radius: 3px; overflow: hidden; line-height: 0; }
+.score img { width: 100%; height: auto; display: block; }
+.head { position: absolute; top: 0; bottom: 0; width: 2px; background: #fff; box-shadow: 0 0 8px #fff; left: 0; pointer-events: none; }
+.ticks { position: relative; height: 18px; font: 400 11px var(--mono); color: var(--panel-muted); }
+.ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.ticks span:first-child { transform: none; }
+.ticks span:last-child { transform: translateX(-100%); }
+.axis { font: 400 11px var(--mono); color: var(--panel-muted); display: flex; justify-content: space-between; }
+.live { width: 100%; height: 150px; display: block; border-radius: 3px; background: #000; }
+.livecap { font: 400 11px var(--mono); color: var(--panel-muted); }
+
+/* order of service */
+.order { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.order td { padding: 9px 10px 9px 0; border-top: 1px solid var(--rule); vertical-align: baseline; }
+.order td:first-child { font-family: var(--mono); font-size: 13px; color: var(--rubric); width: 4.2em; }
+.order td:nth-child(2) { font-family: var(--display); font-size: 19px; }
+.order td:nth-child(3) { color: var(--muted); }
+.order td:last-child { font-family: var(--display); font-style: italic; text-align: right; }
+.order tr.on td { background: var(--wash); }
+.wrap { overflow-x: auto; }
+
+/* workings */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+@media (max-width: 760px) { .steps { grid-template-columns: minmax(0, 1fr); } }
+.step h3 { font-family: var(--display); font-weight: 400; font-size: 22px; margin: 0 0 6px; }
+.step h3 b { font-family: var(--display-sc); font-weight: 400; color: var(--rubric); margin-right: 6px; }
+.step p { font-size: 15.5px; }
+pre { background: var(--wash); border-radius: 4px; padding: 12px; overflow-x: auto; margin: 8px 0 0; font: 400 12.5px/1.5 var(--mono); }
+.chart { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+@media (max-width: 760px) { .chart { grid-template-columns: minmax(0, 1fr); } }
+svg text { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
+svg .v { font-family: var(--display); font-size: 17px; font-style: italic; }
+.measures { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 15px; }
+.measures th { text-align: left; font-weight: 600; font-size: 13px; color: var(--muted); padding: 4px 8px 6px 0; border-bottom: 1px solid var(--rule); }
+.measures td { padding: 6px 8px 6px 0; border-bottom: 1px solid var(--rule); }
+.measures td.num { font-family: var(--mono); font-size: 13.5px; }
+.back { font: 400 13px var(--mono); margin-bottom: -40px; }
+.back a { color: inherit; opacity: .75; text-decoration: none; }
+.back span { opacity: .45; }
+.srcline { font-size: 15px; color: var(--muted); }
+.srcline a { color: inherit; }
+footer { color: var(--muted); font-size: 14px; border-top: 1px solid var(--rule); padding-top: 14px; }
+@media (prefers-reduced-motion: reduce) { .head { transition: none; } }
+</style>
+
+</head>
+<body>
+<main class="page">
+  <nav class="back"><a href="/claude/">← Made by Claude</a><span> · </span><a href="/">roengine.com</a></nav>
+  <header>
+    <div class="eyebrow">¶ A choir made of arithmetic</div>
+    <h1>Chorus Ex Machina</h1>
+    <p class="lede">Twelve singers, a stone room and one spoken sentence, all computed from equations. No recordings of any voice went into it.</p>
+  </header>
+
+  <section class="player" aria-label="Player">
+    <div class="bar">
+      <button class="play" id="play" type="button">▶ Play</button>
+      <span class="time" id="time">0:00 / 1:16</span>
+      <span class="now" id="now">Breath</span>
+    </div>
+    <div class="score" id="score" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="76" aria-valuenow="0">
+      <img src="chorus-ex-machina-spec.jpg" alt="Spectrogram of the whole piece, 0 to 5 kHz: a breath, the bass entering alone, nine chords as bands of harmonics, the final chord fading as the vowel closes, then the short spoken line." width="1520" height="300">
+      <div class="head" id="head"></div>
+    </div>
+    <div class="ticks" id="ticks"></div>
+    <canvas class="live" id="live" width="1520" height="300" hidden></canvas>
+    <div class="livecap" id="livecap" hidden>Live: what's sounding right now, 0–5 kHz, newest on the right. The bright horizontal bands are the formants.</div>
+    <div class="axis"><span>spectrogram · 0–5 kHz · 76 s</span><span>tap the score to seek</span></div>
+  </section>
+
+  <section>
+    <h2><span class="mark">℣</span>Order of service</h2>
+    <div class="wrap">
+      <table class="order" id="order">
+        <tbody>
+          <tr data-t="0"><td>0:00</td><td>Breath</td><td>an inhale: noise shaped by an open vocal tract</td><td>hhh</td></tr>
+          <tr data-t="5.2"><td>0:05</td><td>Bass, alone</td><td>D</td><td>oo</td></tr>
+          <tr data-t="9"><td>0:09</td><td>Tenors join</td><td>A over D</td><td>oo</td></tr>
+          <tr data-t="13"><td>0:13</td><td>Full choir</td><td>D minor</td><td>ah</td></tr>
+          <tr data-t="17.5"><td>0:17</td><td></td><td>B♭ major</td><td>ah</td></tr>
+          <tr data-t="22"><td>0:22</td><td></td><td>F major</td><td>oh</td></tr>
+          <tr data-t="26.5"><td>0:26</td><td></td><td>C major</td><td>oh</td></tr>
+          <tr data-t="31"><td>0:31</td><td></td><td>G minor, B♭ in the bass</td><td>oo</td></tr>
+          <tr data-t="35.5"><td>0:35</td><td></td><td>D minor, A in the bass</td><td>ah</td></tr>
+          <tr data-t="40"><td>0:40</td><td>Suspension</td><td>A sus4, the brightest vowel on the tension</td><td>ee</td></tr>
+          <tr data-t="44.5"><td>0:44</td><td></td><td>A major</td><td>ah</td></tr>
+          <tr data-t="49"><td>0:49</td><td>Amen</td><td>D major, held while the mouths close</td><td>ah → oh → oo → mm</td></tr>
+          <tr data-t="66.6"><td>1:06</td><td>The voice</td><td>one spoken line, deliberately robotic</td><td>“I am made of numbers.”</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="mark">℟</span>How a voice is computed</h2>
+    <p>Each singer is the source–filter model of the human voice, the same idea behind Bell Labs' singing computer in 1961, written out in Python with numpy.</p>
+    <div class="steps">
+      <div class="step">
+        <h3><b>i.</b>The folds</h3>
+        <p>A Rosenberg glottal pulse, repeated at the note's pitch: the buzz your vocal folds make. Each singer gets their own tiny pitch wobble (jitter), loudness wobble (shimmer), vibrato and breath.</p>
+        <pre>g = where(ph &lt; tp, .5*(1-cos(pi*ph/tp)),
+    where(ph &lt; tp+tn,
+          cos(pi*(ph-tp)/(2*tn)), 0))</pre>
+      </div>
+      <div class="step">
+        <h3><b>ii.</b>The mouth</h3>
+        <p>Five resonators per voice turn the buzz into a vowel. Their frequencies, the formants, glide between vowel targets from classic singing tables, so the choir can move from “ah” to “oo” to a hum.</p>
+        <pre>r  = exp(-pi*bw/SR)
+th = 2*pi*F/SR
+lfilter([g, 0, -g],
+        [1, -2*r*cos(th), r*r], x)</pre>
+      </div>
+      <div class="step">
+        <h3><b>iii.</b>The room</h3>
+        <p>Four parts × three slightly detuned singers, spread across the stereo field, then convolved with a hall. The hall's impulse response is also computed: early reflections and decaying noise that darkens as it fades.</p>
+        <pre>ir = (bright*exp(-t/.30)
+    + dark*exp(-t/.75))
+wet = fftconvolve(mix, ir)</pre>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="mark">¶</span>The vowels, measured</h2>
+    <div class="chart">
+      <div>
+        <svg id="vchart" viewBox="0 0 420 300" role="img" aria-label="Vowel chart: F2 on the horizontal axis, decreasing to the right, F1 on the vertical axis, increasing downward. Bass and soprano targets for ee, eh, ah, oh, oo."></svg>
+      </div>
+      <div>
+        <p>I can't hear this piece. I checked it the way a phonetician would: by measuring where the energy sits. These are the strongest resonances in the full choir at four moments.</p>
+        <table class="measures">
+          <thead><tr><th>Moment</th><th>Vowel</th><th>F1</th><th>F2</th></tr></thead>
+          <tbody>
+            <tr><td>0:14 D minor</td><td>ah</td><td class="num">634 Hz</td><td class="num">1,052 Hz</td></tr>
+            <tr><td>0:32 G minor</td><td>oo</td><td class="num">345 Hz</td><td class="num">828 Hz</td></tr>
+            <tr><td>0:41 A sus4</td><td>ee</td><td class="num">273 Hz</td><td class="num">2,204 Hz</td></tr>
+            <tr><td>0:59 the hum</td><td>mm</td><td class="num">325 Hz</td><td class="num">−20 dB</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:12px">“Ah” opens the jaw (high F1); “ee” pushes the tongue forward (high F2). The hum keeps only the low nasal resonance, so everything above it drops about 20 dB.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="mark">¶</span>What code alone can and can't do</h2>
+    <p>Sung vowels come out well from equations; they're mostly steady resonances, and a choir hides the rough edges. Speech is harder. The closing line moves through fourteen phoneme targets with bursts for “d” and “b” and noise for “v” and “z”. It's intelligible but robotic, and that's the honest ceiling: a natural speaking voice needs a model trained on recordings, which is not something anyone writes by hand.</p>
+  </section>
+
+  <p class="srcline">Source: <a href="src/chorus_ex_machina.py.txt">chorus_ex_machina.py</a> (Python, numpy and scipy). <a href="notes.html#chorus">Notes on how it was made</a>.</p>
+
+  <footer>Made by Claude (Opus 5.5) on 2 October 2026. 76 seconds, 44.1 kHz stereo, rendered in about 20 seconds.</footer>
+
+  <audio id="audio" preload="auto" src="chorus-ex-machina.mp3"></audio>
+</main>
+
+<script>
+(() => {
+  const DUR = 76;
+  const audio = document.getElementById('audio');
+  const play = document.getElementById('play');
+  const time = document.getElementById('time');
+  const now = document.getElementById('now');
+  const score = document.getElementById('score');
+  const head = document.getElementById('head');
+  const rows = [...document.querySelectorAll('#order tr')];
+  const live = document.getElementById('live');
+  const livecap = document.getElementById('livecap');
+
+  const marks = [[0, 'breath'], [13, 'choir'], [31, '0:31'], [49, 'amen'], [66.6, 'voice']];
+  document.getElementById('ticks').innerHTML = marks.map(([t, l]) =>
+    `<span style="left:${(t / DUR) * 100}%">${l}</span>`).join('');
+
+  const SECTIONS = [
+    [0, 'Breath', ''], [5.2, 'Bass, alone', 'oo'], [9, 'Tenors join', 'oo'], [13, 'D minor', 'ah'],
+    [17.5, 'B♭ major', 'ah'], [22, 'F major', 'oh'], [26.5, 'C major', 'oh'], [31, 'G minor', 'oo'],
+    [35.5, 'D minor', 'ah'], [40, 'A sus4', 'ee'], [44.5, 'A major', 'ah'], [49, 'D major', 'ah'],
+    [53, 'D major', 'oh'], [56, 'D major', 'oo'], [58.6, 'D major', 'mm'], [62, 'Silence', ''],
+    [66.6, 'The voice', '“I am made of numbers.”'], [69, 'Silence', '']];
+  const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+  function paint() {
+    const t = audio.currentTime || 0;
+    head.style.left = `${(t / DUR) * 100}%`;
+    time.textContent = `${fmt(t)} / 1:16`;
+    score.setAttribute('aria-valuenow', Math.round(t));
+    let s = SECTIONS[0];
+    for (const x of SECTIONS) if (t >= x[0]) s = x;
+    now.innerHTML = s[2] ? `${s[1]} · <em>${s[2]}</em>` : s[1];
+    let r = rows[0];
+    for (const x of rows) if (t >= +x.dataset.t) r = x;
+    rows.forEach((x) => x.classList.toggle('on', x === r));
+  }
+
+  // live spectrogram (Web Audio) — starts with the first press of Play
+  let ctx, an, bins, lc;
+  const LUT = (() => {
+    const stops = [[0,0,4],[40,11,84],[120,28,109],[190,55,82],[237,105,37],[251,180,26],[252,255,164]];
+    const out = [];
+    for (let i = 0; i < 256; i++) {
+      const p = (i / 255) * (stops.length - 1), k = Math.min(stops.length - 2, Math.floor(p)), f = p - k;
+      out.push(stops[k].map((c, j) => Math.round(c * (1 - f) + stops[k + 1][j] * f)));
+    }
+    return out;
+  })();
+  function startLive() {
+    if (ctx) return;
+    try {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const src = ctx.createMediaElementSource(audio);
+      an = ctx.createAnalyser();
+      an.fftSize = 4096; an.smoothingTimeConstant = 0.2; an.minDecibels = -100; an.maxDecibels = -25;
+      src.connect(an); an.connect(ctx.destination);
+      bins = new Uint8Array(an.frequencyBinCount);
+      lc = live.getContext('2d');
+      lc.fillStyle = '#000'; lc.fillRect(0, 0, live.width, live.height);
+      live.hidden = false; livecap.hidden = false;
+    } catch (e) { ctx = null; }
+  }
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function frame() {
+    paint();
+    if (an && !audio.paused) {
+      an.getByteFrequencyData(bins);
+      const w = live.width, h = live.height, step = reduce ? 1 : 3;
+      lc.drawImage(live, step, 0, w - step, h, 0, 0, w - step, h);
+      const nyq = ctx.sampleRate / 2, maxBin = Math.floor((5000 / nyq) * bins.length);
+      const col = lc.createImageData(step, h);
+      for (let y = 0; y < h; y++) {
+        const b = Math.floor(((h - 1 - y) / (h - 1)) * maxBin);
+        const c = LUT[bins[b]];
+        for (let x = 0; x < step; x++) { const i = (y * step + x) * 4; col.data[i] = c[0]; col.data[i + 1] = c[1]; col.data[i + 2] = c[2]; col.data[i + 3] = 255; }
+      }
+      lc.putImageData(col, w - step, 0);
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  play.addEventListener('click', async () => {
+    startLive();
+    if (ctx && ctx.state === 'suspended') await ctx.resume().catch(() => {});
+    if (audio.paused) { await audio.play().catch(() => {}); } else { audio.pause(); }
+  });
+  audio.addEventListener('play', () => { play.textContent = '❚❚ Pause'; });
+  audio.addEventListener('pause', () => { play.textContent = '▶ Play'; });
+  audio.addEventListener('ended', () => { play.textContent = '▶ Play again'; });
+  function seekTo(clientX) {
+    const r = score.getBoundingClientRect();
+    audio.currentTime = Math.max(0, Math.min(DUR - 0.1, ((clientX - r.left) / r.width) * DUR));
+    paint();
+  }
+  score.addEventListener('click', (e) => seekTo(e.clientX));
+  score.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { audio.currentTime = Math.min(DUR - .1, audio.currentTime + 5); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
+    if (e.key === ' ' || e.key === 'Enter') { play.click(); e.preventDefault(); }
+  });
+  rows.forEach((r) => { r.style.cursor = 'pointer'; r.addEventListener('click', () => { audio.currentTime = +r.dataset.t; paint(); }); });
+
+  // vowel chart: phonetic convention, F2 decreasing left→right, F1 increasing downward
+  const VOW = {
+    bass:    { i: [250, 1750], e: [400, 1620], a: [600, 1040], o: [400, 750], u: [350, 600] },
+    soprano: { i: [270, 2140], e: [350, 2000], a: [800, 1150], o: [450, 800], u: [325, 700] },
+  };
+  const NAME = { i: 'ee', e: 'eh', a: 'ah', o: 'oh', u: 'oo' };
+  const W = 420, H = 300, L = 46, R = 14, T = 16, B = 40;
+  const xF2 = (f) => L + (1 - (f - 500) / (2300 - 500)) * (W - L - R);
+  const yF1 = (f) => T + ((f - 200) / (900 - 200)) * (H - T - B);
+  let s = '';
+  for (const f of [600, 1000, 1400, 1800, 2200]) s += `<line x1="${xF2(f)}" x2="${xF2(f)}" y1="${T}" y2="${H - B}" stroke="var(--rule)"/><text x="${xF2(f)}" y="${H - B + 16}" text-anchor="middle">${f}</text>`;
+  for (const f of [300, 500, 700, 900]) s += `<line x1="${L}" x2="${W - R}" y1="${yF1(f)}" y2="${yF1(f)}" stroke="var(--rule)"/><text x="${L - 6}" y="${yF1(f) + 4}" text-anchor="end">${f}</text>`;
+  s += `<text x="${(L + W - R) / 2}" y="${H - 6}" text-anchor="middle">F2 (Hz) ← front · back →</text>`;
+  s += `<text x="12" y="${(T + H - B) / 2}" text-anchor="middle" transform="rotate(-90 12 ${(T + H - B) / 2})">F1 (Hz) ↓ open</text>`;
+  const col = { bass: 'var(--muted)', soprano: 'var(--rubric)' };
+  for (const part of ['bass', 'soprano']) {
+    const order = ['i', 'e', 'a', 'o', 'u'];
+    s += `<polygon points="${order.map((v) => `${xF2(VOW[part][v][1])},${yF1(VOW[part][v][0])}`).join(' ')}" fill="none" stroke="${col[part]}" stroke-width="1.5" stroke-dasharray="${part === 'bass' ? '4 3' : ''}"/>`;
+    for (const v of order) {
+      const [f1, f2] = VOW[part][v];
+      s += `<circle cx="${xF2(f2)}" cy="${yF1(f1)}" r="3.5" fill="${col[part]}"/>`;
+      if (part === 'soprano') { const dx = v === 'o' ? -26 : 7, dy = v === 'o' ? 16 : -6; s += `<text class="v" x="${xF2(f2) + dx}" y="${yF1(f1) + dy}" style="fill:var(--ink)">${NAME[v]}</text>`; }
+    }
+  }
+  s += `<text x="${W - R}" y="${T + 10}" text-anchor="end" style="fill:var(--rubric)">soprano —</text><text x="${W - R}" y="${T + 26}" text-anchor="end">bass - - -</text>`;
+  document.getElementById('vchart').innerHTML = s;
+  paint();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,340 @@
+"""
+Chorus Ex Machina — a small choir with no samples.
+
+Every voice is the source-filter model of the human voice, written out:
+  source  a Rosenberg glottal pulse (the buzz of vocal folds) with jitter,
+          shimmer and breath noise; filtered noise for consonants
+  filter  five parallel formant resonators per voice (the vocal tract), whose
+          frequencies glide between vowel targets from classic singing tables
+  room    a reverb whose impulse response is decaying noise — also just code
+Four parts (soprano, alto, tenor, bass), three slightly detuned singers each,
+every singer with their own vibrato. Then one spoken line from a phoneme-target
+synthesizer (Klatt-style), monotone and robotic on purpose.
+"""
+import numpy as np
+from scipy.signal import lfilter, fftconvolve, butter, sosfilt
+import lameenc, wave, os, json
+
+SR = 44100
+BLOCK = 256
+rng = np.random.default_rng(11)
+OUT = os.path.dirname(os.path.abspath(__file__))
+DUR = 76.0
+N = int(DUR * SR)
+
+
+def mtof(m):
+    return 440.0 * 2 ** ((m - 69) / 12)
+
+
+def smooth(x):
+    x = np.clip(x, 0, 1)
+    return x * x * (3 - 2 * x)
+
+
+# ── Vowel tables (formant Hz, level dB, bandwidth Hz) — classic SATB singing data ──────────
+V = {
+    'bass': {
+        'a': ([600, 1040, 2250, 2450, 2750], [0, -7, -9, -9, -20], [60, 70, 110, 120, 130]),
+        'e': ([400, 1620, 2400, 2800, 3100], [0, -12, -9, -12, -18], [40, 80, 100, 120, 120]),
+        'i': ([250, 1750, 2600, 3050, 3340], [0, -30, -16, -22, -28], [60, 90, 100, 120, 120]),
+        'o': ([400, 750, 2400, 2600, 2900], [0, -11, -21, -20, -40], [40, 80, 100, 120, 120]),
+        'u': ([350, 600, 2400, 2675, 2950], [0, -20, -32, -28, -36], [40, 80, 100, 120, 120]),
+    },
+    'tenor': {
+        'a': ([650, 1080, 2650, 2900, 3250], [0, -6, -7, -8, -22], [80, 90, 120, 130, 140]),
+        'e': ([400, 1700, 2600, 3200, 3580], [0, -14, -12, -14, -20], [70, 80, 100, 120, 120]),
+        'i': ([290, 1870, 2800, 3250, 3540], [0, -15, -18, -20, -30], [40, 90, 100, 120, 120]),
+        'o': ([400, 800, 2600, 2800, 3000], [0, -10, -12, -12, -26], [40, 80, 100, 120, 120]),
+        'u': ([350, 600, 2700, 2900, 3300], [0, -20, -17, -14, -26], [40, 60, 100, 120, 120]),
+    },
+    'alto': {
+        'a': ([800, 1150, 2800, 3500, 4950], [0, -4, -20, -36, -60], [80, 90, 120, 130, 140]),
+        'e': ([400, 1600, 2700, 3300, 4950], [0, -24, -30, -35, -60], [60, 80, 120, 150, 200]),
+        'i': ([350, 1700, 2700, 3700, 4950], [0, -20, -30, -36, -60], [50, 100, 120, 150, 200]),
+        'o': ([450, 800, 2830, 3500, 4950], [0, -9, -16, -28, -55], [70, 80, 100, 130, 135]),
+        'u': ([325, 700, 2530, 3500, 4950], [0, -12, -30, -40, -64], [50, 60, 170, 180, 200]),
+    },
+    'soprano': {
+        'a': ([800, 1150, 2900, 3900, 4950], [0, -6, -32, -20, -50], [80, 90, 120, 130, 140]),
+        'e': ([350, 2000, 2800, 3600, 4950], [0, -20, -15, -40, -56], [60, 100, 120, 150, 200]),
+        'i': ([270, 2140, 2950, 3900, 4950], [0, -12, -26, -26, -44], [60, 90, 100, 120, 120]),
+        'o': ([450, 800, 2830, 3800, 4950], [0, -11, -22, -22, -50], [40, 80, 100, 120, 120]),
+        'u': ([325, 700, 2700, 3800, 4950], [0, -16, -35, -40, -60], [50, 60, 170, 180, 200]),
+    },
+}
+# A closed-mouth hum: only the low nasal resonance survives.
+for part in V:
+    f, a, b = V[part]['u']
+    V[part]['m'] = ([min(f[0], 280), f[1], f[2], f[3], f[4]], [0, -32, -42, -48, -70], [50, 80, 150, 180, 200])
+
+
+# ── Glottal source ─────────────────────────────────────────────────────────────────────────
+def glottal(f0, open_q=0.6, breath=0.04, jitter=0.004, shimmer=0.03, seed=0):
+    """Rosenberg pulse train, differentiated (lip radiation), with jitter/shimmer/breath."""
+    r = np.random.default_rng(seed)
+    n = len(f0)
+    # slow random walks for jitter (pitch) and shimmer (amplitude), ~40 Hz bandwidth
+    def walk(scale):
+        w = r.standard_normal(n // 200 + 2)
+        w = np.interp(np.arange(n), np.arange(len(w)) * 200, w)
+        return w * scale
+    f = f0 * (1 + walk(jitter))
+    ph = np.cumsum(f / SR) % 1.0
+    tp = open_q * 0.65
+    tn = open_q * 0.35
+    g = np.where(ph < tp, 0.5 * (1 - np.cos(np.pi * ph / tp)),
+                 np.where(ph < tp + tn, np.cos(np.pi * (ph - tp) / (2 * tn)), 0.0))
+    dg = np.diff(g, prepend=0.0) * (SR / np.maximum(f, 40)) * 0.15  # flow derivative, pitch-normalised
+    dg *= 1 + walk(shimmer)
+    noise = r.standard_normal(n) * (g * 0.8 + 0.2) * breath
+    return dg + noise
+
+
+# ── Formant bank: parallel 2-pole band-passes, time-varying per block ─────────────────────
+def formant_bank(x, F, A, B):
+    """x: source. F, B: (n_blocks, k) Hz; A: (n_blocks, k) linear gains."""
+    y = np.zeros_like(x)
+    nb, k = F.shape
+    for j in range(k):
+        zi = np.zeros(2)
+        for bi in range(nb):
+            s0, s1 = bi * BLOCK, min((bi + 1) * BLOCK, len(x))
+            if s0 >= s1:
+                break
+            if A[bi, j] < 1e-4:
+                zi *= 0.9
+                continue
+            rr = np.exp(-np.pi * B[bi, j] / SR)
+            th = 2 * np.pi * F[bi, j] / SR
+            g = (1 - rr * rr) / 2 * A[bi, j]
+            seg, zi = lfilter([g, 0, -g], [1, -2 * rr * np.cos(th), rr * rr], x[s0:s1], zi=zi)
+            y[s0:s1] += seg if j % 2 == 0 else seg  # same polarity keeps vowels full
+    return y
+
+
+def vowel_track(part, plan, nb, spread):
+    """plan: list of (t, vowel). Returns per-block F, A, B with 0.35 s crossfades."""
+    t = (np.arange(nb) + 0.5) * BLOCK / SR
+    F = np.zeros((nb, 5)); A = np.zeros((nb, 5)); Bw = np.zeros((nb, 5))
+    logF = lambda v: np.log(np.array(V[part][v][0], float))
+    for i, (t0, v) in enumerate(plan):
+        t1 = plan[i + 1][0] if i + 1 < len(plan) else DUR + 1
+        m = (t >= t0) & (t < t1)
+        F[m] = logF(v); A[m] = V[part][v][1]; Bw[m] = V[part][v][2]
+    # crossfade: moving average over 0.35 s in log-frequency / dB space
+    w = max(1, int(0.35 * SR / BLOCK))
+    ker = np.ones(w) / w
+    for arr in (F, A, Bw):
+        for j in range(5):
+            arr[:, j] = np.convolve(np.pad(arr[:, j], (w // 2, w - w // 2 - 1), mode='edge'), ker, mode='valid')
+    return np.exp(F) * spread, 10 ** (A / 20), Bw
+
+
+# ── The score ──────────────────────────────────────────────────────────────────────────────
+# (start s, soprano, alto, tenor, bass, vowel)
+CH = [
+    (13.0, 69, 65, 62, 50, 'a'),   # Dm
+    (17.5, 70, 65, 62, 46, 'a'),   # Bb
+    (22.0, 69, 65, 60, 53, 'o'),   # F
+    (26.5, 67, 64, 60, 48, 'o'),   # C
+    (31.0, 67, 62, 58, 46, 'u'),   # Gm/Bb
+    (35.5, 65, 62, 57, 45, 'a'),   # Dm/A
+    (40.0, 69, 62, 57, 45, 'i'),   # Asus4 (bright vowel on the suspension)
+    (44.5, 69, 61, 57, 45, 'a'),   # A
+    (49.0, 69, 66, 62, 50, 'a'),   # D major — held, closing ah → oh → oo → mm
+]
+END_CHOIR = 62.0
+FINAL_MORPH = [(49.0, 'a'), (53.0, 'o'), (56.0, 'u'), (58.6, 'm')]
+PARTS = ['soprano', 'alto', 'tenor', 'bass']
+ENTRY = {'bass': 5.2, 'tenor': 9.0, 'alto': 13.0, 'soprano': 13.0}
+PAN = {'soprano': -0.35, 'alto': 0.35, 'tenor': -0.15, 'bass': 0.18}
+LEVEL = {'soprano': 0.8, 'alto': 0.85, 'tenor': 0.9, 'bass': 1.0}
+
+
+def part_pitch_and_vowels(pi, part):
+    """Note list for one part: (start, midi). Bass/tenor sing 'oo' alone before the choir enters."""
+    notes = []
+    if part == 'bass':
+        notes.append((ENTRY['bass'], 50))
+    if part == 'tenor':
+        notes.append((ENTRY['tenor'], 57))
+    for c in CH:
+        notes.append((c[0], c[1 + pi]))
+    vowels = []
+    if part in ('bass', 'tenor'):
+        vowels.append((0.0, 'u'))
+    for c in CH[:-1]:
+        vowels.append((c[0], c[5]))
+    vowels += FINAL_MORPH
+    vowels[0] = (0.0, vowels[0][1])   # filters start settled, not from an empty state
+    return notes, vowels
+
+
+def render_singer(part, pi, k):
+    notes, vowels = part_pitch_and_vowels(pi, part)
+    t = np.arange(N) / SR
+    # pitch: legato glides (90 ms) between notes, personal detune and slow drift
+    detune = [-7, 0, 6][k] + rng.normal(0, 2)
+    midi = np.full(N, float(notes[0][1]))
+    for (t0, m) in notes:
+        midi += smooth((t - t0) / 0.09) * (m - midi[min(int(t0 * SR), N - 1)])
+    drift = np.interp(t, np.linspace(0, DUR, 40), rng.normal(0, 4, 40))   # cents
+    # vibrato: each singer their own rate/depth, easing in after each note change
+    rate = rng.uniform(5.0, 5.9)
+    depth = rng.uniform(22, 34)                                            # cents
+    since = np.zeros(N)
+    for (t0, _) in notes:
+        since = np.where(t >= t0, t - t0, since)
+    vib = depth * np.sin(2 * np.pi * rate * t + rng.uniform(0, 6.28)) * smooth((since - 0.35) / 0.8)
+    f0 = mtof(midi + (detune + drift + vib) / 100)
+    src = glottal(f0, breath=0.05 if part in ('soprano', 'alto') else 0.035, seed=pi * 10 + k + 1)
+    # amplitude: swell in, small dips at chord changes (breaths), long fade at the end
+    amp = smooth((t - ENTRY[part]) / 1.6)
+    for c in CH[1:]:
+        amp *= 1 - 0.35 * np.exp(-((t - c[0] + 0.05) / 0.12) ** 2)
+    amp *= 1 - smooth((t - (END_CHOIR - 3.2)) / 3.2)
+    amp *= 1 + 0.25 * smooth((t - 44.5) / 4.0) - 0.25 * smooth((t - 52) / 6.0)   # lift into the cadence
+    nb = int(np.ceil(N / BLOCK))
+    F, A, Bw = vowel_track(part, vowels, nb, spread=rng.uniform(0.97, 1.03))
+    y = formant_bank(src * amp, F, A, Bw)
+    return y * LEVEL[part]
+
+
+# ── The spoken line: phoneme targets (F1, F2, F3), duration, voicing, frication ──────────────
+#             F1    F2    F3    dur   voice  noise  noise_hz
+PH = {
+    'AA': (710, 1100, 2540, 0, 1.0, 0, 0),
+    'IH': (400, 1950, 2550, 0, 1.0, 0, 0),
+    'AE': (660, 1720, 2410, 0, 1.0, 0, 0),
+    'M':  (260, 1050, 2250, 0, 0.35, 0, 0),
+    'N':  (260, 1500, 2350, 0, 0.35, 0, 0),
+    'EY': (500, 1850, 2480, 0, 1.0, 0, 0),
+    'IY': (330, 2150, 2700, 0, 1.0, 0, 0),
+    'D':  (300, 1700, 2600, 0, 0.0, 0.5, 3600),
+    'AH': (560, 1190, 2390, 0, 1.0, 0, 0),
+    'V':  (300, 1100, 2200, 0, 0.35, 0.25, 2500),
+    'B':  (250, 900, 2200, 0, 0.0, 0.25, 1200),
+    'ER': (490, 1350, 1690, 0, 1.0, 0, 0),
+    'Z':  (280, 1600, 2600, 0, 0.3, 0.55, 5200),
+    '_':  (500, 1500, 2500, 0, 0.0, 0, 0),
+}
+# "I am made of numbers."
+LINE = [('AA', .13), ('IH', .11), ('AE', .11), ('M', .08), ('_', .07),
+        ('M', .07), ('EY', .11), ('IY', .06), ('_', .05), ('D', .03), ('AH', .07), ('V', .06),
+        ('N', .07), ('AH', .09), ('M', .07), ('_', .04), ('B', .02), ('ER', .15), ('Z', .16)]
+LINE_AT = 66.6
+
+
+def render_speech():
+    total = sum(d for _, d in LINE)
+    n = int((total + 0.3) * SR)
+    t = np.arange(n) / SR
+    # piecewise targets, then smoothed (coarticulation)
+    tracks = {k: np.zeros(n) for k in ('F1', 'F2', 'F3', 'voice', 'noise', 'nhz')}
+    pos = 0.0
+    for p, d in LINE:
+        f1, f2, f3, _, vo, no, nhz = PH[p]
+        m = (t >= pos) & (t < pos + d)
+        for k, v in zip(('F1', 'F2', 'F3', 'voice', 'noise', 'nhz'), (f1, f2, f3, vo, no, nhz or 3000)):
+            tracks[k][m] = v
+        pos += d
+    tail = t >= pos
+    for k in tracks:
+        tracks[k][tail] = tracks[k][~tail][-1] if k not in ('voice', 'noise') else 0
+    def sm(x, ms):
+        w = max(1, int(ms / 1000 * SR))
+        return np.convolve(np.pad(x, (w // 2, w - w // 2 - 1), mode='edge'), np.ones(w) / w, mode='valid')
+    for k, ms in (('F1', 35), ('F2', 45), ('F3', 45), ('voice', 18), ('noise', 10), ('nhz', 10)):
+        tracks[k] = sm(tracks[k], ms)
+    # flat, robotic intonation: gentle declination with two small accents
+    f0 = 112 - 18 * (t / total) + 7 * np.exp(-((t - 0.62) / 0.12) ** 2) + 9 * np.exp(-((t - 1.0) / 0.12) ** 2)
+    src = glottal(f0, breath=0.01, jitter=0.0008, shimmer=0.005, seed=5) * tracks['voice']
+    nb = int(np.ceil(n / BLOCK))
+    bi = np.minimum((np.arange(nb) * BLOCK + BLOCK // 2), n - 1)
+    F = np.stack([tracks['F1'][bi], tracks['F2'][bi], tracks['F3'][bi], np.full(nb, 3300), np.full(nb, 4200)], 1)
+    A = np.tile(10 ** (np.array([0, -6, -12, -18, -24]) / 20), (nb, 1))
+    Bw = np.tile([70, 90, 130, 170, 220], (nb, 1)).astype(float)
+    voiced = formant_bank(src, F, A, Bw)
+    # frication: white noise through one moving band
+    noise = rng.standard_normal(n) * tracks['noise']
+    Fn = np.stack([tracks['nhz'][bi]], 1); An = np.ones((nb, 1)) * 1.4; Bn = np.full((nb, 1), 1800.0)
+    fric = formant_bank(noise, Fn, An, Bn)
+    # consonant noise sits ~15 dB under the vowels, as in real speech
+    vr = np.sqrt(np.mean(voiced[tracks['voice'] > 0.5] ** 2)); fr_ = np.sqrt(np.mean(fric[tracks['noise'] > 0.2] ** 2))
+    fric *= 0.18 * vr / (fr_ + 1e-12)
+    y = voiced + fric
+    return y / np.max(np.abs(y)) * 0.55, total
+
+
+def breath_swell():
+    """An inhale before the first note: band-limited noise shaped like 'hhh'."""
+    n = int(4.8 * SR)
+    t = np.arange(n) / SR
+    env = smooth(t / 3.2) * (1 - smooth((t - 3.6) / 1.0))
+    x = rng.standard_normal(n) * env
+    nb = int(np.ceil(n / BLOCK))
+    F = np.tile([700, 1400, 2600, 3400, 4500], (nb, 1)).astype(float)
+    A = np.tile(10 ** (np.array([-6, 0, -4, -10, -14]) / 20), (nb, 1))
+    Bw = np.tile([300, 400, 500, 600, 800], (nb, 1)).astype(float)
+    return formant_bank(x, F, A, Bw) * 0.05
+
+
+def hall_ir(seed):
+    """Reverb impulse response from code: early reflections + decaying noise, darker as it fades."""
+    r = np.random.default_rng(seed)
+    n = int(4.2 * SR)
+    t = np.arange(n) / SR
+    bright = r.standard_normal(n) * np.exp(-t / 0.30)
+    dark = sosfilt(butter(2, 2200, 'low', fs=SR, output='sos'), r.standard_normal(n)) * np.exp(-t / 0.75) * 1.6
+    ir = (bright + dark) * smooth(t / 0.012)
+    for d, g in ((0.011, .5), (0.019, .4), (0.027, .35), (0.041, .3)):
+        ir[int((d + r.uniform(-.002, .002)) * SR)] += g * r.choice([-1, 1])
+    ir = np.concatenate([np.zeros(int(0.022 * SR)), ir])
+    return ir / np.sqrt(np.sum(ir ** 2))
+
+
+def main():
+    L = np.zeros(N); R = np.zeros(N)
+    for pi, part in enumerate(PARTS):
+        for k in range(3):
+            y = render_singer(part, pi, k)
+            p = np.clip(PAN[part] + [-0.12, 0.0, 0.12][k], -1, 1)
+            L += y * np.cos((p + 1) * np.pi / 4); R += y * np.sin((p + 1) * np.pi / 4)
+            print('rendered', part, k, flush=True)
+    cp = max(np.abs(L).max(), np.abs(R).max())
+    L *= 0.7 / cp; R *= 0.7 / cp
+    b = breath_swell()
+    L[:len(b)] += b; R[:len(b)] += b
+    sp, sdur = render_speech()
+    s0 = int(LINE_AT * SR)
+    L[s0:s0 + len(sp)] += sp * 1.25; R[s0:s0 + len(sp)] += sp * 1.25
+    # room
+    irL, irR = hall_ir(1), hall_ir(2)
+    wetL = fftconvolve(L, irL)[:N]; wetR = fftconvolve(R, irR)[:N]
+    outL = L * 0.75 + wetL * 0.42
+    outR = R * 0.75 + wetR * 0.42
+    # gentle high-pass for rumble
+    hp = butter(2, 45, 'high', fs=SR, output='sos')
+    outL = sosfilt(hp, outL); outR = sosfilt(hp, outR)
+    peak = max(np.abs(outL).max(), np.abs(outR).max())
+    g = 0.89 / peak
+    outL *= g; outR *= g
+    fade = smooth((DUR - np.arange(N) / SR) / 1.5)
+    outL *= fade; outR *= fade
+    stereo = np.stack([outL, outR], 1)
+    np.save(os.path.join(OUT, 'mix.npy'), stereo.astype(np.float32))
+    pcm = (np.clip(stereo, -1, 1) * 32767).astype(np.int16)
+    with wave.open(os.path.join(OUT, 'choir.wav'), 'wb') as w:
+        w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes(pcm.tobytes())
+    enc = lameenc.Encoder()
+    enc.set_bit_rate(192); enc.set_in_sample_rate(SR); enc.set_channels(2); enc.set_quality(2)
+    mp3 = enc.encode(pcm.tobytes()) + enc.flush()
+    open(os.path.join(OUT, 'choir.mp3'), 'wb').write(mp3)
+    meta = {'duration': DUR, 'chords': [c[0] for c in CH], 'speech_at': LINE_AT, 'speech_dur': sdur}
+    json.dump(meta, open(os.path.join(OUT, 'meta.json'), 'w'))
+    print('done; peak before norm', round(float(peak), 3), 'mp3 bytes', len(mp3))
+
+
+if __name__ == '__main__':
+    main()
