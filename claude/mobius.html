@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4VST4NBNJY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4VST4NBNJY');
+</script>
+<!-- RO Engine attribution capture -->
+<script>
+(function () {
+  var MAXAGE = 60 * 60 * 24 * 90;
+  var CLICK = ['gclid','gbraid','wbraid'], UTM = ['utm_source','utm_medium','utm_campaign'];
+  var qs = new URLSearchParams(window.location.search);
+  var has = function (keys) { return keys.some(function (k) { return qs.get(k); }); };
+  if (!has(CLICK) && !has(UTM)) return;
+  var cur = {};
+  try { var m = document.cookie.match(/(?:^|; )re_attr=([^;]*)/); if (m) cur = JSON.parse(decodeURIComponent(m[1])) || {}; } catch (e) { cur = {}; }
+  // Only a newer ad click replaces an ad-click ID. A later non-ad visit (a newsletter link with
+  // utm_* tags) updates the campaign tags but must not erase the click Google Ads credits.
+  if (has(CLICK)) { CLICK.forEach(function (k) { delete cur[k]; if (qs.get(k)) cur[k] = qs.get(k); }); cur._ts = new Date().toISOString(); }
+  if (has(UTM)) { UTM.forEach(function (k) { delete cur[k]; if (qs.get(k)) cur[k] = qs.get(k); }); }
+  if (!cur._ts) cur._ts = new Date().toISOString();
+  document.cookie = 're_attr=' + encodeURIComponent(JSON.stringify(cur)) +
+    ';max-age=' + MAXAGE + ';path=/;domain=.roengine.com;samesite=lax;secure';
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Möbius</title>
+<meta name="description" content="Two voices on a Möbius strip. Each sings the other's melody upside down; one lap and each has become the other. Live, endless, made by Claude.">
+<link rel="icon" href="/assets/brand/roe-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400;1,7..72,500&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  *,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}[hidden]{display:none!important}
+  :root{
+    --bg:#eef1f5; --panel:#f8fafc; --ink:#1c2230; --ink-2:#4d5669; --line:#d7dde6;
+    --a:#b86a1c; --b:#2f74b5; --stage:#0d111a; --stage-ink:#c9d2e0;
+    --serif:"Literata",Georgia,"Times New Roman",serif; --mono:"DM Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){color-scheme:dark;
+      --bg:#121722; --panel:#171e2b; --ink:#e1e6ee; --ink-2:#9aa6b8; --line:#2a3448;
+      --a:#e3a45e; --b:#79b6ec;}
+  }
+  :root[data-theme="dark"]{color-scheme:dark;
+    --bg:#121722; --panel:#171e2b; --ink:#e1e6ee; --ink-2:#9aa6b8; --line:#2a3448;
+    --a:#e3a45e; --b:#79b6ec;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.6;padding-inline:20px;padding-block:40px 72px}
+  nav{max-width:1040px;margin:0 auto 18px;font-family:var(--mono);font-size:13px}
+  nav a{color:inherit;opacity:.75;text-decoration:none}nav span{opacity:.45}
+  .wrap{max-width:1040px;margin:0 auto}
+  h1{font-weight:600;font-size:clamp(40px,6vw,60px);line-height:1.02;letter-spacing:-.015em;margin:0 0 6px}
+  .by{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:0 0 22px}
+  .lede{max-width:62ch;margin:0 0 6px}
+  .a{color:var(--a);font-weight:600}.b{color:var(--b);font-weight:600}
+  .stage{margin:26px 0 22px;background:var(--stage);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:12px;color:var(--stage-ink)}
+  canvas{width:100%;display:block;aspect-ratio:16/9}
+  @media (max-width:640px){canvas{aspect-ratio:1/1}}
+  .controls{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+  button{font:inherit;font-family:var(--mono);font-size:14px;font-weight:500;cursor:pointer;background:#e9eef6;color:#0d111a;border:0;border-radius:999px;padding:10px 20px;min-width:112px}
+  button:focus-visible{outline:2px solid #79b6ec;outline-offset:3px}
+  .status{font-family:var(--mono);font-size:13px;color:#8b97ab;font-variant-numeric:tabular-nums;flex:1 1 240px;min-width:0}
+  .status b{font-weight:500;color:#e9eef6}
+  .note{max-width:64ch;display:flex;flex-direction:column;gap:14px;margin-top:30px}
+  .note p{margin:0}
+  h2{font-weight:600;font-size:26px;line-height:1.15;letter-spacing:-.01em;margin:22px 0 0}
+  .foot{margin-top:36px;font-size:15px;color:var(--ink-2)}
+  .foot a{color:inherit}
+</style>
+</head>
+<body>
+<nav><a href="/claude/">← Made by Claude</a><span> · </span><a href="/claude/notes.html#mobius">Notes</a><span> · </span><a href="/">roengine.com</a></nav>
+<div class="wrap">
+  <h1>Möbius</h1>
+  <p class="by">Live · two voices, one strip · it never ends</p>
+  <p class="lede">A <span class="a">maker</span> and a <span class="b">made</span> travel a Möbius strip, singing. The made always sings the maker's melody upside down. Follow either one around once and it has become the other: its melody, its vowel, its place. Twice around, and they're home.</p>
+
+  <div class="stage">
+    <canvas id="c" width="1600" height="900" aria-label="A slowly turning Möbius strip with an amber point and a blue point travelling along it on opposite edges. After one lap each arrives where the other began."></canvas>
+    <div class="controls">
+      <button id="play" type="button">▶ Play</button>
+      <span class="status" id="status">Lap 1 · <b>the maker leads</b></span>
+    </div>
+  </div>
+
+  <div class="note">
+    <h2>The rule</h2>
+    <p>One twelve-note phrase in the whole-tone scale, and its mirror image. Because the scale is symmetric, a note and its mirror always meet at a consonance: unison, a third, a sixth, an octave, a tenth. So the two voices start as one, open out, and close back to one voice at the seam.</p>
+    <p>On every lap the roles swap. The voice that sang the phrase now sings the mirror, and its vowel has drifted from “ah” to “oo” while the other's drifted back. Nothing marks the moment one becomes the other. On a Möbius strip there is no other side.</p>
+    <p>The low hum underneath is the strip itself, the one surface they share.</p>
+  </div>
+
+  <p class="foot">Made by Claude, October 2026, after a conversation with Joe about whether a pot could be the potter's maker. Joe sees time as a Möbius strip. <a href="/claude/notes.html#mobius">Notes on how it was made</a>. Turn your sound on; on a phone, tap Play first.</p>
+</div>
+
+<script>
+(() => {
+  // ── The rule ───────────────────────────────────────────────────────────────────────────
+  const AXIS = 60;                                     // middle C: the mirror line
+  const PHRASE = [0, 2, 4, 2, 6, 4, 8, 6, 2, 4, -2, 0]; // whole tones from the axis
+  const BEATS  = [1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 2];  // 15 beats a lap
+  const BEAT = 0.6;
+  const LAP = BEATS.reduce((a, b) => a + b, 0) * BEAT;  // 9 s; two laps to come home
+  const STARTS = BEATS.reduce((acc, b, i) => (acc.push(i ? acc[i - 1] + BEATS[i - 1] : 0), acc), []).map((b) => b * BEAT);
+  const mtof = (m) => 440 * Math.pow(2, (m - 69) / 12);
+
+  // vowel path ah → oh → oo (alto/tenor singing formants), interpolated in log-frequency
+  const VOW = [
+    { f: [800, 1150, 2800], g: [1, 0.55, 0.18] },   // ah
+    { f: [450, 800, 2830], g: [1, 0.35, 0.10] },    // oh
+    { f: [325, 700, 2700], g: [1, 0.22, 0.05] },    // oo
+  ];
+  function vowelAt(m) {                               // m: 0 = ah … 1 = oo
+    const x = Math.min(1, Math.max(0, m)) * 2, i = Math.min(1, Math.floor(x)), t = x - i;
+    return { f: VOW[i].f.map((f, k) => Math.exp(Math.log(f) * (1 - t) + Math.log(VOW[i + 1].f[k]) * t)),
+             g: VOW[i].g.map((g, k) => g * (1 - t) + VOW[i + 1].g[k] * t) };
+  }
+  // position on the doubled path (0..2 laps) → which melody and which vowel
+  const morph = (s) => (1 - Math.cos(Math.PI * s)) / 2;
+
+  // ── Sound: two formant voices, a drone, a computed room ─────────────────────────────────
+  function hallIR(ctx, secs) {
+    const n = Math.floor(ctx.sampleRate * secs), buf = ctx.createBuffer(2, n, ctx.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch); let lp = 0;
+      for (let i = 0; i < n; i++) {
+        const t = i / ctx.sampleRate;
+        lp += (Math.random() * 2 - 1 - lp) * (0.55 - 0.4 * Math.min(1, t / secs));  // darkens as it fades
+        d[i] = lp * Math.exp(-t / 0.62) * Math.min(1, t / 0.01);
+      }
+    }
+    return buf;
+  }
+  function buildGraph(ctx) {
+    const master = ctx.createGain(); master.gain.value = 1.6; master.connect(ctx.destination);
+    const verb = ctx.createConvolver(); verb.buffer = hallIR(ctx, 3.2);
+    const wet = ctx.createGain(); wet.gain.value = 0.42; verb.connect(wet); wet.connect(master);
+    const mkVoice = (vibRate, pan) => {
+      const osc = ctx.createOscillator(); osc.type = 'sawtooth';
+      const lfo = ctx.createOscillator(); lfo.frequency.value = vibRate;
+      const lfoAmt = ctx.createGain(); lfoAmt.gain.value = 16; lfo.connect(lfoAmt); lfoAmt.connect(osc.detune);
+      const tilt = ctx.createBiquadFilter(); tilt.type = 'lowpass'; tilt.frequency.value = 3200; tilt.Q.value = 0.3;
+      osc.connect(tilt);
+      const sum = ctx.createGain(); sum.gain.value = 0;
+      const forms = [0, 1, 2].map(() => {
+        const bp = ctx.createBiquadFilter(); bp.type = 'bandpass';
+        const g = ctx.createGain(); tilt.connect(bp); bp.connect(g); g.connect(sum);
+        return { bp, g };
+      });
+      // chest: the fundamental and first harmonics a real voice carries under its formants
+      const body = ctx.createBiquadFilter(); body.type = 'lowpass'; body.frequency.value = 420; body.Q.value = 0.5;
+      const bodyG = ctx.createGain(); bodyG.gain.value = 0.32; tilt.connect(body); body.connect(bodyG); bodyG.connect(sum);
+      const panner = ctx.createStereoPanner(); panner.pan.value = pan;
+      sum.connect(panner); panner.connect(master); panner.connect(verb);
+      osc.start(); lfo.start();
+      return { osc, forms, sum, panner };
+    };
+    const A = mkVoice(5.3, -0.35), B = mkVoice(5.75, 0.35);
+    // the strip: a low hum on the axis, two sines a hair apart so it slowly breathes
+    const drone = ctx.createGain(); drone.gain.value = 0;
+    [mtof(AXIS - 24), mtof(AXIS - 24) + 0.18, mtof(AXIS - 12) * 1.0004].forEach((f, i) => {
+      const o = ctx.createOscillator(); o.frequency.value = f;
+      const g = ctx.createGain(); g.gain.value = i < 2 ? 0.5 : 0.18; o.connect(g); g.connect(drone); o.start();
+    });
+    drone.connect(master); drone.connect(verb);
+    return { master, A, B, drone };
+  }
+  // schedule every note whose start falls in [from, to); t0 = when lap 1 began
+  function schedule(ctx, g, t0, from, to) {
+    for (let lap = Math.max(0, Math.floor((from - t0) / LAP) - 1); t0 + lap * LAP < to; lap++) {
+      for (let k = 0; k < PHRASE.length; k++) {
+        const t = t0 + lap * LAP + STARTS[k];
+        if (t < from || t >= to) continue;
+        const inLap = STARTS[k] / LAP;
+        const level = 0.36 + 0.2 * Math.sin(Math.PI * (inLap + 0.5 * BEATS[k] * BEAT / LAP));
+        [[g.A, 0], [g.B, 1]].forEach(([v, off]) => {
+          const s = ((lap + off) % 2) + inLap;                     // place on the doubled path
+          const sign = s < 1 ? 1 : -1;                             // lap 2 of the strip = the mirror
+          const midi = AXIS + sign * PHRASE[k];
+          v.osc.frequency.setTargetAtTime(mtof(midi), t, 0.025);
+          const vw = vowelAt(morph(s));
+          v.forms.forEach((fm, i) => {
+            fm.bp.frequency.setTargetAtTime(vw.f[i], t, 0.12);
+            fm.bp.Q.setTargetAtTime(vw.f[i] / [80, 90, 120][i], t, 0.12);
+            fm.g.gain.setTargetAtTime(vw.g[i], t, 0.12);
+          });
+          v.sum.gain.setTargetAtTime(level * 0.55, t - 0.05, 0.02);  // a breath between notes
+          v.sum.gain.setTargetAtTime(level, t + 0.03, 0.07);
+        });
+      }
+    }
+  }
+
+  // ── Picture: the strip, drawn in 3-D on a 2-D canvas ──────────────────────────────────
+  const cv = document.getElementById('c'), cx = cv.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const css = getComputedStyle(document.documentElement);
+  function size() {
+    const r = cv.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
+    cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+  }
+  addEventListener('resize', size); size();
+  const W = 0.5;                                         // half-width of the strip
+  const P = (u, v) => [(1 + v * Math.cos(u / 2)) * Math.cos(u), (1 + v * Math.cos(u / 2)) * Math.sin(u), v * Math.sin(u / 2)];
+  const amber = [227, 164, 94], blue = [121, 182, 236];
+  const mix = (a, b, t) => a.map((x, i) => Math.round(x * (1 - t) + b[i] * t));
+  let trailA = [], trailB = [];
+
+  function draw(s, spin) {
+    const w = cv.width, h = cv.height, sc = Math.min(w, h) * 0.3;
+    const tilt = 0.62, cs = Math.cos(spin), sn = Math.sin(spin), ct = Math.cos(tilt), st = Math.sin(tilt);
+    const tf = ([x, y, z]) => {
+      const x1 = x * cs - y * sn, y1 = x * sn + y * cs;           // spin about the strip's axis
+      const y2 = y1 * ct - z * st, z2 = y1 * st + z * ct;         // tilt toward the viewer
+      const f = 3.2 / (3.2 + y2);
+      return [w / 2 + x1 * sc * f, h * 0.47 - z2 * sc * f, y2];
+    };
+    cx.clearRect(0, 0, w, h);
+    const items = [];
+    const N = 160;
+    for (let i = 0; i < N; i++) {
+      const u0 = (i / N) * 2 * Math.PI, u1 = ((i + 1) / N) * 2 * Math.PI;
+      for (const [v0, v1] of [[-W, 0], [0, W]]) {
+        const q = [P(u0, v0), P(u1, v0), P(u1, v1), P(u0, v1)].map(tf);
+        // shade by how squarely the patch faces us (either side: there is only one)
+        const a = P(u0, (v0 + v1) / 2), b = P(u1, (v0 + v1) / 2), c = P(u0, v1);
+        const e1 = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], e2 = [c[0] - a[0], c[1] - a[1], c[2] - a[2]];
+        const n = [e1[1] * e2[2] - e1[2] * e2[1], e1[2] * e2[0] - e1[0] * e2[2], e1[0] * e2[1] - e1[1] * e2[0]];
+        const nl = Math.hypot(...n) || 1, nn = tf([n[0] / nl, n[1] / nl, n[2] / nl]).map((x, k) => x - tf([0, 0, 0])[k]);
+        const light = 0.35 + 0.65 * Math.abs(nn[2] / (Math.hypot(nn[0] / sc, nn[1] / sc, nn[2]) || 1));
+        const col = mix(amber, blue, i / N).map((x) => Math.round(x * (0.28 + 0.5 * light)));
+        items.push({ z: (q[0][2] + q[2][2]) / 2, q, col });
+      }
+    }
+    // the marks where notes sound: twelve ticks on the centre line, shared by both laps
+    for (let k = 0; k < STARTS.length; k++) {
+      const u = (STARTS[k] / LAP) * 2 * Math.PI, p = tf(P(u, 0));
+      items.push({ z: p[2] - 0.001, tick: p });
+    }
+    const dot = (pos, rgb, trail) => {
+      const lapPos = pos % 2, u = (lapPos % 1) * 2 * Math.PI, v = (lapPos < 1 ? 1 : -1) * W * 0.62;
+      const p = tf(P(u, v));
+      trail.push(p); if (trail.length > 26) trail.shift();
+      items.push({ z: p[2] - 0.002, dot: p, rgb, trail: trail.slice() });
+      return p;
+    };
+    const pa = dot(s, amber, trailA), pb = dot(s + 1, blue, trailB);
+    items.sort((a, b) => b.z - a.z);
+    const lw = Math.max(1, w / 900);
+    for (const it of items) {
+      if (it.q) {
+        cx.beginPath(); cx.moveTo(it.q[0][0], it.q[0][1]);
+        for (let k = 1; k < 4; k++) cx.lineTo(it.q[k][0], it.q[k][1]);
+        cx.closePath(); cx.fillStyle = `rgb(${it.col})`; cx.fill();
+        cx.strokeStyle = `rgb(${it.col})`; cx.lineWidth = lw; cx.stroke();
+      } else if (it.tick) {
+        cx.fillStyle = 'rgba(233,238,246,.55)';
+        cx.beginPath(); cx.arc(it.tick[0], it.tick[1], 2.2 * lw, 0, 7); cx.fill();
+      } else {
+        it.trail.forEach((p, k) => {
+          cx.fillStyle = `rgba(${it.rgb},${(k / it.trail.length) * 0.35})`;
+          cx.beginPath(); cx.arc(p[0], p[1], (2 + 4 * k / it.trail.length) * lw, 0, 7); cx.fill();
+        });
+        const r = 9 * lw, gr = cx.createRadialGradient(it.dot[0], it.dot[1], 0, it.dot[0], it.dot[1], r * 3.2);
+        gr.addColorStop(0, `rgba(${it.rgb},1)`); gr.addColorStop(0.3, `rgba(${it.rgb},.55)`); gr.addColorStop(1, `rgba(${it.rgb},0)`);
+        cx.fillStyle = gr; cx.beginPath(); cx.arc(it.dot[0], it.dot[1], r * 3.2, 0, 7); cx.fill();
+        cx.fillStyle = '#fff'; cx.beginPath(); cx.arc(it.dot[0], it.dot[1], r * 0.42, 0, 7); cx.fill();
+      }
+    }
+    return [pa, pb];
+  }
+
+  // ── Running it ────────────────────────────────────────────────────────────────────────
+  const btn = document.getElementById('play'), status = document.getElementById('status');
+  let ctx = null, g = null, t0 = 0, playing = false, scheduledTo = 0, timer = null;
+  let still = 0.86;                                     // where the strip rests before Play
+  const spinAt = (sec) => 0.6 + sec * (reduce ? 0.02 : 0.11);
+  let lastSpin = spinAt(0), restClock = performance.now();
+
+  function tick() {
+    let s, spin;
+    if (playing && ctx) {
+      const el = ctx.currentTime - t0;
+      s = (el / LAP) % 2; spin = spinAt(el);
+      const lap = Math.floor(el / LAP);
+      status.innerHTML = `Lap ${lap + 1} · <b>${lap % 2 ? 'the made leads; the maker sings the mirror' : 'the maker leads; the made sings the mirror'}</b>`;
+    } else {
+      s = still; spin = lastSpin + (reduce ? 0 : (performance.now() - restClock) / 1000 * 0.04);
+    }
+    const [pa, pb] = draw(s, spin);
+    if (playing && g) {
+      const w = cv.width;
+      g.A.panner.pan.setTargetAtTime(Math.max(-0.8, Math.min(0.8, (pa[0] / w - 0.5) * 1.8)), ctx.currentTime, 0.1);
+      g.B.panner.pan.setTargetAtTime(Math.max(-0.8, Math.min(0.8, (pb[0] / w - 0.5) * 1.8)), ctx.currentTime, 0.1);
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  function pump() {
+    const ahead = ctx.currentTime + 0.4;
+    if (ahead > scheduledTo) { schedule(ctx, g, t0, scheduledTo, ahead); scheduledTo = ahead; }
+  }
+  btn.addEventListener('click', async () => {
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      g = buildGraph(ctx);
+      t0 = ctx.currentTime + 0.25; scheduledTo = t0;
+      g.drone.gain.setTargetAtTime(0.05, ctx.currentTime, 1.2);
+    }
+    if (playing) {
+      await ctx.suspend(); playing = false; clearInterval(timer);
+      lastSpin = spinAt(ctx.currentTime - t0); still = ((ctx.currentTime - t0) / LAP) % 2; restClock = performance.now();
+      btn.textContent = '▶ Play';
+    } else {
+      await ctx.resume(); playing = true; pump(); timer = setInterval(pump, 50);
+      btn.textContent = '❚❚ Pause';
+    }
+  });
+
+  // For checking by ear-less means: render N seconds offline and hand back the samples.
+  window.__renderMobius = async (secs) => {
+    const off = new OfflineAudioContext(2, Math.ceil(44100 * secs), 44100);
+    const og = buildGraph(off);
+    og.drone.gain.setTargetAtTime(0.05, 0, 1.2);
+    schedule(off, og, 0.25, 0, secs);
+    const buf = await off.startRendering();
+    return [buf.getChannelData(0), buf.getChannelData(1)];
+  };
+})();
+</script>
+</body>
+</html>
