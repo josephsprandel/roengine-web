@@ -65,7 +65,7 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
 <div class="top"><div class="wrap"><a href="/"><img src="/assets/brand/roe-mark-on-dark.svg" alt="">RO Engine</a></div></div>
 <main class="wrap">
 <h1>Privacy Policy</h1>
-<p class="meta">Effective October 1, 2026 · SPRANDEL LLC ("RO Engine", "we")</p>
+<p class="meta">Effective October 1, 2026 · Updated October 4, 2026 · SPRANDEL LLC ("RO Engine", "we")</p>
 
 <p>RO Engine is shop-management software for independent auto repair shops. This policy covers information
 about <b>the people we deal with directly</b>: visitors to roengine.com, people who ask us for a demo, and shop
@@ -96,7 +96,8 @@ IP address, browser and the page you came from.</p>
 <p>Your name and email, your shop's name, web address, phone, city and state, and the optional answers you give
 (current software, how you heard about us, bays, technicians). If the <code>re_attr</code> cookie is present, we save
 its tags with your signup. <b>Payment details go directly to Stripe</b>, which processes them for us; we never see or
-store your full card or bank account number.</p>
+store your full card or bank account number. To keep automated signups out, the signup form runs Cloudflare
+Turnstile, which checks your browser (including your IP address) for signs of a bot.</p>
 <h3>When your shop uses RO Engine</h3>
 <p>Account details for each staff login (name, email, role), sign-in and activity records needed for security and
 support, usage counts for billing and fair-use limits, and the messages you send us.</p>
@@ -130,6 +131,7 @@ to opt out.</p>
 <tr><td>Meta</td><td>Ad measurement and delivery for our Facebook and Instagram ads (Meta Pixel)</td></tr>
 <tr><td>PostHog</td><td>Product analytics and masked session replays of staff screens in the service</td></tr>
 <tr><td>Stripe</td><td>Payments and subscriptions</td></tr>
+<tr><td>Cloudflare</td><td>The bot check on the signup form (Turnstile)</td></tr>
 <tr><td>Mailgun</td><td>Sending email</td></tr>
 <tr><td>HostGator</td><td>Hosting roengine.com and the demo form</td></tr>
 <tr><td>Telnyx, Retell, Anthropic</td><td>Phone, texting and AI features inside the service</td></tr>
