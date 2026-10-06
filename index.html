@@ -89,7 +89,17 @@ section{padding:110px 0}
 .hero .wrap.vh{grid-template-columns:1.15fr .85fr;grid-template-areas:"head video" "body video";row-gap:0}
 .vh .h-head{grid-area:head;align-self:end}.vh .h-body{grid-area:body;align-self:start}.vh .vstage{grid-area:video}
 /* Phones: the video is the proof — show it right under the headline, before the paragraph. */
-@media (max-width:980px){.hero .wrap.vh{grid-template-columns:1fr;grid-template-areas:"head" "video" "body";row-gap:28px}}
+@media (max-width:980px){.hero .wrap.vh{grid-template-columns:1fr;grid-template-areas:"head" "body" "video";row-gap:28px}}
+/* Hero: "Yes. It has everything." in Archivo at its narrowest/heaviest (owner 2026-10-05: lead with completeness). */
+.hero h1.hx{font-variation-settings:"wdth" 62;font-weight:900;text-transform:uppercase;font-size:clamp(54px,7.4vw,92px);line-height:.9;letter-spacing:.005em}
+.hero h1.hx .yes{display:block;color:#7f93aa;font-size:.55em;letter-spacing:.04em;margin-bottom:.12em}
+.hero .all{list-style:none;padding:0;margin:26px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:9px 22px;max-width:600px}
+.hero .all li{position:relative;padding-left:26px;color:#dbe6f2;font-size:16.5px;line-height:1.35;font-weight:500}
+.hero .all li::before{content:"";position:absolute;left:0;top:.18em;width:17px;height:17px;border-radius:50%;background:var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b1726' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/11px no-repeat}
+.hero .price{margin:24px 0 28px;font-size:20px;color:#b7c7da}
+.hero .price b{color:#fff;font-family:var(--display);font-weight:900;font-size:1.25em;letter-spacing:-.01em}
+@media (max-width:560px){.hero .wrap.vh{row-gap:14px}.hero .eyebrow{font-size:11px;letter-spacing:.14em}.hero h1.hx{font-size:clamp(50px,15vw,64px)}.hero .all{margin-top:12px;gap:6px 12px}.hero .all li{font-size:13.5px;padding-left:21px;line-height:1.3}.hero .all li::before{width:14px;height:14px;background-size:9px;top:.1em}.hero .price{margin:16px 0 18px;font-size:16px}}
+.roi h2 .hl{color:var(--teal)}
 .hero .sub .edu{color:var(--teal-b);font-weight:600}
 .hero{padding-bottom:180px}
 .roi{background:var(--paper);padding:84px 0}
@@ -591,10 +601,24 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
   <div class="wrap vh">
     <div class="h-head">
       <div class="eyebrow">Shop management for independent repair shops</div>
-      <h1 style="margin-top:16px">The estimate that <span class="hl">explains</span> itself.</h1>
+      <h1 class="hx" style="margin-top:14px"><span class="yes">Yes.</span> It has <span class="hl">everything.</span></h1>
     </div>
     <div class="h-body">
-      <p class="sub">Customer education is the hardest part of selling maintenance. <b>RO Engine does it on every car</b>: <span class="edu">what each service is, why it's due now, and what happens if they wait</span>, written for the customer's own vehicle and sent to their phone. They understand it. They choose the maintenance that saves them from expensive repairs.</p>
+      <ul class="all" aria-label="Everything in the $349 plan">
+        <li>Estimates that explain themselves</li>
+        <li>AI phone answering</li>
+        <li>Two-way texting</li>
+        <li>Online booking</li>
+        <li>Factory maintenance on every RO</li>
+        <li>Digital inspections with photos</li>
+        <li>Parts ordering: PartsTech, Worldpac</li>
+        <li>A tech app for the shop floor</li>
+        <li>Mnemos, the AI assistant</li>
+        <li>Work orders, invoicing, customers</li>
+        <li>Unlimited users</li>
+        <li>Your history moved free</li>
+      </ul>
+      <p class="price"><b>$349 a month.</b> All of it. No tiers. No add&#8209;ons.</p>
       <div class="ctas">
         <a class="btn btn-p" href="https://app.roengine.com/signup">Set up my shop — free for 90 days <svg><use href="#i-arrow"/></svg></a>
         <a class="tlink" href="#why">See why it matters <svg><use href="#i-arrow"/></svg></a>
@@ -631,7 +655,8 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
 <section class="roi" id="why">
   <div class="wrap">
     <div class="eyebrow rv">Why it matters</div>
-    <h2 class="rv" style="margin-top:12px">Maintenance is the best money your customers will ever spend on their car.</h2>
+    <h2 class="rv" style="margin-top:12px">The estimate that <span class="hl">explains</span> itself.</h2>
+    <p class="rv" style="margin-top:14px">Maintenance is the best money your customers will ever spend on their car, but only if they understand it. <b>RO Engine explains it on every car</b>: what each service is, why it's due now, and what happens if they wait, written for the customer's own vehicle and sent to their phone.</p>
     <div class="math rv" aria-label="Spark plugs now for $160, or a catalytic converter later for $1,000 to $2,500">
       <div class="amt"><b>$160</b><small>spark plugs, today</small></div>
       <span class="or">or</span>
@@ -867,7 +892,6 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
           <tr><th scope="row">Factory maintenance schedules</th><td class="us">On every RO</td><td>Grow plan, $349</td><td class="y">Maintenance Builder</td><td class="x">Not clearly listed</td><td>Pro plan, $349</td><td class="x">Not listed</td></tr>
           <tr><th scope="row">Digital inspections with photos</th><td class="us">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">2 templates on Basic</td><td class="y">Included</td><td>Optional, price not listed</td></tr>
           <tr><th scope="row">Parts ordering</th><td class="us">PartsTech, Worldpac and more</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td></tr>
-          <tr><th scope="row">Labor times</th><td class="us plain">Connects your ALLDATA</td><td>Grow plan, $349</td><td>Pro plan, $389</td><td>Clever plan, $399</td><td>Pro plan, $349</td><td>TeamWorks bundle, $348</td></tr>
           <tr><th scope="row">Users</th><td class="us">Unlimited</td><td class="y">Unlimited</td><td class="y">Unlimited</td><td>3&ndash;5, then $20/user</td><td class="x">Not listed</td><td>$15/mo per extra user</td></tr>
           <tr><th scope="row">Contract and setup</th><td class="us">Month to month; history moved free</td><td class="y">No contract</td><td>No annual; migration fee may apply</td><td>$500 data migration</td><td>One-time setup fee</td><td>12-month lease</td></tr>
           </tbody>
