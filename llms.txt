@@ -42,5 +42,6 @@ RO Engine is built by Joe Sprandel, an independent shop owner with 13+ years on 
   - [Ask the shop](https://www.youtube.com/watch?v=QFnPTjVbzeU): Mnemos, the AI assistant, answers from the shop's live data and stages changes as cards for a person to approve
   - [Photo check-in](https://www.youtube.com/watch?v=J-92ygprqDU): the AI reads VIN, mileage, build date and tire size from four photos
   - [Scan the bottle](https://www.youtube.com/watch?v=Lr_bWFcKRcQ): the AI reads a fluid bottle's specs and OEM approvals into inventory
+  - [Leave whenever, with everything](https://www.youtube.com/watch?v=KS_asJ9icJo): Settings → Export Data — every table as CSV + JSON with a README, and every photo in a folder per repair order
 - [The shop owner's fact sheet](https://roengine.com/card-fees/): how payment processing fees fund much of the shop software industry, with sources
 - Contact: joe@roengine.com
