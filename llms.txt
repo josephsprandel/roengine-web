@@ -19,6 +19,8 @@
 - Includes 300 AI phone minutes, 300 calls on the shop line and 1,500 texts a month. Beyond that: $0.35 per minute, $0.10 per call, $0.02 per text.
 - Founding shop pricing: shops that join before July 1, 2027 pay $261.75/month (25% off) for as long as they stay.
 - RO Engine does not take a cut of a shop's card processing; its revenue is the subscription.
+- Easy out: the owner can export all the shop's data at any time from Settings → Export Data — customers, vehicles, repair orders and invoices, payments, inspections, estimates, appointments, messages, inventory, vendors and purchase orders as CSV and/or JSON (with a README explaining how the files link), plus every photo filed by repair order. No fee and no request needed; export is not tied to billing, so a cancelled shop can still sign in and take its data.
+- QuickBooks Online sync (coming soon): either an invoice and payment per repair order, or one journal entry per day for shops whose accountant wants QuickBooks lean; a CSV of the same accounting ledger covers other bookkeeping.
 
 ## The free trial
 - Not a demo or sandbox: signing up creates the shop's own live RO Engine at yourshop.roengine.com, ready in minutes.
@@ -37,5 +39,8 @@ RO Engine is built by Joe Sprandel, an independent shop owner with 13+ years on 
   - [No signal, no lost photos](https://www.youtube.com/watch?v=1QUcIwPg1Bc): the tech app keeps photos and video through a dead spot and sends them by itself
   - [Type it like you talk](https://www.youtube.com/watch?v=br-gPtVj090): AI service-title cleanup, position check and labor rewrite
   - [Online booking](https://www.youtube.com/watch?v=lGv2GY12MSo): a website booking lands on the schedule as a repair order
+  - [Ask the shop](https://www.youtube.com/watch?v=QFnPTjVbzeU): Mnemos, the AI assistant, answers from the shop's live data and stages changes as cards for a person to approve
+  - [Photo check-in](https://www.youtube.com/watch?v=J-92ygprqDU): the AI reads VIN, mileage, build date and tire size from four photos
+  - [Scan the bottle](https://www.youtube.com/watch?v=Lr_bWFcKRcQ): the AI reads a fluid bottle's specs and OEM approvals into inventory
 - [The shop owner's fact sheet](https://roengine.com/card-fees/): how payment processing fees fund much of the shop software industry, with sources
 - Contact: joe@roengine.com
