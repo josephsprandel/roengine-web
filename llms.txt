@@ -33,5 +33,9 @@ RO Engine is built by Joe Sprandel, an independent shop owner with 13+ years on 
 ## Key pages
 - [Home](https://roengine.com/): product overview, pricing, free trial
 - [Start a free trial](https://app.roengine.com/signup): set up your own shop
+- [Product videos](https://roengine.com/#watch): the real app doing real jobs, no mockups ([YouTube channel](https://www.youtube.com/channel/UCoQKHYyz_7hkKRGkKqBsXzw))
+  - [No signal, no lost photos](https://www.youtube.com/watch?v=1QUcIwPg1Bc): the tech app keeps photos and video through a dead spot and sends them by itself
+  - [Type it like you talk](https://www.youtube.com/watch?v=br-gPtVj090): AI service-title cleanup, position check and labor rewrite
+  - [Online booking](https://www.youtube.com/watch?v=lGv2GY12MSo): a website booking lands on the schedule as a repair order
 - [The shop owner's fact sheet](https://roengine.com/card-fees/): how payment processing fees fund much of the shop software industry, with sources
 - Contact: joe@roengine.com

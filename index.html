@@ -536,6 +536,26 @@ footer a{color:#b7c7da;text-decoration:none}
   .vs .row .lbl{grid-column:1/-1}
   .vs .row.hd .lbl{display:none}
 }
+
+/* ═══ SEE IT WORK (videos) — our own thumbnail first; YouTube (privacy-enhanced) loads only on click ═══ */
+.vids{padding:84px 0;background:var(--paper)}
+.vid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px}
+@media (max-width:900px){.vid-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.vid-grid{grid-template-columns:1fr}}
+.vid{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 1px 0 rgba(16,26,38,.06),0 14px 34px -22px rgba(16,26,38,.45)}
+.vid .play{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;cursor:pointer;background:var(--night)}
+.vid .play img{width:100%;height:100%;object-fit:cover;display:block}
+.vid .play .pb{position:absolute;left:14px;bottom:12px;width:52px;height:52px;border-radius:50%;background:var(--teal);box-shadow:0 10px 30px -8px rgba(63,181,174,.8);transition:transform .2s var(--ease)}
+.vid .play .pb::after{content:"";position:absolute;left:21px;top:16px;border-left:15px solid #062a28;border-top:10px solid transparent;border-bottom:10px solid transparent}
+.vid .play:hover .pb,.vid .play:focus-visible .pb{transform:scale(1.08)}
+.vid .play:focus-visible{outline:3px solid var(--teal-b);outline-offset:-3px}
+.vid .play .len{position:absolute;right:10px;bottom:10px;background:rgba(6,12,22,.82);color:#fff;font:600 12.5px var(--body);padding:3px 8px;border-radius:6px}
+.vid iframe{display:block;width:100%;aspect-ratio:16/9;border:0}
+.vid .cap{padding:16px 18px 20px}
+.vid h3{font-size:18px;margin:0 0 6px}
+.vid p{font-size:15px;color:var(--ink-2);margin:0}
+.vids .more{display:inline-flex;gap:8px;align-items:center;margin-top:28px;font-weight:700;color:var(--blue);text-decoration:none}
+.vids .more:hover{text-decoration:underline}
 </style>
 <!-- Meta Pixel (dataset 1693754829035693 · ad account 3514465940926) -->
 <script>
@@ -769,6 +789,36 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
   </div>
 </section>
 
+<!-- ═══ SEE IT WORK — short videos of the real app ══════════════════════ -->
+<section class="vids" id="watch">
+  <div class="wrap">
+    <div class="eyebrow rv">See it work</div>
+    <h2 class="rv" style="margin-top:12px">The real app. <span style="color:var(--teal)">No mockups.</span></h2>
+    <p class="lead rv" style="margin-top:14px">Short videos of RO Engine doing real jobs, recorded on the real app. Nothing staged; anything sped up says so on screen.</p>
+    <div class="vid-grid">
+      <div class="vid rv">
+        <button class="play" type="button" data-yt="1QUcIwPg1Bc" aria-label="Play video: No signal. No lost photos.">
+          <img src="/assets/video/no-signal.jpg" alt="" width="960" height="540" loading="lazy"><span class="pb"></span><span class="len">0:55</span>
+        </button>
+        <div class="cap"><h3>No signal. No lost photos.</h3><p>The tech app keeps every photo and video on the phone through a dead spot, then sends them by itself.</p></div>
+      </div>
+      <div class="vid rv">
+        <button class="play" type="button" data-yt="br-gPtVj090" aria-label="Play video: Type it like you talk.">
+          <img src="/assets/video/service-writing.jpg" alt="" width="960" height="540" loading="lazy"><span class="pb"></span><span class="len">0:45</span>
+        </button>
+        <div class="cap"><h3>Type it like you talk.</h3><p>Scribble a service; the AI cleans up the title, asks which corner, and rewrites the labor line.</p></div>
+      </div>
+      <div class="vid rv">
+        <button class="play" type="button" data-yt="lGv2GY12MSo" aria-label="Play video: Booked online, already an RO.">
+          <img src="/assets/video/online-booking.jpg" alt="" width="960" height="540" loading="lazy"><span class="pb"></span><span class="len">0:53</span>
+        </button>
+        <div class="cap"><h3>Booked online, already an RO.</h3><p>A customer books from your website and it lands on the schedule as a repair order.</p></div>
+      </div>
+    </div>
+    <a class="more rv" href="https://www.youtube.com/channel/UCoQKHYyz_7hkKRGkKqBsXzw" target="_blank" rel="noopener">More on our YouTube channel <svg width="16" height="16"><use href="#i-arrow"/></svg></a>
+  </div>
+</section>
+
 <!-- ═══ EVERYTHING INCLUDED ════════════════════════════════════════════ -->
 <!-- ═══ MNEMOS ═════════════════════════════════════════════════════════ -->
 <!-- ═══ IT'S REAL ══════════════════════════════════════════════════════ -->
@@ -978,7 +1028,7 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
 <footer class="on-dark">
   <div class="wrap">
     <a href="#top" class="brand"><img src="/assets/brand/roe-mark-on-dark.svg" alt="" width="62" height="24" style="height:24px;width:auto"><span><span class="nm" style="font-size:16px">RO Engine</span><span class="tg"><b>A</b>utomotive <b>I</b>ntelligence</span></span></a>
-    <span>© 2026 RO Engine · <a href="mailto:joe@roengine.com">joe@roengine.com</a> · <a href="/privacy/">Privacy</a> · Built by a shop owner, for shop owners.</span>
+    <span>© 2026 RO Engine · <a href="mailto:joe@roengine.com">joe@roengine.com</a> · <a href="/privacy/">Privacy</a> · <a href="https://www.youtube.com/channel/UCoQKHYyz_7hkKRGkKqBsXzw" target="_blank" rel="noopener">YouTube</a> · Built by a shop owner, for shop owners.</span>
   </div>
 </footer>
 
@@ -1118,6 +1168,18 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
 })()
 </script>
 
+
+<script>
+// See it work: swap our thumbnail for YouTube's privacy-enhanced player only when a visitor presses play.
+document.querySelectorAll('.vid .play').forEach((b) => b.addEventListener('click', () => {
+  const f = document.createElement('iframe')
+  f.src = `https://www.youtube-nocookie.com/embed/${b.dataset.yt}?autoplay=1&rel=0&modestbranding=1`
+  f.title = b.getAttribute('aria-label').replace('Play video: ', '')
+  f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'
+  f.allowFullscreen = true
+  b.replaceWith(f)
+}))
+</script>
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -1132,7 +1194,13 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
      "description":"AI shop management software for independent auto repair shops. Surfaces overdue and deferred maintenance on every repair order from 54,000+ OEM service intervals, with AI phone answering, two-way texting, digital estimate approval, parts ordering and inspections included.",
      "offers":{"@type":"Offer","price":"349.00","priceCurrency":"USD","availability":"https://schema.org/InStock",
        "priceSpecification":{"@type":"UnitPriceSpecification","price":"349.00","priceCurrency":"USD","unitText":"MONTH"},
-       "description":"One plan, everything included, unlimited users, month to month. 90-day free trial. Founding shops that join before July 1, 2027 pay $261.75/month for as long as they stay."}}
+       "description":"One plan, everything included, unlimited users, month to month. 90-day free trial. Founding shops that join before July 1, 2027 pay $261.75/month for as long as they stay."}},
+    {"@type":"VideoObject","name":"No signal. No lost photos.","description":"The tech app keeps every photo and video on the phone through a dead spot, then sends them by itself.","thumbnailUrl":"https://roengine.com/assets/video/no-signal.jpg",
+     "uploadDate":"2026-10-11","duration":"PT55S","embedUrl":"https://www.youtube-nocookie.com/embed/1QUcIwPg1Bc","contentUrl":"https://www.youtube.com/watch?v=1QUcIwPg1Bc","publisher":{"@id":"https://roengine.com/#org"}},
+    {"@type":"VideoObject","name":"Type it like you talk.","description":"Scribble a service; the AI cleans up the title, asks which corner, and rewrites the labor line.","thumbnailUrl":"https://roengine.com/assets/video/service-writing.jpg",
+     "uploadDate":"2026-10-11","duration":"PT45S","embedUrl":"https://www.youtube-nocookie.com/embed/br-gPtVj090","contentUrl":"https://www.youtube.com/watch?v=br-gPtVj090","publisher":{"@id":"https://roengine.com/#org"}},
+    {"@type":"VideoObject","name":"Booked online, already an RO.","description":"A customer books from your website and it lands on the schedule as a repair order.","thumbnailUrl":"https://roengine.com/assets/video/online-booking.jpg",
+     "uploadDate":"2026-10-11","duration":"PT53S","embedUrl":"https://www.youtube-nocookie.com/embed/lGv2GY12MSo","contentUrl":"https://www.youtube.com/watch?v=lGv2GY12MSo","publisher":{"@id":"https://roengine.com/#org"}}
   ]
 }
 </script>
