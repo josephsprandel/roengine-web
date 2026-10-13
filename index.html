@@ -557,6 +557,20 @@ footer a{color:#b7c7da;text-decoration:none}
 .vid p{font-size:15px;color:var(--ink-2);margin:0}
 .vids .more{display:inline-flex;gap:8px;align-items:center;margin-top:28px;font-weight:700;color:var(--blue);text-decoration:none}
 .vids .more:hover{text-decoration:underline}
+
+/* ── Early-adopter homepage (2026-10-12): new sections reuse existing tokens ── */
+.edge .lead{margin-top:18px}
+.edge .small{margin-top:14px;font-size:14.5px;color:var(--ink-3)}
+.edge .big{font-family:var(--display);font-weight:900;color:var(--ink)}
+.gap-label{margin-top:12px;font-size:14px;font-weight:700;color:var(--ink-2)}
+.founder-copy p{margin:16px 0 0;max-width:620px;font-size:18px}
+.founder-copy .sig{margin-top:22px;font-weight:700;color:var(--ink);font-size:16px}
+.everything .all{list-style:none;padding:0;margin:30px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px 26px;max-width:960px}
+.everything .all li{position:relative;padding-left:26px;color:var(--ink);font-size:16px;line-height:1.35;font-weight:500}
+.everything .all li::before{content:"";position:absolute;left:0;top:.15em;width:17px;height:17px;border-radius:50%;background:var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/11px no-repeat}
+@media (max-width:900px){.everything .all{grid-template-columns:1fr 1fr}}@media (max-width:560px){.everything .all{grid-template-columns:1fr}}
+.cmp-only{padding:84px 0}
+.cmp-only .cmp{margin-top:0}
 </style>
 <!-- Meta Pixel (dataset 1693754829035693 · ad account 3514465940926) -->
 <script>
@@ -621,29 +635,16 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
   </svg>
   <div class="wrap vh">
     <div class="h-head">
-      <div class="eyebrow">Shop management for independent repair shops</div>
-      <h1 class="hx" style="margin-top:14px"><span class="yes">Yes.</span> It has <span class="hl">everything.</span></h1>
+      <div class="eyebrow">Built by a Volvo shop owner. Running his shops every day.</div>
+      <h1 style="margin-top:14px">A new advisor writes a <span class="hl">veteran's ticket.</span></h1>
     </div>
     <div class="h-body">
-      <ul class="all" aria-label="Everything in the $349 plan">
-        <li>Estimates that explain themselves</li>
-        <li>AI phone answering</li>
-        <li>Two-way texting</li>
-        <li>Online booking</li>
-        <li>Factory maintenance on every RO</li>
-        <li>Digital inspections with photos</li>
-        <li>Parts ordering: PartsTech, Worldpac</li>
-        <li>A tech app for the shop floor</li>
-        <li>Mnemos, the AI assistant</li>
-        <li>Work orders, invoicing, customers</li>
-        <li>Unlimited users</li>
-        <li>Your history moved free</li>
-      </ul>
-      <p class="price"><b>$349 a month.</b> All of it. No tiers. No add&#8209;ons.</p>
+      <p class="sub">RO Engine's AI writes every recommendation and tells your customer what it is, why it's due now, and what happens if they wait. They approve from a private link. No app, no login.</p>
       <div class="ctas">
-        <a class="btn btn-p" href="https://app.roengine.com/signup">Set up my shop — free for 90 days <svg><use href="#i-arrow"/></svg></a>
-        <a class="tlink" href="#why">See why it matters <svg><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-p" href="https://app.roengine.com/signup">Start 90 days free <svg><use href="#i-arrow"/></svg></a>
+        <a class="tlink" href="#why">See an estimate <svg><use href="#i-arrow"/></svg></a>
       </div>
+      <!-- [PROOF: "Running AutoHouse since ___" (go-live date). Joe to confirm. No shop count until 5+ outside shops.] -->
       <div class="addr" aria-label="Your shop gets its own address"><svg class="lock"><use href="#i-lock"/></svg><span><span class="shopname" id="sub">your-shop</span><span class="dom">.roengine.com</span></span><span class="live"><i></i><span>Live</span></span></div>
       <p class="fine">Your own live shop in minutes · nothing charges for 90 days · no sales call</p>
     </div>
@@ -669,22 +670,18 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
   </div>
 </div>
 
-
-
-
 <!-- ═══ MAINTENANCE PAYS ═══════════════════════════════════════════════ -->
 <section class="roi" id="why">
   <div class="wrap">
     <div class="eyebrow rv">Why it matters</div>
-    <h2 class="rv" style="margin-top:12px">The estimate that <span class="hl">explains</span> itself.</h2>
-    <p class="rv" style="margin-top:14px">Maintenance is the best money your customers will ever spend on their car, but only if they understand it. <b>RO Engine explains it on every car</b>: what each service is, why it's due now, and what happens if they wait, written for the customer's own vehicle and sent to their phone.</p>
+    <h2 class="rv" style="margin-top:12px">The estimate <span class="hl">explains</span> itself.</h2>
+    <p class="rv" style="margin-top:14px">Every recommendation comes with three things your customer actually reads: what it is, why it's due now, and what happens if they put it off. The AI writes it. The customer approves from a private link, on their phone, without downloading anything.</p>
     <div class="math rv" aria-label="Spark plugs now for $160, or a catalytic converter later for $1,000 to $2,500">
       <div class="amt"><b>$160</b><small>spark plugs, today</small></div>
       <span class="or">or</span>
       <div class="amt later"><b>$1,000–$2,500</b><small>catalytic converter, later</small></div>
     </div>
     <p class="rv">That's the estimate in the video, written for a real 2013 Highlander. Quick-lube chains taught customers that maintenance means an oil change and a sticker. If the shop doesn't explain the rest, nobody will.</p>
-    <p class="rv" style="margin-top:14px">When a customer says no because nobody explained it, nobody wins. <b>RO Engine makes sure every customer hears why, on every car.</b></p>
   </div>
 </section>
 
@@ -720,7 +717,201 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
         <div class="sum"><span>Ticket written</span><b data-count="125" data-prefix="$" data-gap>$125</b></div>
       </div>
     </div>
-    <p class="fine-print rv">Nobody handed your new advisor twelve years of pattern recognition on day one. RO Engine does — on every RO. Illustrative example using typical labor and parts pricing, not a guaranteed result.</p>
+    <p class="gap-label rv">Illustrative example, not measured data.</p>
+    <p class="fine-print rv" style="margin-top:10px">RO Engine writes the explanation the veteran would have given, so whoever is at the counter writes the better ticket.</p>
+    <!-- [PROOF NEEDED: AutoHouse approval rate or ARO before vs. after RO Engine. Label as our own shops' numbers.] -->
+    <!-- [QUOTE: Bailey, in her own words, on writing estimates with RO Engine. Labeled as AutoHouse's service advisor.] -->
+  </div>
+</section>
+
+<!-- ═══ THE PHONE ══════════════════════════════════════════════════════ -->
+<section class="edge" id="ai-phone" style="background:var(--paper)">
+  <div class="wrap">
+    <h2 class="rv">The phone gets answered.</h2>
+    <p class="lead rv">RO Engine's AI answers the shop line and books the work, so the call that comes in while you're under a car still turns into a job on the schedule.</p>
+    <p class="small rv">Plans include 300 AI phone minutes and 300 shop-line calls a month.</p>
+    <!-- [PROOF NEEDED: calls answered and jobs booked by the AI at AutoHouse per month.] -->
+  </div>
+</section>
+
+<!-- ═══ FOUNDER ════════════════════════════════════════════════════════ -->
+<section id="about">
+  <div class="wrap founder">
+    <div class="founder-copy">
+      <div class="eyebrow rv">Built different</div>
+      <h2 class="rv" style="margin-top:12px">I'm not a software company. I run a shop.</h2>
+      <p class="rv">I opened AutoHouse in 2013, and that same year I wrote our first shop system in PHP. We outgrew it, then ran Shop-Ware, then Steer. They kept the records. I wanted software that did part of the work. Most shop systems are big, slow-moving software, and improvements come slow. Software moves faster than that now.</p>
+      <p class="rv">RO Engine is what I built next. It runs both AutoHouse locations, in Northwest Arkansas and Wood Dale, Illinois. Bailey, our service advisor, is in it all day. In Arkansas we moved our whole Shop-Ware history over: about 6,900 customers and 6,000 repair orders.</p>
+      <p class="rv">Try it for 90 days. If it doesn't earn its spot, cancel.</p>
+      <p class="sig rv">Joe Sprandel, owner, AutoHouse Automotive</p>
+    </div>
+    <div class="facts">
+      <div class="rv"><b>13+</b>years on the shop floor</div>
+      <div class="rv"><b>2013</b>built his first custom shop system</div>
+      <div class="rv"><b>6,000</b>repair orders carried over from Shop-Ware</div>
+      <div class="rv"><b>2</b>shops running it every day</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FACTORY MAINTENANCE ════════════════════════════════════════════ -->
+<section class="edge" id="maintenance" style="background:var(--paper)">
+  <div class="wrap">
+    <h2 class="rv">Factory maintenance on every RO.</h2>
+    <p class="lead rv">RO Engine puts what's due on every repair order, from a validated database of <b class="big">54,823 service intervals</b> across <b class="big">1,958 powertrain configurations</b>. Nobody has to look it up.</p>
+  </div>
+</section>
+
+<!-- ═══ FOUNDING SHOPS ═════════════════════════════════════════════════ -->
+<section class="edge" id="founding">
+  <div class="wrap">
+    <h2 class="rv">Two shops run on it today. Both are mine.</h2>
+    <p class="lead rv">I'm looking for 10 more. Founding shops pay <b class="big">$261.75 a month, locked for life</b>, if they join before July 1, 2027. Tell me what's broken and I'll fix it.</p>
+    <!-- [JOE: optional reference ask, e.g. "If it earns it, let another shop owner call you." Joe to decide before adding.] -->
+    <!-- [TESTIMONIAL: first outside founding shop. Name, shop, city, make focus.] -->
+  </div>
+</section>
+
+<!-- ═══ PRICING ════════════════════════════════════════════════════════ -->
+<section class="pricing on-dark" id="pricing">
+  <div class="wrap">
+    <div class="eyebrow rv">Pricing</div>
+    <h2 class="rv" style="margin-top:12px">One price. No contract. No sales calls.</h2>
+    <p class="lead rv" style="color:#b7c7da;margin-top:16px">No tiers to upgrade into. No per-user fees. No add-on for the phone to answer itself.</p>
+    <div class="price-grid">
+      <div class="pc rv">
+        <div class="amt"><b>$349</b><span>per month<br>unlimited users · month to month</span></div>
+        <div class="fnd"><b>Founding rate:</b> <b>$261.75 a month</b>, locked for life, for shops that join before July 1, 2027.</div>
+        <ul>
+          <li><svg><use href="#i-check"/></svg>AI service recommendations on every RO</li>
+          <li><svg><use href="#i-check"/></svg>Mnemos, the AI assistant built on Claude</li>
+          <li><svg><use href="#i-check"/></svg>AI phone answering and two-way texting</li>
+          <li><svg><use href="#i-check"/></svg>Digital estimate approval</li>
+          <li><svg><use href="#i-check"/></svg>54,000+ OEM service intervals</li>
+          <li><svg><use href="#i-check"/></svg>Parts ordering, POs and receiving</li>
+          <li><svg><use href="#i-check"/></svg>Work orders, invoicing, customers, inspections</li>
+          <li><svg><use href="#i-check"/></svg>QuickBooks Online sync <span class="soon">Coming soon</span></li>
+          <li><svg><use href="#i-check"/></svg>Export all your data, anytime</li>
+        </ul>
+        <a class="btn btn-p" href="https://app.roengine.com/signup">Set up my shop — free for 90 days <svg><use href="#i-arrow"/></svg></a>
+        <p class="usage">Includes 300 AI phone minutes, 300 calls on your shop line and 1,500 texts a month. Past that: $0.35 a minute, 10¢ a call, 2¢ a text — most shops never get there.</p>
+        <p class="usage">Texting and AI phone turn on after carrier registration, usually within two weeks.</p>
+      </div>
+      <div class="promise">
+        <div class="rv"><h3>The test drive is the real thing</h3><p>Your own shop at yourshop.roengine.com — not a sandbox. Everything you enter carries forward when you stay.</p></div>
+        <div class="rv"><h3>Nothing charges for 90 days</h3><p>Card or bank account on file to start. Cancel online in a few clicks — there's no one to call.</p></div>
+        <div class="rv"><h3>We move your history over</h3><p>Customers, vehicles and repair history, migrated free. Coming off Shop-Ware? We've already done it — for ourselves. <a href="/shop-ware/" style="color:var(--teal-b);font-weight:700">See what comes over</a></p></div>
+        <div class="rv"><h3>Leave whenever, with everything</h3><p>Export all your data anytime, from Settings, in a few clicks: customers, vehicles, every repair order and invoice, payments, inspections, messages and inventory as spreadsheets (CSV) or JSON, plus every photo, filed by repair order. No fee, no request, no one to call. It isn't tied to your bill, either: cancel, and you can still sign in and take it all. <a href="https://www.youtube.com/watch?v=KS_asJ9icJo" target="_blank" rel="noopener" style="color:var(--teal-b);font-weight:700;white-space:nowrap">Watch the whole export (1:03)</a></p></div>
+        <div class="rv"><h3>No sales calls. Ever.</h3><p>If you want to talk, you ask — and the shop owner who built it answers.</p></div>
+      </div>
+    </div>
+    <!-- [TESTIMONIAL: outside owner on why they switched from ___.] -->
+  </div>
+</section>
+
+<!-- Full comparison: opens from "See the full comparison" (also at /compare/ without JS) -->
+<dialog class="cmpd on-dark" id="cmpDialog" aria-labelledby="cmpTitle">
+  <button class="cmpx" type="button" aria-label="Close the comparison" data-close-cmp>×</button>
+    <div class="cmp">
+      <h3 id="cmpTitle">Everything in one plan. Here&rsquo;s where it lives elsewhere.</h3>
+      <p class="sub2">Every row in our column comes with the $349 plan. On the others, the same things are spread across higher tiers and add-ons &mdash; straight from their own price lists.</p>
+      <div class="scroll">
+        <table>
+          <thead><tr><th scope="col"><span class="sr-only">Feature</span></th><th scope="col" class="us">RO Engine</th><th scope="col">Tekmetric</th><th scope="col">Shop-Ware</th><th scope="col">Shopmonkey</th><th scope="col">AutoLeap</th><th scope="col">Mitchell 1 SE</th></tr></thead>
+          <tbody>
+          <tr><th scope="row">Price, monthly billing</th><td class="us plain">$349 &mdash; everything below</td><td>$199 entry plan</td><td>$279 entry plan</td><td>$239 entry plan</td><td>$199 entry plan</td><td class="x">Not published</td></tr>
+          <tr><th scope="row">Try it first</th><td class="us">90 days free, in your own live shop</td><td>Demo and self-guided tour; no free trial</td><td>15-minute demo</td><td>Demo; trial terms not published</td><td>Demo only; no free trial</td><td>Free demo</td></tr>
+          <tr><th scope="row">AI phone answering</th><td class="us">300 minutes a month</td><td class="x">Not offered</td><td class="x">Not listed</td><td class="x">Not listed</td><td>$99/mo add-on</td><td class="x">Not listed</td></tr>
+          <tr><th scope="row">Two-way texting</th><td class="us">1,500 texts a month</td><td>Scale plan, $439</td><td class="y">Limited; unlimited on Pro, $389</td><td class="y">Included</td><td>Pro plan, $349</td><td>$39/mo add-on</td></tr>
+          <tr><th scope="row">Online booking</th><td class="us">Included</td><td>$345/mo Marketing add-on</td><td>Ultimate+ plan, $999, or add-on</td><td>$349/mo add-on</td><td>Add-on, price not listed</td><td class="x">Not listed</td></tr>
+          <tr><th scope="row">Factory maintenance schedules</th><td class="us">On every RO</td><td>Grow plan, $349</td><td class="y">Maintenance Builder</td><td class="x">Not clearly listed</td><td>Pro plan, $349</td><td class="x">Not listed</td></tr>
+          <tr><th scope="row">Digital inspections with photos</th><td class="us">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">2 templates on Basic</td><td class="y">Included</td><td>Optional, price not listed</td></tr>
+          <tr><th scope="row">Parts ordering</th><td class="us">PartsTech, Worldpac and more</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td></tr>
+          <tr><th scope="row">Users</th><td class="us">Unlimited</td><td class="y">Unlimited</td><td class="y">Unlimited</td><td>3&ndash;5, then $20/user</td><td class="x">Not listed</td><td>$15/mo per extra user</td></tr>
+          <tr><th scope="row">Contract and setup</th><td class="us">Month to month; history in free, everything out anytime</td><td class="y">No contract</td><td>No annual; migration fee may apply</td><td>$500 data migration</td><td>One-time setup fee</td><td>12-month lease</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">From each company&rsquo;s own pricing page, checked September 29, 2026, at monthly billing. &ldquo;Not listed&rdquo; means we couldn&rsquo;t find it on their pricing page &mdash; ask them, they may offer it. Mitchell 1 sells Manager SE on a 12-month lease and doesn&rsquo;t publish the car-shop price. Prices change, so check theirs before you decide.</p>
+    </div>
+</dialog>
+
+<!-- ═══ IT'S REAL ══════════════════════════════════════════════════════ -->
+<section class="real" id="live">
+  <div class="wrap">
+    <div class="eyebrow rv">The free trial</div>
+    <h2 class="rv" style="margin-top:12px;max-width:860px">Not a demo. <span style="color:var(--teal)">Your shop, live in minutes.</span></h2>
+    <p class="lead rv" style="margin-top:18px">Most "free trials" are a sandbox with fake data and a salesperson waiting at the end. This is the actual RO Engine — your own copy, at your own address, running your shop from the first repair order.</p>
+
+    <div class="real-grid">
+      <div>
+        <div class="rsteps" id="rsteps">
+          <div class="rs rv" data-rs="0"><span class="num">1</span><div><h3>Pick your shop's address</h3><p>Choose your name and get your own <code>yourshop.roengine.com</code> — checked and reserved on the spot.</p></div></div>
+          <div class="rs rv" data-rs="1"><span class="num">2</span><div><h3>Start your 90 days</h3><p>Card or bank account on file. Nothing charges for 90 days, and you can cancel online in a few clicks.</p></div></div>
+          <div class="rs rv" data-rs="2"><span class="num">3</span><div><h3>Check your email — you're in</h3><p>"Your RO Engine shop is ready." Set your password and a short setup walks you through hours, labor rates, your team and payments. Skip anything you want.</p></div></div>
+        </div>
+        <ul class="realfacts rv">
+          <li><svg><use href="#i-check"/></svg>Real repair orders from day one</li>
+          <li><svg><use href="#i-check"/></svg>Everything carries forward when you stay</li>
+          <li><svg><use href="#i-check"/></svg>Your whole team — unlimited users</li>
+          <li><svg><use href="#i-check"/></svg>We move your history over, free</li>
+        </ul>
+        <div class="rv"><a class="btn btn-p" href="https://app.roengine.com/signup">Set up my shop now <svg><use href="#i-arrow"/></svg></a></div>
+        <p class="later rv">Texting and the AI phone switch on once your shop's number clears carrier registration — usually within two weeks. Everything else works the day you sign up.</p>
+      </div>
+
+      <div class="browser rv" id="browser" aria-label="Animated example: a new shop's RO Engine opening for the first time">
+        <div class="bbar"><span class="dots"><i></i><i></i><i></i></span><span class="url"><svg style="width:13px;height:13px;color:#7f93aa"><use href="#i-lock"/></svg><span><b id="burl"></b></span></span></div>
+        <div class="bload"><i id="bload"></i></div>
+        <div class="bapp" id="bapp">
+          <div class="bside"><div class="shop">Main Street Auto<small>MAIN-STREET-AUTO.ROENGINE.COM</small></div><div class="n a">Setup</div><div class="n">Dashboard</div><div class="n">Schedule</div><div class="n">Repair Orders</div><div class="n">Customers</div><div class="n">Settings</div></div>
+          <div class="bmain">
+            <h4>Welcome to your shop</h4>
+            <div class="hi">Let's get the basics in — about ten minutes.</div>
+            <div class="wz" id="wz">
+              <div><i>✓</i>Shop identity</div>
+              <div><i>✓</i>Your team</div>
+              <div><i>✓</i>Labor rates</div>
+              <div><i>✓</i>Payment methods</div>
+              <div><i>✓</i>RO numbering</div>
+              <div><i>✓</i>Business hours</div>
+            </div>
+            <span class="first" id="first">Write your first RO <svg style="width:15px;height:15px"><use href="#i-arrow"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SWITCHING ══════════════════════════════════════════════════════ -->
+<section class="edge" id="switching" style="background:var(--paper)">
+  <div class="wrap">
+    <h2 class="rv">Switching is our problem, not yours.</h2>
+    <p class="lead rv">We migrate your history free. At AutoHouse we brought over about 6,900 customers and 6,000 repair orders from Shop-Ware. Your data stays yours: export all of it, anytime.</p>
+    <!-- [PROOF NEEDED: AutoHouse Chicago switch from ___ to RO Engine in ___ days; ___ customers / ___ ROs migrated.] -->
+    <!-- [QUOTE: Chicago shop manager, own words, first 30 days. Labeled as our sister shop.] -->
+  </div>
+</section>
+
+<!-- ═══ EVERYTHING ELSE ════════════════════════════════════════════════ -->
+<section class="everything" id="features">
+  <div class="wrap">
+    <h2 class="rv">Everything else you'd expect.</h2>
+    <ul class="all rv" aria-label="Everything in the $349 plan">
+        <li>Estimates that explain themselves</li>
+        <li>AI phone answering</li>
+        <li>Two-way texting</li>
+        <li>Online booking</li>
+        <li>Factory maintenance on every RO</li>
+        <li>Digital inspections with photos</li>
+        <li>Parts ordering: PartsTech, Worldpac</li>
+        <li>A tech app for the shop floor</li>
+        <li>Mnemos, the AI assistant</li>
+        <li>Work orders, invoicing, customers</li>
+        <li>Unlimited users</li>
+        <li>Your history moved free</li>
+    </ul>
   </div>
 </section>
 
@@ -838,93 +1029,9 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- ═══ EVERYTHING INCLUDED ════════════════════════════════════════════ -->
-<!-- ═══ MNEMOS ═════════════════════════════════════════════════════════ -->
-<!-- ═══ IT'S REAL ══════════════════════════════════════════════════════ -->
-<section class="real" id="live">
+<!-- ═══ COMPARISON ═════════════════════════════════════════════════════ -->
+<section class="pricing on-dark cmp-only" id="compare">
   <div class="wrap">
-    <div class="eyebrow rv">The free trial</div>
-    <h2 class="rv" style="margin-top:12px;max-width:860px">Not a demo. <span style="color:var(--teal)">Your shop, live in minutes.</span></h2>
-    <p class="lead rv" style="margin-top:18px">Most "free trials" are a sandbox with fake data and a salesperson waiting at the end. This is the actual RO Engine — your own copy, at your own address, running your shop from the first repair order.</p>
-
-    <div class="real-grid">
-      <div>
-        <div class="rsteps" id="rsteps">
-          <div class="rs rv" data-rs="0"><span class="num">1</span><div><h3>Pick your shop's address</h3><p>Choose your name and get your own <code>yourshop.roengine.com</code> — checked and reserved on the spot.</p></div></div>
-          <div class="rs rv" data-rs="1"><span class="num">2</span><div><h3>Start your 90 days</h3><p>Card or bank account on file. Nothing charges for 90 days, and you can cancel online in a few clicks.</p></div></div>
-          <div class="rs rv" data-rs="2"><span class="num">3</span><div><h3>Check your email — you're in</h3><p>"Your RO Engine shop is ready." Set your password and a short setup walks you through hours, labor rates, your team and payments. Skip anything you want.</p></div></div>
-        </div>
-        <ul class="realfacts rv">
-          <li><svg><use href="#i-check"/></svg>Real repair orders from day one</li>
-          <li><svg><use href="#i-check"/></svg>Everything carries forward when you stay</li>
-          <li><svg><use href="#i-check"/></svg>Your whole team — unlimited users</li>
-          <li><svg><use href="#i-check"/></svg>We move your history over, free</li>
-        </ul>
-        <div class="rv"><a class="btn btn-p" href="https://app.roengine.com/signup">Set up my shop now <svg><use href="#i-arrow"/></svg></a></div>
-        <p class="later rv">Texting and the AI phone switch on once your shop's number clears carrier registration — usually within two weeks. Everything else works the day you sign up.</p>
-      </div>
-
-      <div class="browser rv" id="browser" aria-label="Animated example: a new shop's RO Engine opening for the first time">
-        <div class="bbar"><span class="dots"><i></i><i></i><i></i></span><span class="url"><svg style="width:13px;height:13px;color:#7f93aa"><use href="#i-lock"/></svg><span><b id="burl"></b></span></span></div>
-        <div class="bload"><i id="bload"></i></div>
-        <div class="bapp" id="bapp">
-          <div class="bside"><div class="shop">Main Street Auto<small>MAIN-STREET-AUTO.ROENGINE.COM</small></div><div class="n a">Setup</div><div class="n">Dashboard</div><div class="n">Schedule</div><div class="n">Repair Orders</div><div class="n">Customers</div><div class="n">Settings</div></div>
-          <div class="bmain">
-            <h4>Welcome to your shop</h4>
-            <div class="hi">Let's get the basics in — about ten minutes.</div>
-            <div class="wz" id="wz">
-              <div><i>✓</i>Shop identity</div>
-              <div><i>✓</i>Your team</div>
-              <div><i>✓</i>Labor rates</div>
-              <div><i>✓</i>Payment methods</div>
-              <div><i>✓</i>RO numbering</div>
-              <div><i>✓</i>Business hours</div>
-            </div>
-            <span class="first" id="first">Write your first RO <svg style="width:15px;height:15px"><use href="#i-arrow"/></svg></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="features" style="padding:64px 0">
-  <div class="wrap"><p class="oneline rv"><b>And the rest of the shop, included:</b> work orders, invoicing, inspections with photos, parts and purchase orders, two-way texting, an AI phone that answers when the counter is buried, and Mnemos, the AI assistant that knows your shop.</p></div>
-</section>
-
-<!-- ═══ PRICING ════════════════════════════════════════════════════════ -->
-<section class="pricing on-dark" id="pricing">
-  <div class="wrap">
-    <div class="eyebrow rv">Pricing</div>
-    <h2 class="rv" style="margin-top:12px">One price. Everything in it.</h2>
-    <p class="lead rv" style="color:#b7c7da;margin-top:16px">No tiers to upgrade into. No per-user fees. No add-on for the phone to answer itself.</p>
-    <div class="price-grid">
-      <div class="pc rv">
-        <div class="amt"><b>$349</b><span>per month<br>unlimited users · month to month</span></div>
-        <div class="fnd"><b>Founding shop pricing:</b> join before July 1, 2027 and pay <b>$261.75 a month</b> — 25% less, for as long as you stay.</div>
-        <ul>
-          <li><svg><use href="#i-check"/></svg>AI service recommendations on every RO</li>
-          <li><svg><use href="#i-check"/></svg>Mnemos, the AI assistant built on Claude</li>
-          <li><svg><use href="#i-check"/></svg>AI phone answering and two-way texting</li>
-          <li><svg><use href="#i-check"/></svg>Digital estimate approval</li>
-          <li><svg><use href="#i-check"/></svg>54,000+ OEM service intervals</li>
-          <li><svg><use href="#i-check"/></svg>Parts ordering, POs and receiving</li>
-          <li><svg><use href="#i-check"/></svg>Work orders, invoicing, customers, inspections</li>
-          <li><svg><use href="#i-check"/></svg>QuickBooks Online sync <span class="soon">Coming soon</span></li>
-          <li><svg><use href="#i-check"/></svg>Export all your data, anytime</li>
-        </ul>
-        <a class="btn btn-p" href="https://app.roengine.com/signup">Set up my shop — free for 90 days <svg><use href="#i-arrow"/></svg></a>
-        <p class="usage">Includes 300 AI phone minutes, 300 calls on your shop line and 1,500 texts a month. Past that: $0.35 a minute, 10¢ a call, 2¢ a text — most shops never get there.</p>
-      </div>
-      <div class="promise">
-        <div class="rv"><h3>The test drive is the real thing</h3><p>Your own shop at yourshop.roengine.com — not a sandbox. Everything you enter carries forward when you stay.</p></div>
-        <div class="rv"><h3>Nothing charges for 90 days</h3><p>Card or bank account on file to start. Cancel online in a few clicks — there's no one to call.</p></div>
-        <div class="rv"><h3>We move your history over</h3><p>Customers, vehicles and repair history, migrated free. Coming off Shop-Ware? We've already done it — for ourselves. <a href="/shop-ware/" style="color:var(--teal-b);font-weight:700">See what comes over</a></p></div>
-        <div class="rv"><h3>Leave whenever, with everything</h3><p>Export all your data anytime, from Settings, in a few clicks: customers, vehicles, every repair order and invoice, payments, inspections, messages and inventory as spreadsheets (CSV) or JSON, plus every photo, filed by repair order. No fee, no request, no one to call. It isn't tied to your bill, either: cancel, and you can still sign in and take it all. <a href="https://www.youtube.com/watch?v=KS_asJ9icJo" target="_blank" rel="noopener" style="color:var(--teal-b);font-weight:700;white-space:nowrap">Watch the whole export (1:03)</a></p></div>
-        <div class="rv"><h3>No sales calls. Ever.</h3><p>If you want to talk, you ask — and the shop owner who built it answers.</p></div>
-      </div>
-    </div>
-
     <div class="cmp rv">
       <h3>Everything in one plan. Here&rsquo;s where it lives elsewhere.</h3>
       <p class="sub2">Every row in our column comes with the $349 plan. On the others, the same things are spread across higher tiers and add-ons &mdash; straight from their own price lists.</p>
@@ -946,49 +1053,6 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- Full comparison: opens from "See the full comparison" (also at /compare/ without JS) -->
-<dialog class="cmpd on-dark" id="cmpDialog" aria-labelledby="cmpTitle">
-  <button class="cmpx" type="button" aria-label="Close the comparison" data-close-cmp>×</button>
-    <div class="cmp">
-      <h3 id="cmpTitle">Everything in one plan. Here&rsquo;s where it lives elsewhere.</h3>
-      <p class="sub2">Every row in our column comes with the $349 plan. On the others, the same things are spread across higher tiers and add-ons &mdash; straight from their own price lists.</p>
-      <div class="scroll">
-        <table>
-          <thead><tr><th scope="col"><span class="sr-only">Feature</span></th><th scope="col" class="us">RO Engine</th><th scope="col">Tekmetric</th><th scope="col">Shop-Ware</th><th scope="col">Shopmonkey</th><th scope="col">AutoLeap</th><th scope="col">Mitchell 1 SE</th></tr></thead>
-          <tbody>
-          <tr><th scope="row">Price, monthly billing</th><td class="us plain">$349 &mdash; everything below</td><td>$199 entry plan</td><td>$279 entry plan</td><td>$239 entry plan</td><td>$199 entry plan</td><td class="x">Not published</td></tr>
-          <tr><th scope="row">Try it first</th><td class="us">90 days free, in your own live shop</td><td>Demo and self-guided tour; no free trial</td><td>15-minute demo</td><td>Demo; trial terms not published</td><td>Demo only; no free trial</td><td>Free demo</td></tr>
-          <tr><th scope="row">AI phone answering</th><td class="us">300 minutes a month</td><td class="x">Not offered</td><td class="x">Not listed</td><td class="x">Not listed</td><td>$99/mo add-on</td><td class="x">Not listed</td></tr>
-          <tr><th scope="row">Two-way texting</th><td class="us">1,500 texts a month</td><td>Scale plan, $439</td><td class="y">Limited; unlimited on Pro, $389</td><td class="y">Included</td><td>Pro plan, $349</td><td>$39/mo add-on</td></tr>
-          <tr><th scope="row">Online booking</th><td class="us">Included</td><td>$345/mo Marketing add-on</td><td>Ultimate+ plan, $999, or add-on</td><td>$349/mo add-on</td><td>Add-on, price not listed</td><td class="x">Not listed</td></tr>
-          <tr><th scope="row">Factory maintenance schedules</th><td class="us">On every RO</td><td>Grow plan, $349</td><td class="y">Maintenance Builder</td><td class="x">Not clearly listed</td><td>Pro plan, $349</td><td class="x">Not listed</td></tr>
-          <tr><th scope="row">Digital inspections with photos</th><td class="us">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">2 templates on Basic</td><td class="y">Included</td><td>Optional, price not listed</td></tr>
-          <tr><th scope="row">Parts ordering</th><td class="us">PartsTech, Worldpac and more</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td></tr>
-          <tr><th scope="row">Users</th><td class="us">Unlimited</td><td class="y">Unlimited</td><td class="y">Unlimited</td><td>3&ndash;5, then $20/user</td><td class="x">Not listed</td><td>$15/mo per extra user</td></tr>
-          <tr><th scope="row">Contract and setup</th><td class="us">Month to month; history in free, everything out anytime</td><td class="y">No contract</td><td>No annual; migration fee may apply</td><td>$500 data migration</td><td>One-time setup fee</td><td>12-month lease</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="note">From each company&rsquo;s own pricing page, checked September 29, 2026, at monthly billing. &ldquo;Not listed&rdquo; means we couldn&rsquo;t find it on their pricing page &mdash; ask them, they may offer it. Mitchell 1 sells Manager SE on a 12-month lease and doesn&rsquo;t publish the car-shop price. Prices change, so check theirs before you decide.</p>
-    </div>
-</dialog>
-
-<!-- ═══ FOUNDER ════════════════════════════════════════════════════════ -->
-<section id="about">
-  <div class="wrap founder">
-    <div>
-      <div class="eyebrow rv">Built different</div>
-      <p class="quote rv" style="margin-top:14px">RO Engine wasn't built by a software company that read about auto repair. It was built by a working shop owner who <em>still explains a $1,900 estimate to somebody every week.</em></p>
-    </div>
-    <div class="facts">
-      <div class="rv"><b>13+</b>years on the shop floor</div>
-      <div class="rv"><b>2013</b>built his first custom shop system</div>
-      <div class="rv"><b>6,000</b>repair orders carried over from Shop-Ware</div>
-      <div class="rv"><b>1</b>real shop running it every single day</div>
-    </div>
-  </div>
-</section>
-
 <section style="padding-top:0">
   <div class="wrap">
     <div class="teaser rv">
@@ -997,7 +1061,6 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
     </div>
   </div>
 </section>
-
 
 <!-- ═══ ASK THE SHOP OWNER ═════════════════════════════════════════════ -->
 <section id="demo" style="background:var(--paper)">
@@ -1038,10 +1101,10 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
 
 <section class="final on-dark">
   <div class="wrap">
-    <h2 class="rv">Give every advisor your best advisor's eye.</h2>
-    <p class="rv">Your own RO Engine at your own address, live in minutes. Ninety days free — if it doesn't earn its keep, you walk away.</p>
+    <h2 class="rv">Try it on your own cars for 90 days.</h2>
+    <p class="rv">Nothing charged during the trial. No contract. No sales calls.</p>
     <div class="ctas rv">
-      <a class="btn btn-p" href="https://app.roengine.com/signup">Set up my shop — free for 90 days <svg><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-p" href="https://app.roengine.com/signup">Start 90 days free <svg><use href="#i-arrow"/></svg></a>
       <a class="btn btn-g" href="#demo">Ask the shop owner a question</a>
     </div>
   </div>
