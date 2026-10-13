@@ -1,6 +1,7 @@
 <?php
 /**
- * POST /try/send.php — "Try it on your VIN" (try/index.html): email a visitor their result link, or note that they want
+ * POST /try/result-link.php — (not send.php: HostGator's bot shield challenges that spam-mailer filename with a 409)
+ * "Try it on your VIN" (try/index.html): email a visitor their result link, or note that they want
  * to hear when their car is covered. Same config, bot gates and per-IP limit as form.php; the lead is logged to
  * leads.jsonl (type try-vin) and Joe gets a one-line note.
  *

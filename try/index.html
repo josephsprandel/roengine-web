@@ -321,7 +321,7 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
       fd.append('email', $('email').value.trim()); fd.append('kind', kind); fd.append('car', carLabel);
       fd.append('url', shareUrl()); fd.append('ts', ts); fd.append('hk', hk); fd.append('website', mf.website.value);
       $('mailmsg').textContent = 'Sending…';
-      fetch('/try/send.php', { method: 'POST', body: fd }).then(function (r) { return r.json(); }).then(function (d) {
+      fetch('/try/result-link.php', { method: 'POST', body: fd }).then(function (r) { return r.json(); }).then(function (d) {
         $('mailmsg').textContent = d.ok ? (kind === 'notify' ? 'Got it. We\'ll email you when it\'s covered.' : 'Sent. Check your inbox.') : (d.error || 'Could not send.');
         if (d.ok) { window.fbq && fbq('track', 'Lead', { content_name: 'try-vin-' + kind }); window.gtag && gtag('event', 'try_vin_email', { kind: kind }); }
       }, function () { $('mailmsg').textContent = 'Could not send. Try again in a minute.'; });
