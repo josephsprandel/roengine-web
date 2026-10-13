@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4VST4NBNJY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4VST4NBNJY');
+</script>
+<!-- RO Engine attribution capture -->
+<script>
+(function () {
+  var MAXAGE = 60 * 60 * 24 * 90;
+  var CLICK = ['gclid','gbraid','wbraid'], UTM = ['utm_source','utm_medium','utm_campaign'];
+  var qs = new URLSearchParams(window.location.search);
+  var has = function (keys) { return keys.some(function (k) { return qs.get(k); }); };
+  if (!has(CLICK) && !has(UTM)) return;
+  var cur = {};
+  try { var m = document.cookie.match(/(?:^|; )re_attr=([^;]*)/); if (m) cur = JSON.parse(decodeURIComponent(m[1])) || {}; } catch (e) { cur = {}; }
+  // Only a newer ad click replaces an ad-click ID. A later non-ad visit (a newsletter link with
+  // utm_* tags) updates the campaign tags but must not erase the click Google Ads credits.
+  if (has(CLICK)) { CLICK.forEach(function (k) { delete cur[k]; if (qs.get(k)) cur[k] = qs.get(k); }); cur._ts = new Date().toISOString(); }
+  if (has(UTM)) { UTM.forEach(function (k) { delete cur[k]; if (qs.get(k)) cur[k] = qs.get(k); }); }
+  if (!cur._ts) cur._ts = new Date().toISOString();
+  document.cookie = 're_attr=' + encodeURIComponent(JSON.stringify(cur)) +
+    ';max-age=' + MAXAGE + ';path=/;domain=.roengine.com;samesite=lax;secure';
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Try it on your VIN — RO Engine</title>
+<meta name="description" content="Put in a VIN and the mileage. See what's due from the factory schedule, explained the way your customer reads it: what it is, why it's due now, and what happens if they wait. No signup.">
+<link rel="canonical" href="https://roengine.com/try/">
+<meta name="theme-color" content="#0b1524">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RO Engine">
+<meta property="og:url" content="https://roengine.com/try/">
+<meta property="og:title" content="Try it on your VIN — the estimate that explains itself">
+<meta property="og:description" content="A VIN and the mileage in. What's due from the factory schedule out, explained for the customer. No signup.">
+<meta property="og:image" content="https://roengine.com/assets/brand/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/brand/roe-icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/brand/roe-icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* ── Tokens ──────────────────────────────────────────────────────────── */
+:root{
+  --night:#0b1524; --night-2:#12233d; --navy:#14263f; --blue:#2d4d78; --blue-v:#3f7fc4;
+  --teal:#3fb5ae; --teal-b:#4fd1c9; --teal-w:#e8f8f6;
+  --ink:#101a26; --ink-2:#4a5c70; --ink-3:#8598ab; --line:#e2ecf4; --paper:#f6f8fb; --w:#fff;
+  --red:#e0625c; --amber:#e3a33b; --green:#2f9e69;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --display:'Archivo',system-ui,sans-serif; --body:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--w);color:var(--ink-2);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img,svg{display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);color:var(--ink);margin:0;letter-spacing:-.02em;line-height:1.05}
+h2{font-size:clamp(32px,4.4vw,52px);font-weight:800;font-stretch:108%}
+.eyebrow{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal)}
+.lead{font-size:19px;color:var(--ink-2);max-width:640px}
+section{padding:110px 0}
+@media (max-width:720px){section{padding:76px 0}body{font-size:16px}}
+
+/* ── Logo (direction A) ──────────────────────────────────────────────── */
+.mk{display:inline-flex;align-items:flex-start;font-family:var(--display);font-weight:900;font-stretch:118%;letter-spacing:-.035em;line-height:.8;color:var(--navy)}
+/* RO raised to the power e: a true math-italic exponent (STIX Two), a nod to AI's exponential curve. */
+.mk .e{font-family:'STIX Two Text',Georgia,serif;font-style:italic;font-weight:600;font-size:.72em;letter-spacing:0;color:var(--teal);line-height:.7;margin-left:.05em;transform:translateY(-.18em)}
+.on-dark .mk{color:#fff}.on-dark .mk .e{color:var(--teal-b)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand .mk{font-size:30px}
+.brand .nm{font-family:var(--display);font-weight:700;font-size:19px;color:var(--ink);letter-spacing:-.01em;line-height:1}
+.brand .tg{display:block;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-top:4px}
+.on-dark .brand .nm{color:#fff}
+/* Automotive Intelligence — the initials are A.I. */
+.brand .tg b{color:var(--teal);font-weight:800}
+.on-dark .brand .tg b{color:var(--teal-b)}
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:700;font-size:16px;text-decoration:none;border-radius:12px;padding:15px 24px;transition:transform .2s var(--ease),box-shadow .2s var(--ease),background .2s}
+.btn svg{width:18px;height:18px}
+.btn-p{background:var(--teal);color:#062a28;box-shadow:0 10px 30px -10px rgba(63,181,174,.7)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 16px 36px -12px rgba(63,181,174,.8)}
+.btn-g{color:#fff;border:1px solid rgba(255,255,255,.22)}
+.btn-g:hover{background:rgba(255,255,255,.07)}
+.btn-d{background:var(--navy);color:#fff}
+.btn-d:hover{transform:translateY(-2px)}
+
+/* ── Nav ─────────────────────────────────────────────────────────────── */
+.nav{position:sticky;top:0;z-index:50;transition:background .3s,border-color .3s,backdrop-filter .3s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(11,21,36,.86);backdrop-filter:blur(14px);border-color:rgba(255,255,255,.08)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:72px}
+.nav .links{margin-left:auto;display:flex;gap:26px;align-items:center}
+.nav .links a{color:#c8d6e6;text-decoration:none;font-weight:600;font-size:15px}
+.nav .links a:hover{color:#fff}
+.nav .btn{padding:10px 18px;font-size:14.5px}
+@media (max-width:860px){.nav .links a.hide-m{display:none}}
+.nav .btn{white-space:nowrap}
+@media (max-width:520px){.brand .tg{display:none}.brand .nm{font-size:17px}.nav .btn{padding:9px 14px;font-size:13.5px}.nav .wrap{gap:14px}}
+footer{background:var(--night);border-top:1px solid rgba(255,255,255,.07);color:#7f93aa;font-size:14px;padding:30px 0}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+footer a{color:#b7c7da;text-decoration:none}
+
+/* ── Try it on your VIN ─────────────────────────────────────────────── */
+.tv-hero{background:radial-gradient(1100px 520px at 80% 0%,rgba(63,181,174,.16),transparent 60%),linear-gradient(180deg,var(--night),var(--night-2));color:#c8d6e6;margin-top:-72px;padding:132px 0 72px}
+.tv-hero h1{color:#fff;font-size:clamp(36px,5.6vw,64px);font-weight:900;font-stretch:112%;max-width:900px}
+.tv-hero h1 .hl{color:var(--teal-b)}
+.tv-hero .lead{color:#b7c7da;margin-top:18px}
+.tv-form{margin-top:34px;display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr) auto auto;gap:12px;align-items:end;max-width:980px}
+.tv-form label{display:block;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8fa6bf;margin-bottom:7px}
+.tv-form input{width:100%;height:54px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;font:600 18px var(--body);padding:0 16px;outline:none}
+.tv-form input#vin{font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase}
+.tv-form input:focus{border-color:var(--teal-b);background:rgba(255,255,255,.09)}
+.tv-sched{display:flex;height:54px;border:1px solid rgba(255,255,255,.16);border-radius:12px;overflow:hidden}
+.tv-sched button{border:0;background:transparent;color:#b7c7da;font:600 14.5px var(--body);padding:0 14px;cursor:pointer}
+.tv-sched button[aria-pressed="true"]{background:rgba(79,209,201,.16);color:#fff}
+.tv-form .btn{height:54px;border:0;cursor:pointer}
+@media (max-width:860px){.tv-form{grid-template-columns:1fr 1fr}.tv-form .vinf{grid-column:1/-1}.tv-form .btn{grid-column:1/-1;justify-content:center}}
+.tv-samples{margin-top:26px;max-width:980px}
+.tv-samples p{margin:0 0 10px;font-size:14.5px;color:#8fa6bf}
+.tv-chips{display:flex;flex-wrap:wrap;gap:8px}
+.tv-chips button{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.04);color:#dbe6f2;font:600 14px var(--body);border-radius:999px;padding:8px 14px;cursor:pointer}
+.tv-chips button:hover{border-color:var(--teal-b);color:#fff}
+.tv-chips button small{color:#8fa6bf;font-weight:500;margin-left:6px}
+.tv-err{margin-top:14px;color:#ffb4ae;font-weight:600;min-height:1em}
+.tv-out{padding:64px 0 96px;background:var(--paper);display:none;scroll-margin-top:72px}
+.tv-out.on{display:block}
+.tv-car{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px}
+.tv-car h2{font-size:clamp(26px,3.4vw,40px)}
+.tv-car .mi{font-family:var(--display);font-weight:700;color:var(--ink-3);font-size:18px}
+.tv-note{margin:14px 0 0;max-width:860px;font-size:15px;color:var(--ink-2)}
+.tv-note b{color:var(--ink)}
+.tv-groups{margin-top:30px;display:grid;gap:28px}
+.tv-group h3{font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;display:flex;align-items:center;gap:10px}
+.tv-group h3 i{display:inline-block;width:10px;height:10px;border-radius:50%}
+.tv-group.over h3{color:var(--red)}.tv-group.over h3 i{background:var(--red)}
+.tv-group.now h3{color:#b9771a}.tv-group.now h3 i{background:var(--amber)}
+.tv-group.soon h3{color:#2b8d87}.tv-group.soon h3 i{background:var(--teal)}
+.tv-items{margin-top:12px;display:grid;gap:12px}
+.tv-item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:0 10px 30px -24px rgba(16,26,38,.4)}
+.tv-item .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 14px;align-items:baseline}
+.tv-item h4{margin:0;font-family:var(--display);font-size:20px;color:var(--ink);letter-spacing:-.01em}
+.tv-item .when{font-size:13.5px;font-weight:700;color:var(--ink-3)}
+.tv-item .sum{margin:6px 0 0;color:var(--ink-2)}
+.tv-item dl{margin:14px 0 0;display:grid;gap:10px}
+.tv-item dt{font-family:var(--display);font-weight:800;font-size:14px;color:var(--ink)}
+.tv-item dd{margin:2px 0 0;font-size:15.5px}
+.tv-hook{margin-top:40px;background:var(--night);color:#c8d6e6;border-radius:20px;padding:30px;display:grid;gap:18px}
+.tv-hook h3{color:#fff;font-size:clamp(22px,2.6vw,30px)}
+.tv-hook p{margin:0;max-width:760px}
+.tv-acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tv-acts .btn{padding:12px 18px;font-size:15px;border:0;cursor:pointer}
+.tv-acts .btn-g,.tv-mail .btn-g{background:transparent;border:1px solid rgba(255,255,255,.22)}
+.tv-mail{display:none;gap:8px;flex-wrap:wrap;align-items:center}
+.tv-mail.on{display:flex}
+.tv-mail input{height:46px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff;font:500 16px var(--body);padding:0 12px;min-width:260px}
+.tv-msg{font-size:14.5px;color:var(--teal-b);font-weight:600}
+.tv-empty{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;max-width:860px}
+.tv-empty h3{font-size:24px}
+.tv-empty p{margin:10px 0 0}
+.hp{position:absolute;left:-9999px}
+
+</style>
+<!-- Meta Pixel (dataset 1693754829035693 · ad account 3514465940926) -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1693754829035693');
+fbq('track', 'PageView');
+// Any "Set up my shop" link → InitiateCheckout (the trial itself finishes on app.roengine.com).
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="https://app.roengine.com/signup"]');
+  if (a) fbq('track', 'InitiateCheckout');
+}, true);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel -->
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+</defs></svg>
+<nav class="nav on-dark solid" id="nav">
+  <div class="wrap">
+    <a href="/" class="brand" aria-label="RO Engine home"><img src="/assets/brand/roe-mark-on-dark.svg" alt="" width="77" height="30" style="height:30px;width:auto"><span><span class="nm">RO Engine</span><span class="tg"><b>A</b>utomotive <b>I</b>ntelligence</span></span></a>
+    <div class="links">
+      <a href="/#story" class="hide-m">How it works</a>
+      <a href="/#pricing" class="hide-m">Pricing</a>
+      <a href="https://app.roengine.com/signup" class="btn btn-p">Set up my shop</a>
+    </div>
+  </div>
+</nav>
+
+<header class="tv-hero on-dark">
+  <div class="wrap">
+    <div class="eyebrow">Try it on your VIN</div>
+    <h1 style="margin-top:14px">The estimate that explains itself, <span class="hl">on a real car.</span></h1>
+    <p class="lead">Put in a VIN and the mileage. You'll see what's due from the factory schedule, written the way your customer reads it: what it is, why it's due now, and what happens if they wait. No signup.</p>
+    <form class="tv-form" id="tv" autocomplete="off">
+      <div class="vinf"><label for="vin">VIN</label><input id="vin" name="vin" maxlength="17" spellcheck="false" placeholder="17 characters" inputmode="text"></div>
+      <div><label for="mi">Mileage</label><input id="mi" name="mi" inputmode="numeric" placeholder="e.g. 74,000"></div>
+      <div><label>Service</label><div class="tv-sched" role="group" aria-label="Service schedule"><button type="button" data-s="normal" aria-pressed="true">Normal</button><button type="button" data-s="severe" aria-pressed="false">Severe</button></div></div>
+      <button class="btn btn-p" type="submit">Explain this car <svg><use href="#i-arrow"/></svg></button>
+    </form>
+    <div class="tv-err" id="err" role="alert"></div>
+    <div class="tv-samples">
+      <p>No VIN handy? Try one of these:</p>
+      <div class="tv-chips" id="chips"></div>
+    </div>
+  </div>
+</header>
+
+<section class="tv-out" id="out" aria-live="polite">
+  <div class="wrap" id="res"></div>
+</section>
+
+<footer class="on-dark">
+  <div class="wrap">
+    <a href="/" class="brand"><img src="/assets/brand/roe-mark-on-dark.svg" alt="" width="62" height="24" style="height:24px;width:auto"><span><span class="nm" style="font-size:16px">RO Engine</span><span class="tg"><b>A</b>utomotive <b>I</b>ntelligence</span></span></a>
+    <span>© 2026 RO Engine · <a href="mailto:joe@roengine.com">joe@roengine.com</a> · <a href="/privacy/">Privacy</a> · Built by a shop owner, for shop owners.</span>
+  </div>
+</footer>
+<script>
+(function () {
+  // The API runs in the RO Engine app (reference data only). A local preview can point it elsewhere with ?api=.
+  var PROD_API = 'https://autohouse.roengine.com/api/public/try-vin';
+  var API = /(^|\.)roengine\.com$/.test(location.hostname) ? PROD_API : (new URLSearchParams(location.search).get('api') || PROD_API);
+  var SIGNUP = 'https://app.roengine.com/signup?utm_source=roengine.com&utm_medium=try-vin';
+  // Synthetic sample VINs: a real 11-character vehicle descriptor (shared by thousands of cars) with a made-up serial
+  // and a correct check digit. Never a customer's VIN. Each checked end to end (roengine tests/capture/try-vin-samples).
+  var SAMPLES = [
+    ['YV4A22PK4H1204417', 74000, '2017 Volvo XC90'],
+    ['YV4102RKXJ1318852', 61000, '2018 Volvo XC60'],
+    ['5TDYK3EH4DS451903', 118000, '2013 Toyota Highlander'],
+    ['7FARW2H8XJE062718', 88000, '2018 Honda CR-V'],
+    ['1FTEW1EF9FK733164', 97000, '2015 Ford F-150'],
+    ['4S4BSAHC6K3285517', 45000, '2019 Subaru Outback'],
+    ['WBA3A5C59EP739264', 61000, '2014 BMW 328i']
+  ];
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $('tv'), vinEl = $('vin'), miEl = $('mi'), err = $('err'), out = $('out'), res = $('res');
+  var schedule = 'normal', isSample = false, last = null;
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var num = function (n) { return Number(n).toLocaleString('en-US'); };
+
+  SAMPLES.forEach(function (s) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.innerHTML = esc(s[2]) + '<small>' + num(s[1]) + ' mi</small>';
+    b.onclick = function () { vinEl.value = s[0]; miEl.value = num(s[1]); isSample = true; run(); };
+    $('chips').appendChild(b);
+  });
+  document.querySelectorAll('.tv-sched button').forEach(function (b) {
+    b.onclick = function () {
+      schedule = b.dataset.s;
+      document.querySelectorAll('.tv-sched button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      if (last) run();
+    };
+  });
+  vinEl.addEventListener('input', function () { isSample = false; vinEl.value = vinEl.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); });
+  form.addEventListener('submit', function (e) { e.preventDefault(); run(); });
+
+  function when(it) {
+    var every = [it.interval_miles ? 'every ' + num(it.interval_miles) + ' mi' : '', it.interval_months ? (it.interval_miles ? 'or ' : 'every ') + it.interval_months + ' months' : ''].filter(Boolean).join(' ');
+    var due = it.urgency === 'OVERDUE' ? (it.miles_until_due < 0 ? num(-it.miles_until_due) + ' mi past due' : 'past due by time')
+      : it.urgency === 'DUE_NOW' ? 'due now' : 'due in ' + num(it.miles_until_due) + ' mi';
+    return due + (every ? ' · ' + every : '');
+  }
+  function group(cls, title, items) {
+    if (!items.length) return '';
+    return '<div class="tv-group ' + cls + '"><h3><i></i>' + title + ' · ' + items.length + '</h3><div class="tv-items">' + items.map(function (it) {
+      return '<article class="tv-item"><div class="top"><h4>' + esc(it.name) + '</h4><span class="when">' + esc(when(it)) + '</span></div>' +
+        (it.summary ? '<p class="sum">' + esc(it.summary) + '</p>' : '') +
+        ((it.what || it.why || it.if_you_wait) ? '<dl>' +
+          (it.what ? '<div><dt>What is it?</dt><dd>' + esc(it.what) + '</dd></div>' : '') +
+          (it.why ? '<div><dt>Why now?</dt><dd>' + esc(it.why) + '</dd></div>' : '') +
+          (it.if_you_wait ? '<div><dt>What happens if you wait?</dt><dd>' + esc(it.if_you_wait) + '</dd></div>' : '') +
+        '</dl>' : '') + '</article>';
+    }).join('') + '</div></div>';
+  }
+  function hook(car, covered) {
+    return '<div class="tv-hook"><h3>' + (covered ? 'This is what your customer reads, on every repair order.' : 'On a covered car, this is what your customer reads.') + '</h3>' +
+      '<p>In RO Engine it comes with prices, photos from your tech, a diagram of their car and a button to approve, sent to their phone. And it uses each car\'s own service history, not a guess.</p>' +
+      '<div class="tv-acts"><a class="btn btn-p" href="' + SIGNUP + '">Start 90 days free <svg><use href="#i-arrow"/></svg></a>' +
+      '<button class="btn btn-g" type="button" id="mailbtn">Email me this</button>' +
+      (covered ? '<button class="btn btn-g" type="button" id="copybtn">Copy link</button>' : '') + '</div>' +
+      '<form class="tv-mail" id="mailf"><input type="email" id="email" placeholder="you@yourshop.com" required><input class="hp" name="website" tabindex="-1" autocomplete="off"><button class="btn btn-p" type="submit">Send</button><span class="tv-msg" id="mailmsg"></span></form>' +
+      '<span class="tv-msg" id="copymsg"></span></div>';
+  }
+  function shareUrl() {
+    return 'https://roengine.com/try/?vin=' + encodeURIComponent(last.vin) + '&mi=' + last.mi + (last.schedule === 'severe' ? '&s=severe' : '');
+  }
+  function wire(kind, carLabel) {
+    var ts = Math.floor(Date.now() / 1000), hk = '';
+    var mb = $('mailbtn'), cb = $('copybtn'), mf = $('mailf');
+    if (mb) mb.onclick = function () { mf.classList.add('on'); $('email').focus(); };
+    if ($('email')) $('email').addEventListener('input', function () { hk = ts.toString(36); });
+    if (cb) cb.onclick = function () {
+      var u = shareUrl();
+      (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(function () { $('copymsg').textContent = 'Link copied.'; }, function () { $('copymsg').textContent = u; });
+    };
+    if (mf) mf.onsubmit = function (e) {
+      e.preventDefault();
+      var fd = new FormData();
+      fd.append('email', $('email').value.trim()); fd.append('kind', kind); fd.append('car', carLabel);
+      fd.append('url', shareUrl()); fd.append('ts', ts); fd.append('hk', hk); fd.append('website', mf.website.value);
+      $('mailmsg').textContent = 'Sending…';
+      fetch('/try/send.php', { method: 'POST', body: fd }).then(function (r) { return r.json(); }).then(function (d) {
+        $('mailmsg').textContent = d.ok ? (kind === 'notify' ? 'Got it. We\'ll email you when it\'s covered.' : 'Sent. Check your inbox.') : (d.error || 'Could not send.');
+        if (d.ok) { window.fbq && fbq('track', 'Lead', { content_name: 'try-vin-' + kind }); window.gtag && gtag('event', 'try_vin_email', { kind: kind }); }
+      }, function () { $('mailmsg').textContent = 'Could not send. Try again in a minute.'; });
+    };
+  }
+
+  function render(d) {
+    var v = d.vehicle, car = v ? v.year + ' ' + v.make + ' ' + v.model : '';
+    var head = v ? '<div class="tv-car"><h2>' + esc(car) + '</h2><span class="mi">' + esc([v.engine, num(d.mileage) + ' mi'].filter(Boolean).join(' · ')) + '</span></div>' : '';
+    if (d.status === 'ok' || d.status === 'nothing_due') {
+      var it = d.items || [];
+      var by = function (u) { return it.filter(function (x) { return x.urgency === u; }); };
+      res.innerHTML = head +
+        '<p class="tv-note">From the manufacturer\'s ' + (d.schedule === 'severe' ? 'severe-service' : 'normal') + ' maintenance schedule. <b>We don\'t know this car\'s history</b>, so anything with a time interval shows as due. In your shop, RO Engine uses each car\'s own records.' +
+        (d.closest_match ? ' Closest factory match: ' + esc(d.closest_match) + '; a few engine versions share this VIN pattern.' : '') + '</p>' +
+        (it.length ? '<div class="tv-groups">' + group('over', 'Overdue', by('OVERDUE')) + group('now', 'Due now', by('DUE_NOW')) + group('soon', 'Coming soon', by('COMING_SOON')) + '</div>'
+          : '<div class="tv-empty" style="margin-top:24px"><h3>Nothing\'s due at this mileage.</h3><p>By the factory schedule, this car is caught up. Try a higher mileage, or one of the sample cars.</p></div>') +
+        hook(car, true);
+      wire('result', car + ' at ' + num(d.mileage) + ' mi');
+    } else if (d.status === 'not_covered') {
+      res.innerHTML = head + '<div class="tv-empty" style="margin-top:24px"><h3>We don\'t have this one\'s factory schedule yet.</h3>' +
+        '<p>We only show what the manufacturer publishes, never a guess, and we\'re adding cars every week. Try one of the sample cars above, or leave your email and we\'ll tell you when the ' + esc(car) + ' is covered.</p></div>' + hook(car, false);
+      wire('notify', car);
+      var mb = $('mailbtn'); if (mb) mb.textContent = 'Email me when it\'s covered';
+    } else {
+      out.classList.remove('on');
+      err.textContent = d.status === 'not_decoded' ? 'We couldn\'t read that VIN. Check it: 17 letters and numbers, no I, O or Q.' : (d.error || 'Something went wrong. Try again in a minute.');
+      return;
+    }
+    out.classList.add('on');
+    out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.fbq && fbq('track', 'ViewContent', { content_name: 'try-vin', content_category: isSample ? 'sample' : 'own', status: d.status });
+    window.gtag && gtag('event', 'try_vin', { sample: isSample ? 1 : 0, status: d.status, make: v && v.make });
+  }
+
+  function run() {
+    var vin = vinEl.value.toUpperCase().trim(), mi = String(miEl.value).replace(/[^0-9]/g, '');
+    err.textContent = '';
+    if (!/^[A-HJ-NPR-Z0-9]{17}$/.test(vin)) { err.textContent = 'A VIN is 17 letters and numbers (no I, O or Q).'; return; }
+    if (!mi) { err.textContent = 'Add the mileage.'; miEl.focus(); return; }
+    last = { vin: vin, mi: Number(mi), schedule: schedule };
+    var btn = form.querySelector('.btn'); btn.disabled = true; btn.firstChild.textContent = 'Explaining… ';
+    fetch(API + '?vin=' + encodeURIComponent(vin) + '&mileage=' + mi + '&schedule=' + schedule)
+      .then(function (r) { return r.json(); })
+      .then(render, function () { err.textContent = 'Couldn\'t reach the server. Try again in a minute.'; })
+      .then(function () { btn.disabled = false; btn.firstChild.textContent = 'Explain this car '; });
+  }
+
+  // A shared link (?vin=&mi=[&s=severe]) runs on arrival.
+  var qs = new URLSearchParams(location.search);
+  var qmi = String(qs.get('mi') || '').replace(/[^0-9]/g, '');
+  if (qs.get('vin') && qmi) {
+    vinEl.value = qs.get('vin').toUpperCase().replace(/[^A-Z0-9]/g, ''); miEl.value = num(qmi);
+    if (qs.get('s') === 'severe') document.querySelector('.tv-sched [data-s="severe"]').click();
+    isSample = SAMPLES.some(function (s) { return s[0] === vinEl.value; });
+    run();
+  }
+})();
+</script>
+</body>
+</html>

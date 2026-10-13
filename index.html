@@ -235,6 +235,17 @@ section{padding:110px 0}
 
 /* strip */
 .strip{background:var(--night-2);border-top:1px solid rgba(255,255,255,.06)}
+.tryband{padding:56px 0;background:var(--teal-w);border-bottom:1px solid var(--line)}
+.tryband .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:36px;align-items:center}
+.tryband h2{font-size:clamp(28px,3.4vw,40px)}
+.tryband p{margin:10px 0 0;max-width:520px}
+.tryf{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr) auto;gap:10px;align-items:center}
+.tryf input{height:52px;border-radius:12px;border:1px solid #bfe4e1;background:#fff;font:600 16px var(--body);color:var(--ink);padding:0 14px;outline:none;min-width:0}
+.tryf input[name=vin]{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.04em}
+.tryf input:focus{border-color:var(--teal)}
+.tryf .btn{height:52px;border:0;cursor:pointer}
+.tryf .trys{grid-column:1/-1;font-size:14.5px;font-weight:600;color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:860px){.tryband .wrap{grid-template-columns:1fr}.tryf{grid-template-columns:1fr 1fr}.tryf input[name=vin]{grid-column:1/-1}.tryf .btn{justify-content:center}}
 .strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
 .strip .s{padding:30px 22px;border-right:1px solid rgba(255,255,255,.07)}
 .strip .s:last-child{border-right:0}
@@ -669,6 +680,23 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
     <div class="s rv"><b data-count="90">90</b><span>days free to try it</span></div>
   </div>
 </div>
+
+<!-- ═══ TRY IT ON YOUR VIN (→ /try/, which runs ?vin=&mi= on arrival) ═══ -->
+<section class="tryband" id="try">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Try it on your VIN</div>
+      <h2 class="rv" style="margin-top:10px">See it explain <span style="color:var(--teal)">a real car.</span></h2>
+      <p class="rv">Put in a customer's VIN and the mileage. What's due from the factory schedule, written the way they'd read it. No signup.</p>
+    </div>
+    <form class="tryf rv" action="/try/" method="get" autocomplete="off">
+      <input name="vin" maxlength="17" placeholder="VIN (17 characters)" aria-label="VIN" spellcheck="false" required pattern="[A-HJ-NPR-Za-hj-npr-z0-9]{17}" title="17 letters and numbers, no I, O or Q">
+      <input name="mi" inputmode="numeric" placeholder="Mileage" aria-label="Mileage" required>
+      <button class="btn btn-p" type="submit">Explain it <svg><use href="#i-arrow"/></svg></button>
+      <a class="trys" href="/try/">No VIN handy? Try a sample car</a>
+    </form>
+  </div>
+</section>
 
 <!-- ═══ MAINTENANCE PAYS ═══════════════════════════════════════════════ -->
 <section class="roi" id="why">
