@@ -324,8 +324,8 @@ if (true) {
         'text'       =>
             "$first,\n\n" .
             "Got it — I'll reply within one business day.\n\n" .
-            "I run AutoHouse Automotive in Northwest Arkansas — I built RO Engine " .
-            "because I needed it, and it's been running my shop. So when we talk, " .
+            "I run AutoHouse Automotive — two shops, in Northwest Arkansas and Chicago. I built RO Engine " .
+            "because I needed it, and it runs both of them. So when we talk, " .
             "you're talking to another shop owner, not a salesperson.\n\n" .
             "Want to look around in the meantime? Start a test drive at https://app.roengine.com/signup — nothing charges for 90 days.\n\n" .
             "— Joe Sprandel\nRO Engine\n" . REPLY_TO . "\n",
