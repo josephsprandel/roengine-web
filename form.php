@@ -242,7 +242,7 @@ function mg_send(string $key, array $fields): array {
 }
 
 $hot = in_array($sms, ['Shop-Ware', 'ShopWare'], true) ? ' [SHOPWARE]' : '';
-$subject = 'Question — ' . $shop . ' (' . $bays . ' bays, ' . $sms . ')' . $hot;
+$subject = 'Question — ' . $shop . ' (' . ($bays !== '' ? $bays . ' bays, ' : '') . $sms . ')' . $hot;
 $body =
     "New question from roengine.com\n" .
     str_repeat('-', 46) . "\n" .
