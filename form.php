@@ -197,6 +197,15 @@ $sms   = field('sms', 40);
 $notes = trim((string)($_POST['notes'] ?? ''));
 $notes = mb_substr($notes, 0, 2000);
 
+// Content gates: patterns real shop owners never produce. Same silent ok as
+// the honeypot, so the sender learns nothing.
+$allText = $first . ' ' . $last . ' ' . $shop . ' ' . $notes;
+if (strpos($shop, '@') !== false                              // email typed as the shop name
+    || ($first !== '' && strcasecmp($first, $last) === 0)     // "illineugs illineugs"
+    || preg_match('/\p{Cyrillic}/u', $allText)) {            // Russian-language spam
+    out(true);
+}
+
 if ($first === '' || $last === '') out(false, 'Please enter your first and last name.', 400);
 if ($shop  === '')                 out(false, 'Please enter your shop name.', 400);
 if ($email === '')                 out(false, 'Please enter your email address.', 400);
