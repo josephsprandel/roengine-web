@@ -155,9 +155,17 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
 if (field('website') !== '') {
     out(true);
 }
-// Timing: humans do not fill seven fields in under three seconds.
+// Timing: humans do not fill the form in under three seconds. A missing or
+// day-old timestamp means the page was never loaded: a direct POST.
 $ts = (int)field('ts', 20);
-if ($ts > 0 && (time() - $ts) < MIN_SECONDS) {
+$age = time() - $ts;
+if ($ts <= 0 || $age < MIN_SECONDS || $age > 86400) {
+    out(true);
+}
+// Interaction token: the page sets hk = ts in base 36 on the first keystroke or
+// autofill in the form. Scripts that post the fields without a person typing
+// never set it.
+if (field('hk', 20) !== base_convert((string)$ts, 10, 36)) {
     out(true);
 }
 

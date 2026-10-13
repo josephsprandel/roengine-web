@@ -1090,6 +1090,7 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
       <div style="margin-bottom:20px"><label for="notes">Anything else? (optional)</label><textarea id="notes" name="notes" rows="3" placeholder="What's driving you off your current system?"></textarea></div>
       <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
       <input type="hidden" name="ts" id="ts">
+      <input type="hidden" name="hk" id="hk">
       <button class="btn btn-d" style="width:100%;justify-content:center" type="submit">Send my question <svg><use href="#i-arrow"/></svg></button>
       <p class="fineprint">I read these myself, usually same day. No sales sequence, no drip campaign, and your email doesn't go anywhere else.</p>
     </form>
@@ -1214,6 +1215,8 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
   const form = $('#demoForm')
   if (form) {
     $('#ts').value = Math.floor(Date.now() / 1000)
+    // Bot gate: the token is only set once a person types (or autofills) a field.
+    form.addEventListener('input', () => { $('#hk').value = Number($('#ts').value).toString(36) }, { once: true })
     form.addEventListener('submit', async (e) => {
       e.preventDefault()
       const msg = $('#formMsg'), btn = form.querySelector('button')
