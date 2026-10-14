@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuickBooks disconnected — RO Engine</title>
+<meta name="description" content="What happens when QuickBooks Online is disconnected from RO Engine, and how to reconnect.">
+<link rel="canonical" href="https://roengine.com/quickbooks/disconnected/">
+<link rel="icon" href="/assets/brand/roe-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0b1524; --teal:#3fb5ae; --ink:#101a26; --ink-2:#4a5c70; --ink-3:#8598ab; --line:#e2ecf4; --paper:#f6f8fb; --w:#fff;
+  --display:'Archivo',system-ui,sans-serif; --body:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--w);color:var(--ink-2);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}
+.top{background:var(--night);padding:18px 0}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px}
+.top a{display:inline-flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:var(--display);font-weight:800;font-size:17px}
+.top img{height:22px;width:auto}
+main{padding:48px 0 72px}
+h1,h2{font-family:var(--display);color:var(--ink);letter-spacing:-.02em;line-height:1.1}
+h1{font-size:clamp(32px,5vw,44px);margin:0 0 6px}
+h2{font-size:22px;margin:40px 0 10px}
+h3{font-size:17px;color:var(--ink);margin:22px 0 6px}
+.meta{color:var(--ink-3);font-size:14.5px;margin:0 0 28px}
+.note{background:var(--paper);border-left:3px solid var(--teal);padding:14px 18px;border-radius:6px;margin:22px 0}
+ul{padding-left:22px}
+li{margin:6px 0}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--ink);font-weight:600}
+code{font-size:14.5px;background:var(--paper);padding:1px 5px;border-radius:4px}
+footer{border-top:1px solid var(--line);padding:24px 0;color:var(--ink-3);font-size:14px}
+@media (max-width:560px){table{font-size:14.5px}th,td{padding:8px 6px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap"><a href="/"><img src="/assets/brand/roe-mark-on-dark.svg" alt="">RO Engine</a></div></div>
+<main class="wrap">
+<h1>QuickBooks is disconnected</h1>
+<p class="meta">RO Engine no longer has access to your QuickBooks Online company</p>
+<p>When QuickBooks is disconnected, RO Engine stops sending anything to QuickBooks and no longer holds an access token
+for your company.</p>
+<ul>
+<li><b>Nothing in QuickBooks is removed.</b> Invoices, payments and journal entries RO Engine already posted stay in
+your QuickBooks company.</li>
+<li><b>Your shop keeps working.</b> RO Engine keeps recording your accounting activity and holds it unsent.</li>
+<li><b>Reconnecting</b> to the same company sends what was held, without posting anything twice. See
+<a href="/quickbooks/connect/">Connect or reconnect QuickBooks</a>.</li>
+</ul>
+<p>If you disconnected from inside QuickBooks, your shop's RO Engine shows <b>Reconnect QuickBooks</b> in
+<b>Settings → Accounting</b> the next time it tries to send an entry. Details are in section 6 of our
+<a href="/terms/quickbooks/">QuickBooks Integration Terms</a>.</p>
+
+<p class="meta" style="margin-top:40px">Questions? <a href="mailto:joe@roengine.com">joe@roengine.com</a> ·
+<a href="/terms/quickbooks/">QuickBooks Integration Terms</a> · <a href="/privacy/">Privacy Policy</a></p>
+</main>
+<footer><div class="wrap">© 2026 SPRANDEL LLC · <a href="/">RO Engine</a> · <a href="/terms/quickbooks/">QuickBooks terms</a> · <a href="/privacy/">Privacy</a></div></footer>
+</body>
+</html>

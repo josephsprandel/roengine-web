@@ -22,6 +22,7 @@ deployment:
     - /bin/cp -Rf shop-ware $DEPLOYPATH
     - /bin/cp -Rf privacy $DEPLOYPATH
     - /bin/cp -Rf terms $DEPLOYPATH
+    - /bin/cp -Rf quickbooks $DEPLOYPATH
     - /bin/cp -Rf try $DEPLOYPATH
     # Lead retention job, run by a cPanel cron — lives OUTSIDE public_html.
     - /bin/mkdir -p /home/roengine/ops
