@@ -20,7 +20,7 @@
 - Founding shop pricing: shops that join before July 1, 2027 pay $261.75/month (25% off) for as long as they stay.
 - RO Engine does not take a cut of a shop's card processing; its revenue is the subscription.
 - Easy out: the owner can export all the shop's data at any time from Settings → Export Data — customers, vehicles, repair orders and invoices, payments, inspections, estimates, appointments, messages, inventory, vendors and purchase orders as CSV and/or JSON (with a README explaining how the files link), plus every photo filed by repair order. No fee and no request needed; export is not tied to billing, so a cancelled shop can still sign in and take its data.
-- QuickBooks Online sync (coming soon): either an invoice and payment per repair order, or one journal entry per day for shops whose accountant wants QuickBooks lean; a CSV of the same accounting ledger covers other bookkeeping.
+- QuickBooks Online sync (Intuit-approved; details at https://roengine.com/quickbooks/): either an invoice and payment per repair order, or one journal entry per day for shops whose accountant wants QuickBooks lean; a CSV of the same accounting ledger covers other bookkeeping.
 
 ## The free trial
 - Not a demo or sandbox: signing up creates the shop's own live RO Engine at yourshop.roengine.com, ready in minutes.
