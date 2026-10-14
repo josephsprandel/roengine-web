@@ -15,16 +15,22 @@
 <script>
 (function () {
   var MAXAGE = 60 * 60 * 24 * 90;
-  var CLICK = ['gclid','gbraid','wbraid'], UTM = ['utm_source','utm_medium','utm_campaign'];
+  var CLICK = ['gclid','gbraid','wbraid','fbclid'], UTM = ['utm_source','utm_medium','utm_campaign','utm_content'];
   var qs = new URLSearchParams(window.location.search);
   var has = function (keys) { return keys.some(function (k) { return qs.get(k); }); };
-  if (!has(CLICK) && !has(UTM)) return;
+  // The first outside page that sent the visitor (origin + path only), kept from the first visit: a Meta ad
+  // link without tags still shows up as facebook.com.
+  var ref = '';
+  try { var r = new URL(document.referrer); if (/^https?:$/.test(r.protocol) && !/(^|[.])roengine[.]com$/.test(r.hostname)) ref = (r.origin + r.pathname).slice(0, 200); } catch (e) {}
+  if (!has(CLICK) && !has(UTM) && !ref) return;
   var cur = {};
   try { var m = document.cookie.match(/(?:^|; )re_attr=([^;]*)/); if (m) cur = JSON.parse(decodeURIComponent(m[1])) || {}; } catch (e) { cur = {}; }
+  if (!has(CLICK) && !has(UTM) && cur.ref) return;
   // Only a newer ad click replaces an ad-click ID. A later non-ad visit (a newsletter link with
   // utm_* tags) updates the campaign tags but must not erase the click Google Ads credits.
   if (has(CLICK)) { CLICK.forEach(function (k) { delete cur[k]; if (qs.get(k)) cur[k] = qs.get(k); }); cur._ts = new Date().toISOString(); }
   if (has(UTM)) { UTM.forEach(function (k) { delete cur[k]; if (qs.get(k)) cur[k] = qs.get(k); }); }
+  if (ref && !cur.ref) cur.ref = ref;
   if (!cur._ts) cur._ts = new Date().toISOString();
   document.cookie = 're_attr=' + encodeURIComponent(JSON.stringify(cur)) +
     ';max-age=' + MAXAGE + ';path=/;domain=.roengine.com;samesite=lax;secure';
