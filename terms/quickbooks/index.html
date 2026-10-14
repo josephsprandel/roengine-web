@@ -43,12 +43,12 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--ink-3);font-s
 <div class="top"><div class="wrap"><a href="/"><img src="/assets/brand/roe-mark-on-dark.svg" alt="">RO Engine</a></div></div>
 <main class="wrap">
 <h1>QuickBooks Integration Terms</h1>
-<p class="meta">End-user license agreement · Effective October 14, 2026 · SPRANDEL LLC ("RO Engine", "we")</p>
+<p class="meta">End-user license agreement · Effective October 14, 2026 · Updated October 14, 2026 · SPRANDEL LLC ("RO Engine", "we")</p>
 
 <p>These terms cover the <b>QuickBooks Online integration</b> in RO Engine, shop-management software for independent
-auto repair shops. They apply to the repair shop ("you") that connects its QuickBooks Online company to RO Engine,
-and to the people who use the integration on the shop's behalf. By connecting QuickBooks to RO Engine, you agree to
-them. Your use of RO Engine itself is governed by your agreement with us for the service.</p>
+auto repair shops. They are an agreement between us and the repair shop ("you") that connects its QuickBooks Online
+company to RO Engine. The person who connects QuickBooks accepts these terms on the shop's behalf and confirms they
+are authorized to do so. How these terms relate to your other agreements is in section 13.</p>
 
 <div class="note">RO Engine is not affiliated with or endorsed by Intuit. QuickBooks and QuickBooks Online are
 trademarks of Intuit Inc. Your use of QuickBooks is governed by your agreement with Intuit.</div>
@@ -71,21 +71,31 @@ its payments (<i>Detailed</i> mode), or one summary journal entry per day (<i>Da
 customers, the "RO Engine" items and, if you ask, the accounts those entries need. When a repair order is reopened,
 voided or a payment is reversed in RO Engine, it updates, voids or removes the matching record, or posts a dated
 correction rather than editing a posted day.</li>
+<li><b>Timing.</b> RO Engine checks for new entries about once a minute. In <i>Daily summary</i> mode a day's entry is
+posted after that day ends. A correction is posted as its own entry, dated the day of the change; a posted day is never
+edited.</li>
 <li><b>Never</b> reads or changes bank feeds, bank reconciliation, payroll, or records it didn't create, other than
 the reads above. It never moves money.</li>
 </ul>
 
 <h2>3. Who can connect it</h2>
 <p>Only people your shop has given RO Engine's <i>Accounting</i> permission can connect, configure or disconnect the
-integration. By default that is the shop's owners, and your shop decides who else gets it. By connecting, you confirm
-you are authorized to grant RO Engine access to that QuickBooks Online company.</p>
+integration. By default that is the shop's owners, and your shop decides who else gets it and is responsible for that
+choice. Intuit's own sign-in then requires the person to sign in to the QuickBooks Online company and approve the
+connection there. By connecting, that person confirms they are authorized to act for the shop and to grant RO Engine
+access to that company.</p>
 
 <h2>4. Your data</h2>
 <ul>
 <li>Your shop's data, in RO Engine and in QuickBooks, is yours. We use the access you grant only to provide the
 integration to you, as described in section 2 and in our <a href="/privacy/">Privacy Policy</a>.</li>
-<li>The access tokens Intuit issues to us are stored encrypted, and used only by your shop's RO Engine to send your
-entries. We don't sell your data or use it to train AI models.</li>
+<li>The access tokens Intuit issues to us are stored encrypted and used only by your shop's RO Engine, only for the
+reads and writes described in section 2.</li>
+<li>Besides the tokens, we keep only what the integration needs to keep your books consistent: your account choices,
+and the QuickBooks record numbers that match each RO Engine invoice, payment, customer and item (so a later change
+updates the right record instead of creating a duplicate). These are kept with your shop's RO Engine data, and RO
+Engine's assistant features can see the record numbers as part of your shop's data.</li>
+<li>We don't sell your data, and we don't use it, or anything we read from QuickBooks, to train AI models.</li>
 <li>Records the integration wrote to QuickBooks stay in your QuickBooks company after you disconnect or leave RO
 Engine; managing them is up to you.</li>
 </ul>
@@ -101,15 +111,24 @@ tax filings and decisions remain your responsibility.</li>
 </ul>
 
 <h2>6. Disconnecting</h2>
-<p>Your shop can disconnect at any time in <i>Settings → Accounting</i>. Disconnecting revokes RO Engine's access with
-Intuit and stops all syncing. You can also revoke access from your Intuit account's list of connected apps. These
-terms end for your shop when you disconnect, or when your RO Engine subscription ends.</p>
+<p>Your shop can disconnect at any time in <i>Settings → Accounting</i>, or revoke access from your Intuit account's
+list of connected apps. When you disconnect in RO Engine, it immediately asks Intuit to revoke our access, deletes the
+stored access tokens, and stops sending anything to QuickBooks.</p>
+<ul>
+<li>RO Engine keeps recording your accounting activity in your shop's account, and holds it unsent. If you reconnect
+to the same QuickBooks company, it picks up where it left off; otherwise nothing more is sent.</li>
+<li>Your account choices and the matching record numbers stay with your shop's RO Engine data, and are deleted along
+with it when that data is deleted under your agreement with us for RO Engine.</li>
+<li>Records already written to QuickBooks stay there (section 4).</li>
+</ul>
+<p>These terms end for your shop when you disconnect, or when your RO Engine subscription ends. Sections 4, 5, 8, 9,
+11 and 13 continue to apply after that.</p>
 
 <h2>7. Availability and changes</h2>
 <p>The integration depends on QuickBooks Online and Intuit's APIs, which Intuit can change or limit. We may update
 or suspend the integration to keep it working, secure or compliant, and we'll tell account owners about changes that
-matter. If an entry can't be delivered, RO Engine retries it and shows you its status; it doesn't post the same entry
-twice.</p>
+matter. If an entry can't be delivered, RO Engine retries it and shows you its status; it doesn't post the same entry twice. Retries and status reporting are features
+of the integration, not a promise of any particular availability or timing.</p>
 
 <h2>8. No warranty</h2>
 <p>The integration is provided "as is" and "as available." To the extent the law allows, we disclaim all warranties,
@@ -117,21 +136,34 @@ express or implied, including merchantability, fitness for a particular purpose 
 promise it will be uninterrupted or error-free.</p>
 
 <h2>9. Limitation of liability</h2>
-<p>To the extent the law allows, neither party is liable for indirect, incidental, special, consequential or punitive
-damages, or for lost profits or revenue, arising from the integration. Our total liability for any claims relating
-to the integration is limited to the greater of the fees you paid us for RO Engine in the 12 months before the claim
-or $500.</p>
+<p>To the extent the law allows:</p>
+<ul>
+<li>Neither party is liable to the other for indirect, incidental, special, consequential or punitive damages, or for
+lost profits or revenue, arising from the integration or these terms.</li>
+<li>Each party's total liability for all claims arising from the integration or these terms is limited to the greater
+of (a) the total fees you paid us for your RO Engine subscription in the 12 months before the event that gave rise to
+the claim, or (b) $500.</li>
+<li>These limits don't apply to amounts you owe us for RO Engine, or to a breach of the use restrictions in section 1.</li>
+</ul>
 
 <h2>10. Changes to these terms</h2>
-<p>If we change these terms in a way that matters, we'll update the date above and email your shop's account owner
-before the change takes effect. Continuing to use the integration after that means you accept the change.</p>
+<p>If we make a material change to these terms, we'll email your shop's account owner at least 30 days before it takes
+effect and update the date above. If you don't agree, you can disconnect before the change takes effect, and it won't
+apply to you. If you keep using the integration after it takes effect, you accept it. Changes are never retroactive.
+Corrections and clarifications that don't change anyone's rights take effect when posted.</p>
 
 <h2>11. Governing law</h2>
 <p>These terms are governed by the laws of the State of Arkansas, without regard to its conflict-of-laws rules. Any
-dispute will be brought in the state or federal courts located in Washington County, Arkansas.</p>
+dispute arising from them will be brought exclusively in the state or federal courts located in Washington County,
+Arkansas, and both parties consent to those courts' personal jurisdiction.</p>
 
 <h2>12. Contact</h2>
 <p>SPRANDEL LLC · 432 N Main Ave, Fayetteville, AR 72701 · <a href="mailto:privacy@roengine.com">privacy@roengine.com</a></p>
+
+<h2>13. How these terms fit with your other agreements</h2>
+<p>These terms add to your agreement with us for RO Engine; they don't replace it. If the two conflict about the
+QuickBooks integration, these terms control for the integration. Our <a href="/privacy/">Privacy Policy</a> describes
+how we handle personal information. Nothing here changes your agreement with Intuit for QuickBooks.</p>
 </main>
 <footer><div class="wrap">© 2026 SPRANDEL LLC · <a href="/">RO Engine</a> · <a href="/privacy/">Privacy Policy</a></div></footer>
 </body>
