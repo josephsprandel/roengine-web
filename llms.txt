@@ -8,7 +8,7 @@
 - **Two-way texting** with a local shop number and click-to-call.
 - **Digital estimate approval** — customers approve or decline line by line from a private link (no app, no login), with an AI-written explanation of each service ("What is it?", "Why now?", "What happens if you wait?") and a diagram of the car showing where each service is; declines are saved as deferred work for the next visit.
 - **Full comparison** with Tekmetric, Shop-Ware, Shopmonkey, AutoLeap and Mitchell 1 SE: https://roengine.com/compare/
-- **Parts and purchase orders** — parts attached to the job, purchase orders and receiving, core charges and returns, margin visible before approval.
+- **Parts and purchase orders** — parts searched and ordered from the repair order on the shop's own supplier accounts (RO Engine never stores supplier passwords), purchase orders and receiving, core charges and returns, margin visible before approval.
 - **Photo intake** — VIN from the door jamb sticker, mileage from the dashboard, plate capture, timestamped condition photos.
 - **Multi-point inspections** — green/yellow/red ratings with photos; tech notes rewritten for customers; red findings become recommendations.
 - **Oil-change decals** — next service calculated from the actual oil spec and OEM time interval, printed automatically.
