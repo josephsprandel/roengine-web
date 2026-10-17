@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Release notes — RO Engine</title>
+<meta name="description" content="What changed in RO Engine, dated. Built and run by a working shop owner. Tell him what's broken and it shows up here.">
+<link rel="canonical" href="https://roengine.com/changelog/">
+<link rel="icon" href="/assets/brand/roe-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0b1524; --teal:#3fb5ae; --ink:#101a26; --ink-2:#4a5c70; --ink-3:#8598ab; --line:#e2ecf4; --paper:#f6f8fb; --w:#fff;
+  --display:'Archivo',system-ui,sans-serif; --body:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--w);color:var(--ink-2);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}
+.top{background:var(--night);padding:18px 0}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px}
+.top a{display:inline-flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:var(--display);font-weight:800;font-size:17px}
+.top img{height:22px;width:auto}
+main.wrap{padding:40px 20px 72px}
+h1,h2{font-family:var(--display);color:var(--ink);letter-spacing:-.02em;line-height:1.1}
+h1{font-size:clamp(32px,5vw,44px);margin:0 0 10px}
+h2{font-size:20px;margin:40px 0 8px;padding-top:16px;border-top:1px solid var(--line)}
+.lede{font-size:18px;margin:0 0 22px}
+.release{background:var(--paper);border-left:3px solid var(--teal);padding:14px 18px;border-radius:6px;margin:0 0 8px;font-size:15.5px}
+.release b{color:var(--ink)}
+.release code{font-size:14px;background:var(--w);padding:1px 5px;border-radius:4px}
+ul{padding-left:20px;margin:8px 0}
+li{margin:9px 0}
+li b{color:var(--ink)}
+.tag{display:inline-block;font-size:12px;font-weight:600;line-height:1;color:var(--teal);border:1px solid var(--teal);border-radius:20px;padding:3px 8px;margin-left:6px;vertical-align:2px;white-space:nowrap}
+.ask{margin-top:44px;padding-top:20px;border-top:1px solid var(--line)}
+footer{border-top:1px solid var(--line);padding:24px 0;color:var(--ink-3);font-size:14px}
+</style>
+<!-- Meta Pixel (dataset 1693754829035693 · ad account 3514465940926) -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1693754829035693');
+fbq('track', 'PageView');
+// Any "Set up my shop" link → InitiateCheckout (the trial itself finishes on app.roengine.com).
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="https://app.roengine.com/signup"]');
+  if (a) fbq('track', 'InitiateCheckout');
+}, true);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel -->
+</head>
+<body>
+<div class="top"><div class="wrap"><a href="/"><img src="/assets/brand/roe-mark-on-dark.svg" alt="">RO Engine</a></div></div>
+<main class="wrap">
+<h1>Release notes</h1>
+<p class="lede">What changed in RO Engine, dated. Tell me what's broken and it shows up here. — Joe</p>
+
+<div class="release"><b>Current release: 0.9.0</b> · build <code>759d237</code> · October 15, 2026<br>
+Changes run at AutoHouse first. Anything tagged <span class="tag">AutoHouse first</span> reaches every shop with the next release.</div>
+
+<h2>October 17, 2026</h2>
+<ul>
+<li><b>No card to start.</b> The 90-day trial starts with four fields: shop name, your name, email, shop link.</li>
+<li><b>Launch price: $199 a month, locked for as long as you stay.</b> Regular price $349.</li>
+<li><b>Check-in list on the phone.</b> Open check-in and see the cars due today, plus no-shows from the last 3 days, customer name first. Tap a car, shoot the VIN and odometer, hit Next car. <span class="tag">AutoHouse first</span></li>
+<li><b>Recalls, honestly.</b> The recall badge no longer implies a model's recalls are open on this car. It sends you to NHTSA's VIN lookup and saves the answer on the vehicle. <span class="tag">AutoHouse first</span></li>
+</ul>
+
+<h2>October 16, 2026</h2>
+<ul>
+<li><b>Call-back alerts.</b> When the AI phone takes a call-back request, you get a dashboard card, a push alert, and a text to whoever you put on the list. <span class="tag">AutoHouse first</span></li>
+<li><b>We don't ask for your PartsTech password.</b> Parts ordering runs through the RO Engine Parts browser extension, signed in with your own PartsTech login. <span class="tag">AutoHouse first</span></li>
+</ul>
+
+<h2>October 15, 2026</h2>
+<ul>
+<li><b>Shop in PartsTech from the RO.</b> PartsTech opens with the vehicle loaded. Your cart comes back onto the RO, and checkout is recorded as POs with confirmation numbers. <span class="tag">AutoHouse first</span></li>
+<li><b>Check in from any phone.</b> Scan the QR code on the RO, shoot the VIN and odometer, and the desk fills in.</li>
+<li><b>Special orders follow the job.</b> Ordered parts are tied to their RO lines and show their status on the RO.</li>
+<li><b>Inventory if you want it.</b> Off by default. Parts come out of stock when the RO closes and go back if it's reopened or voided.</li>
+<li><b>Fluids by the quart,</b> whatever size the jug.</li>
+<li><b>No automatic texts unless you turn them on.</b></li>
+</ul>
+
+<h2>October 14, 2026</h2>
+<ul>
+<li><b>Live job board on the dashboard.</b> A lane for every tech. Drag a job to hand it over.</li>
+<li><b>Shop-floor TV screen.</b> The board on a TV in the shop.</li>
+<li><b>Job clock.</b> Techs clock on and off a job; time shows on My Hours.</li>
+<li><b>Repair order tabs:</b> My jobs, All open, Closed, Estimates.</li>
+<li><b>Faster AI.</b> Photo intake: about 13 seconds down to 2.5 for four photos. Fluid-bottle scanner: about 15 seconds down to 3–6. Vendor invoice scanning: 8.9 seconds down to 2.3.</li>
+<li><b>QuickBooks for every shop,</b> not just ours.</li>
+<li><b>Security.</b> Six rounds of fixes from a hands-on security audit of the live system.</li>
+</ul>
+
+<h2>October 8, 2026</h2>
+<ul>
+<li><b>Holiday closures and lunch breaks.</b> Online booking and the AI phone both know when you're closed.</li>
+<li><b>Inspections save as you go.</b> No Save button. The camera stays open for the next photo.</li>
+<li><b>New printed invoice.</b></li>
+</ul>
+
+<h2>October 7, 2026</h2>
+<ul>
+<li><b>The AI phone books from the same calendar as online booking,</b> with the same rules. Your rules guide people; they're hard limits for the AI.</li>
+<li><b>Waiter cap.</b> Customers can't book past your daily waiter limit; staff can override.</li>
+<li><b>Waiter / drop-off badge</b> on every RO.</li>
+</ul>
+
+<h2>October 2, 2026</h2>
+<ul>
+<li><b>Hand-typed VINs get checked.</b> Wrong length, illegal characters or a bad check digit warns you as you type. Year, make and model come from pick lists.</li>
+</ul>
+
+<h2>October 1, 2026</h2>
+<ul>
+<li><b>AI recommendations land on the RO as services</b> you can edit like any other job.</li>
+<li><b>One priority scale:</b> critical, recommended, suggested. "Critical" now means well past due, not just due.</li>
+</ul>
+
+<h2>September 2026</h2>
+<ul>
+<li><b>Self-serve signup opened.</b> Your own shop at yourshop.roengine.com, set up by a wizard built around writing your first RO.</li>
+<li><b>Maintenance from the owner's manual.</b> Recommendations use the manufacturer's printed intervals and fluid specs, with the page cited.</li>
+<li><b>Texting through RO Engine,</b> with carrier registration handled per shop.</li>
+<li><b>Appointment confirmations and day-before reminders</b> on every booking.</li>
+<li><b>Online booking menu editor</b> in Settings.</li>
+<li><b>Label printing,</b> USB or network, with your shop's own decal design.</li>
+<li><b>Free Shop-Ware import</b> for customers, vehicles and repair orders.</li>
+</ul>
+
+<p class="ask">Something broken, or something you need? <a href="mailto:joe@roengine.com">joe@roengine.com</a>. That's me.</p>
+</main>
+<footer><div class="wrap">© 2026 SPRANDEL LLC · <a href="/">RO Engine</a> · <a href="/privacy/">Privacy</a></div></footer>
+</body>
+</html>

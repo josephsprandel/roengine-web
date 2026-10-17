@@ -24,6 +24,7 @@ deployment:
     - /bin/cp -Rf terms $DEPLOYPATH
     - /bin/cp -Rf quickbooks $DEPLOYPATH
     - /bin/cp -Rf try $DEPLOYPATH
+    - /bin/cp -Rf changelog $DEPLOYPATH
     # Lead retention job, run by a cPanel cron — lives OUTSIDE public_html.
     - /bin/mkdir -p /home/roengine/ops
     - /bin/cp -f ops/lead-retention.php /home/roengine/ops/
