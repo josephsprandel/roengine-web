@@ -1,6 +1,6 @@
 # RO Engine
 
-> RO Engine is shop management software for independent auto repair shops, built by a working shop owner. Its tagline is "The estimate that explains itself": the AI writes the maintenance recommendations on every repair order, and the customer's estimate explains each service in plain language — what it is, why it's due now, and what happens if they wait — written for the customer's own vehicle and sent to their phone. Customer education is the hardest part of selling maintenance; RO Engine does it on every car. One plan: $349/month, everything included, unlimited users, month to month. Each shop gets its own live copy of the app at its own address (yourshop.roengine.com), set up in minutes, free for 90 days.
+> RO Engine is shop management software for independent auto repair shops, built by a working shop owner. Its tagline is "The estimate that explains itself": the AI writes the maintenance recommendations on every repair order, and the customer's estimate explains each service in plain language — what it is, why it's due now, and what happens if they wait — written for the customer's own vehicle and sent to their phone. Customer education is the hardest part of selling maintenance; RO Engine does it on every car. One plan: $199/month launch price (regular $349), everything included, unlimited users, month to month. Each shop gets its own live copy of the app at its own address (yourshop.roengine.com), set up in minutes, free for 90 days.
 
 ## What it does
 - **AI service recommendations on every repair order** — cross-checks the manufacturer maintenance schedule (54,000+ OEM service intervals), the vehicle's own history and known failure patterns; surfaces overdue and coming-due work, remembers deferred work from past visits, and explains it in plain language. Advisors choose normal or severe service schedules.
@@ -15,16 +15,15 @@
 - Work orders, invoicing, customers, vehicles, scheduling and reports.
 
 ## Pricing
-- $349 per month, one plan, every feature on from day one. No tiers, no add-ons, no per-user fees, no contract; cancel any month.
+- One plan, every feature on from day one: $199 per month launch price, locked in for as long as the shop stays (regular price $349 per month). No tiers, no add-ons, no per-user fees, no contract; cancel any month.
 - Includes 300 AI phone minutes, 300 calls on the shop line and 1,500 texts a month. Beyond that: $0.35 per minute, $0.10 per call, $0.02 per text.
-- Founding shop pricing: shops that join before July 1, 2027 pay $261.75/month (25% off) for as long as they stay.
 - RO Engine does not take a cut of a shop's card processing; its revenue is the subscription.
 - Easy out: the owner can export all the shop's data at any time from Settings → Export Data — customers, vehicles, repair orders and invoices, payments, inspections, estimates, appointments, messages, inventory, vendors and purchase orders as CSV and/or JSON (with a README explaining how the files link), plus every photo filed by repair order. No fee and no request needed; export is not tied to billing, so a cancelled shop can still sign in and take its data.
 - QuickBooks Online sync (Intuit-approved; details at https://roengine.com/quickbooks/): either an invoice and payment per repair order, or one journal entry per day for shops whose accountant wants QuickBooks lean; a CSV of the same accounting ledger covers other bookkeeping.
 
 ## The free trial
 - Not a demo or sandbox: signing up creates the shop's own live RO Engine at yourshop.roengine.com, ready in minutes.
-- 90 days free; a card or bank account is required to start; nothing is charged for 90 days; cancel online.
+- 90 days free; no card needed to start (a card or bank account can be added any time before the trial ends); cancel online.
 - Everything entered during the trial carries forward when the shop stays.
 - Texting and the AI phone switch on once the shop's number clears carrier registration (usually within two weeks); everything else works immediately.
 - Customer, vehicle and repair history migration is free; migration from Shop-Ware is already proven (full repair orders, inspections, photos, payments): https://roengine.com/shop-ware/
