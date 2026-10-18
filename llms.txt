@@ -11,7 +11,7 @@
 - **Parts and purchase orders** — parts searched and ordered from the repair order on the shop's own supplier accounts (RO Engine never stores supplier passwords), purchase orders and receiving, core charges and returns, margin visible before approval.
 - **Photo intake** — VIN from the door jamb sticker, mileage from the dashboard, plate capture, timestamped condition photos.
 - **Multi-point inspections** — green/yellow/red ratings with photos; tech notes rewritten for customers; red findings become recommendations.
-- **Oil-change decals** — next service calculated from the actual oil spec and OEM time interval, printed automatically.
+- **Oil-change decals** — the shop designs its own windshield decal in Settings (logo, text, layout, drag and drop, with a print preview); next-due miles and date fill in from the shop's oil-change presets, and it prints on a thermal label printer when the oil change is marked complete.
 - Work orders, invoicing, customers, vehicles, scheduling and reports.
 
 ## Pricing
