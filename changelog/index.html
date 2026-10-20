@@ -66,8 +66,39 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
 <h1>Release notes</h1>
 <p class="lede">What changed in RO Engine, dated. Tell me what's broken and it shows up here. — Joe</p>
 
-<div class="release"><b>Current release: 0.9.0</b> · build <code>759d237</code> · October 15, 2026<br>
+<div class="release"><b>Current release: 0.9.0</b> · build <code>ab2995f</code> · October 19, 2026<br>
 Changes run at AutoHouse first. Anything tagged <span class="tag">AutoHouse first</span> reaches every shop with the next release.</div>
+
+<h2>October 20, 2026</h2>
+<ul>
+<li><b>Labor matrix.</b> Set a multiplier by job size and a price by hours. It only touches estimated labor times; hours an advisor types are left alone. Estimated times over an hour round up to the next half hour, so 1.1 becomes 1.5. <span class="tag">AutoHouse first</span></li>
+<li><b>Taxable boxes on every service.</b> Tick parts, labor, or both. Customers can be marked tax exempt. <span class="tag">AutoHouse first</span></li>
+<li><b>Closed means closed.</b> An invoice can't close until every job is marked complete and the mileage out is in. A job that isn't getting done moves to recommendations instead of quietly dropping off. Once it's closed, every field is greyed out and an edit attempt tells you why. <span class="tag">AutoHouse first</span></li>
+<li><b>Clocking on a job makes it yours.</b> If nobody has it, it's yours. If someone else has it, you're asked: take it and clock on, or just clock on. If it moves, whoever had it gets a push alert. <span class="tag">AutoHouse first</span></li>
+<li><b>Count stock with the fluid scanner.</b> Scan a barcode, see what's on the shelf and what's spoken for on open ROs, tap in the count, scan the next one. Works with a handheld scanner too. <span class="tag">AutoHouse first</span></li>
+<li><b>Settings by role.</b> Shop settings are Owner only; workflow settings are Manager and Owner. <span class="tag">AutoHouse first</span></li>
+</ul>
+
+<h2>October 19, 2026</h2>
+<ul>
+<li><b>Mnemos drafts labor times with our own AI estimator.</b> The advisor sets the final hours. <span class="tag">AutoHouse first</span></li>
+<li><b>Mnemos shops for parts when it writes a service:</b> SSF, O'Reilly, AutoZone and NAPA, through the RO Engine Parts extension and your own logins. <span class="tag">AutoHouse first</span></li>
+<li><b>Change the vehicle on an RO.</b> A misclick in the vehicle picker can be undone. An RO with no vehicle lists the customer's cars, or adds a new one. <span class="tag">AutoHouse first</span></li>
+<li><b>Move to Maintenance Recs or Repair Recs</b> from any service's menu. <span class="tag">AutoHouse first</span></li>
+<li><b>RO numbers in the Communications inbox</b> open that RO. <span class="tag">AutoHouse first</span></li>
+<li><b>Dates no longer jump to tomorrow in the evening.</b> Each shop runs on its own time zone. <span class="tag">AutoHouse first</span></li>
+<li><b>The AI phone finds the caller's car without the year.</b> <span class="tag">AutoHouse first</span></li>
+<li><b>"Take more photos"</b> after sending check-in photos from a phone. <span class="tag">AutoHouse first</span></li>
+<li><b>Text consent from online booking is saved with the exact wording</b> the customer agreed to. <span class="tag">AutoHouse first</span></li>
+</ul>
+
+<h2>October 18, 2026</h2>
+<ul>
+<li><b>Maintenance list before the visit.</b> When someone books, the shop can text a short list of what the car is due for, so the customer can mark what interests them before they arrive. Off until you turn it on.</li>
+<li><b>Teach Mnemos your shop's rules.</b> Type <code>/teach</code> and the rule. <code>/rules</code> lists them, <code>/forget</code> drops one.</li>
+<li><b>Drivetrain on every vehicle.</b> AWD, FWD or RWD narrows the maintenance schedule to the right one.</li>
+<li><b>The AI phone says street names right.</b> "Hwy" comes out as "Highway". New shops' assistant is named Milo.</li>
+</ul>
 
 <h2>October 17, 2026</h2>
 <ul>
