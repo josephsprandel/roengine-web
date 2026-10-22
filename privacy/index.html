@@ -126,15 +126,17 @@ order, or a recall check.</p>
 <li><b>What it handles.</b> The vehicle's VIN, the words searched for, the repair order number (to name the
 supplier's cart or quote), and what the supplier sends back: parts, prices, stock and cart contents. For a recall
 check, the VIN and NHTSA's answer.</li>
-<li><b>Where that goes.</b> To the supplier sites your shop uses (PartsTech, SSF, O'Reilly First Call, AutoZone Pro,
-NAPA PROLink, Worldpac and myplace4parts), through the account you're already signed in to in that browser; to
-nhtsa.gov for recalls; and back to the RO Engine page that asked. Parts you add to a repair order are then saved in
+<li><b>Where that goes.</b> To the supplier sites your shop uses (PartsTech, SSF, O'Reilly First Call, AutoZone Pro and
+NAPA PROLink), through the account you're already signed in to in that browser; to Worldpac and myplace4parts only
+the VIN, typed into the site's VIN box when you open it from a repair order; to nhtsa.gov for recalls; and back to the
+RO Engine page that asked. Parts you add to a repair order are then saved in
 your shop's RO Engine account, and results you ask the RO Engine assistant about are shown to it, like anything else
 you enter. The extension itself never sends anything to RO Engine's servers or to anyone else.</li>
 <li><b>Your supplier logins.</b> The extension never asks for, reads or stores your supplier passwords. It uses the
 session you're already signed in with on each supplier's site. On O'Reilly First Call, AutoZone Pro and NAPA PROLink
 it works inside your open tab for that site, using the sign-in that site's own page keeps, only to make that site's
-own requests.</li>
+own requests. Your sign-ins and sessions stay in your browser: the extension never sends them to RO Engine or to
+anyone else.</li>
 <li><b>What it keeps.</b> On that computer only, in Chrome's extension storage: which O'Reilly quote belongs to which
 repair order. Nothing else. Removing the extension deletes it.</li>
 <li><b>What it doesn't do.</b> No analytics or tracking, no ads, no reading of any other website or of your browsing
