@@ -587,6 +587,13 @@ footer a{color:#b7c7da;text-decoration:none}
 .everything .all{list-style:none;padding:0;margin:30px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px 26px;max-width:960px}
 .everything .all li{position:relative;padding-left:26px;color:var(--ink);font-size:16px;line-height:1.35;font-weight:500}
 .everything .all li::before{content:"";position:absolute;left:0;top:.15em;width:17px;height:17px;border-radius:50%;background:var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/11px no-repeat}
+.inbox{padding-top:0}
+.inbox-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:44px;align-items:center;margin-top:8px}
+.inbox-shot{margin:0}.inbox-shot img{display:block;width:100%;height:auto}
+.gone-label{margin:26px 0 0;font-weight:700;color:var(--ink);font-size:16px}
+.gone{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.gone li{font-size:14.5px;color:var(--ink-3);text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:1.5px;background:#fff;border:1px solid #d7e2ee;border-radius:999px;padding:5px 12px}
+@media (max-width:900px){.inbox-grid{grid-template-columns:1fr;gap:34px}}
 @media (max-width:900px){.everything .all{grid-template-columns:1fr 1fr}}@media (max-width:560px){.everything .all{grid-template-columns:1fr}}
 .cmp-only{padding:84px 0}
 .cmp-only .cmp{margin-top:0}
@@ -772,6 +779,31 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
   </div>
 </section>
 
+<!-- ═══ ONE INBOX ══════════════════════════════════════════════════════ -->
+<section class="edge inbox" id="inbox" style="background:var(--paper)">
+  <div class="wrap">
+    <h2 class="rv">Every conversation. One inbox.</h2>
+    <div class="inbox-grid">
+    <div>
+      <p class="lead rv">Texts, email and calls in one thread per customer, linked to their repair orders. Calls come with the recording and a transcript, including the ones the AI phone answered.</p>
+      <p class="gone-label rv">Stop checking five apps:</p>
+      <ul class="gone rv" aria-label="What you stop checking">
+        <li>The texting app</li>
+        <li>The email inbox</li>
+        <li>Voicemail</li>
+        <li>The answering service</li>
+        <li>The reminders and reviews service</li>
+      </ul>
+      <p class="small rv">Built in. No add-ons, no extra logins. <a href="/compare/" style="color:var(--teal);font-weight:700">How the others compare &rarr;</a></p>
+    </div>
+    <figure class="browser inbox-shot rv">
+      <div class="bbar"><span class="dots"><i></i><i></i><i></i></span><span class="url"><span><b>Communications</b> · Inbox</span></span></div>
+      <img src="/assets/one-inbox-screen.jpg" width="1600" height="1080" loading="lazy" alt="RO Engine's Communications inbox: a list of customers with texts, emails and calls mixed together, and an AI-answered call open with its summary and transcript. Made-up customers.">
+    </figure>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ FOUNDER ════════════════════════════════════════════════════════ -->
 <section id="about">
   <div class="wrap founder">
@@ -945,7 +977,7 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
     <ul class="all rv" aria-label="Everything in the plan">
         <li>Estimates that explain themselves</li>
         <li>AI phone answering</li>
-        <li>Two-way texting</li>
+        <li>One inbox: texts, email, calls</li>
         <li>Online booking</li>
         <li>Factory maintenance on every RO</li>
         <li>Digital inspections with photos</li>

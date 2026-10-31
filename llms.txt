@@ -5,7 +5,7 @@
 ## What it does
 - **AI service recommendations on every repair order** — cross-checks the manufacturer maintenance schedule (82,000+ OEM service intervals), the vehicle's own history and known failure patterns; surfaces overdue and coming-due work, remembers deferred work from past visits, and explains it in plain language. Advisors choose normal or severe service schedules.
 - **AI phone answering** — answers when the counter is busy, takes vehicle and customer details, and puts the call transcript on the customer record. Included, not an add-on.
-- **Two-way texting** with a local shop number and click-to-call.
+- **One inbox:** texts, email and calls (with recordings and transcripts) in one thread per customer, linked to the RO. Two-way texting with a local shop number and click-to-call.
 - **Digital estimate approval** — customers approve or decline line by line from a private link (no app, no login), with an AI-written explanation of each service ("What is it?", "Why now?", "What happens if you wait?") and a diagram of the car showing where each service is; declines are saved as deferred work for the next visit.
 - **Full comparison** with Tekmetric, Shop-Ware, Shopmonkey, AutoLeap and Mitchell 1 SE: https://roengine.com/compare/ — plan-by-plan pricing, plus "What we found only in RO Engine": 45 capabilities not found in the others' public release notes (May 2025–Oct 2026), corrections invited (https://roengine.com/compare/#only)
 - **Parts and purchase orders** — parts searched and ordered from the repair order on the shop's own supplier accounts (RO Engine never stores supplier passwords), purchase orders and receiving, core charges and returns, margin visible before approval.
