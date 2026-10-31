@@ -508,6 +508,27 @@ footer a{color:#b7c7da;text-decoration:none}
 .sw-final h2{color:#fff}
 .sw-final .ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:28px}
 .cmp{margin-top:0}
+.calc{margin-top:56px}
+.calc-rows{padding:0 32px}
+.cr{display:grid;grid-template-columns:minmax(220px,1.1fr) minmax(200px,1fr) 120px;gap:8px 18px;align-items:center;padding:14px 0;border-top:1px solid rgba(255,255,255,.09)}
+.cr .ck{display:flex;gap:10px;align-items:center;color:#dbe6f2;font-weight:600;cursor:pointer}
+.cr .ck small{font-weight:500;color:#8fa4ba}
+.cr input[type=checkbox]{width:18px;height:18px;accent-color:var(--teal);flex:none}
+.cr select,.cr .amt input{font:inherit;font-size:14.5px;color:#fff;background:#0f1d31;border:1px solid rgba(255,255,255,.18);border-radius:9px;padding:8px 10px}
+.cr select{width:100%}
+.cr .plan-fixed{color:#9fb3c8;font-size:14.5px}
+.cr .amt{display:flex;align-items:center;gap:4px;color:#9fb3c8;justify-self:end}
+.cr .amt input{width:92px;text-align:right}
+.cr .cov{grid-column:1/-1;margin:0;font-size:13.5px;color:#8fa4ba;line-height:1.45;padding-left:28px}
+.cr .cov b{color:#b7c7da;font-weight:600}.cr .cov b.no{color:#c99a9a}
+.cr:not(.on) .cov{opacity:.7}
+.cr.on .ck span{color:#fff}
+.calc-total{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 32px 0;padding:18px 20px;border-radius:16px;background:rgba(79,209,201,.07);border:1px solid rgba(79,209,201,.22)}
+.calc-total span{display:block;font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9fb3c8}
+.calc-total b{display:block;font-family:var(--display);font-weight:900;font-size:clamp(26px,3vw,34px);color:#fff;margin-top:4px}
+.calc-total small{color:#8fa4ba;font-size:13px}
+.calc-total .res b{color:var(--teal-b)}.calc-total .res.more b{color:#e8b37a}
+@media (max-width:720px){.calc-rows{padding:0 20px}.cr{grid-template-columns:1fr 110px}.cr select,.cr .plan-fixed{grid-column:1/-1;grid-row:2}.cr .amt{grid-row:1;grid-column:2}.cr .cov{padding-left:0}.calc-total{grid-template-columns:1fr;margin:18px 20px 0}}
 </style>
 <!-- Meta Pixel (dataset 1693754829035693 · ad account 3514465940926) -->
 <script>
@@ -600,6 +621,46 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
       </div>
       <p class="note">From each company&rsquo;s own pricing page, checked October 18, 2026, at monthly billing (Mitchell 1&rsquo;s texting, user and lease terms from our September 29 check). &ldquo;Not listed&rdquo; means we couldn&rsquo;t find it on their pricing page &mdash; ask them, they may offer it. Mitchell 1 sells Manager SE on a 12-month lease and doesn&rsquo;t publish the car-shop price. Prices change, so check theirs before you decide.</p>
     </div>
+    <div class="cmp calc" id="cancel">
+      <h3>What you could cancel</h3>
+      <p class="sub2">Tick what your shop pays for today. Each line says what RO Engine covers and what it doesn&rsquo;t, so you only count what you&rsquo;d really drop. Prices are filled in where the company publishes them; type over any of them with your real bill.</p>
+      <div class="calc-rows">
+        <div class="cr"><label class="ck"><input type="checkbox" data-row><span>Shop management system</span></label>
+          <select aria-label="Which shop system" data-plan><option value="199">Tekmetric, entry plan &mdash; $199</option><option value="279">Shop-Ware, entry plan &mdash; $279</option><option value="239">Shopmonkey, entry plan &mdash; $239</option><option value="199">AutoLeap, entry plan &mdash; $199</option><option value="">Other &mdash; type yours</option></select>
+          <span class="amt">$<input type="number" min="0" step="1" inputmode="numeric" value="199" aria-label="Shop system, per month"></span>
+          <p class="cov"><b>RO Engine covers:</b> repair orders, estimates, invoicing, inspections, parts ordering and the rest of the table above. Entry plans leave out texting and booking, so if you&rsquo;re on a higher tier, type in your real bill.</p></div>
+        <div class="cr"><label class="ck"><input type="checkbox" data-row><span>Steer</span></label>
+          <select aria-label="Steer plan" data-plan><option value="189">Booking Tool &mdash; $189</option><option value="479" selected>Essentials &mdash; $479</option><option value="629">Ultimate &mdash; $629</option></select>
+          <span class="amt">$<input type="number" min="0" step="1" inputmode="numeric" value="479" aria-label="Steer, per month"></span>
+          <p class="cov"><b>RO Engine covers:</b> online booking, service reminders, two-way texting, review requests, call summaries and transcripts, a customer portal. <b class="no">Not in RO Engine:</b> Reserve with Google, text and email marketing campaigns, Steer&rsquo;s websites.</p></div>
+        <div class="cr"><label class="ck"><input type="checkbox" data-row><span>AutoOps Pro <small>(Steer add-on)</small></span></label>
+          <span class="plan-fixed">AI voice, website chat &mdash; $80</span>
+          <span class="amt">$<input type="number" min="0" step="1" inputmode="numeric" value="80" aria-label="AutoOps Pro, per month"></span>
+          <p class="cov"><b>RO Engine covers:</b> AI phone answering. <b class="no">Not in RO Engine:</b> website chat.</p></div>
+        <div class="cr"><label class="ck"><input type="checkbox" data-row><span>Broadly</span></label>
+          <select aria-label="Broadly plan" data-plan><option value="399">Standard &mdash; $399</option><option value="699" selected>Pro &mdash; $699</option><option value="999">Premium &mdash; $999</option></select>
+          <span class="amt">$<input type="number" min="0" step="1" inputmode="numeric" value="699" aria-label="Broadly, per month"></span>
+          <p class="cov"><b>RO Engine covers:</b> two-way texting, missed calls answered (by the AI phone), review requests, phone answering on Premium. <b class="no">Not in RO Engine:</b> website chat, replies to reviews, social posts, directory listings, SEO. Standard is mostly those, so count it only if you&rsquo;d drop them too.</p></div>
+        <div class="cr"><label class="ck"><input type="checkbox" data-row><span>Answering service or AI receptionist</span></label>
+          <span class="plan-fixed">Your monthly bill</span>
+          <span class="amt">$<input type="number" min="0" step="1" inputmode="numeric" value="" placeholder="0" aria-label="Answering service, per month"></span>
+          <p class="cov"><b>RO Engine covers:</b> AI phone answering that books the work, 300 minutes a month included.</p></div>
+        <div class="cr"><label class="ck"><input type="checkbox" data-row><span>Separate texting app or add-on</span></label>
+          <span class="plan-fixed">Your monthly bill</span>
+          <span class="amt">$<input type="number" min="0" step="1" inputmode="numeric" value="" placeholder="0" aria-label="Texting app, per month"></span>
+          <p class="cov"><b>RO Engine covers:</b> two-way texting from your shop number, 1,500 texts a month, in the same inbox as email and calls.</p></div>
+        <div class="cr"><label class="ck"><input type="checkbox" data-row><span>Online booking add-on</span></label>
+          <span class="plan-fixed">Your monthly bill</span>
+          <span class="amt">$<input type="number" min="0" step="1" inputmode="numeric" value="" placeholder="0" aria-label="Online booking add-on, per month"></span>
+          <p class="cov"><b>RO Engine covers:</b> online booking on your website, straight onto the schedule.</p></div>
+      </div>
+      <div class="calc-total" aria-live="polite">
+        <div><span>You pay today</span><b id="c-today">$0</b><small>a month, for what you ticked</small></div>
+        <div><span>RO Engine</span><b>$199</b><small>a month, everything included</small></div>
+        <div class="res"><span id="c-label">You&rsquo;d save</span><b id="c-diff">&mdash;</b><small id="c-year">Tick what you pay for</small></div>
+      </div>
+      <p class="note">Steer from <a href="https://steer.io/pricing" style="color:var(--teal-b)">steer.io/pricing</a> and Broadly from <a href="https://broadly.com/pricing" style="color:var(--teal-b)">broadly.com/pricing</a>, checked October 31, 2026, monthly billing; shop systems from the table above. AutoOps Pro is priced per location; the other pages don&rsquo;t say. Broadly also lists a $350 onboarding fee, not counted here. RO Engine&rsquo;s $199 is the launch price, locked in for as long as you stay. Prices change, so check theirs before you decide.</p>
+    </div>
     <div class="cmp" id="only">
       <h3>What we found only in RO Engine</h3>
       <p class="sub2">We&rsquo;re diffing, not bashing. Every row below is live in RO Engine today. For the others, we went through each company&rsquo;s public release notes, help pages and announcements from May 2025 to October 2026. If one of them does something we&rsquo;ve marked &ldquo;Not found,&rdquo; <a href="mailto:joe@roengine.com" style="color:var(--teal-b)">tell us</a> and we&rsquo;ll fix the table.</p>
@@ -683,5 +744,33 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
     <span>© 2026 RO Engine · <a href="mailto:joe@roengine.com">joe@roengine.com</a> · <a href="/changelog/">Release notes</a> · <a href="/compare/">Compare</a> · <a href="/card-fees/">Card fees</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/quickbooks/">QuickBooks terms</a> · Built by a shop owner, for shop owners.</span>
   </div>
 </footer>
+<script>
+// "What you could cancel": monthly total of the ticked rows vs RO Engine's $199.
+(function () {
+  var ROE = 199, rows = document.querySelectorAll('#cancel .cr')
+  var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US') }
+  function total() {
+    var t = 0, any = false
+    rows.forEach(function (r) {
+      var on = r.querySelector('[data-row]').checked
+      r.classList.toggle('on', on)
+      if (on) { any = true; t += Number(r.querySelector('.amt input').value) || 0 }
+    })
+    var d = t - ROE, res = document.querySelector('#cancel .res')
+    document.getElementById('c-today').textContent = money(t)
+    res.classList.toggle('more', any && d < 0)
+    document.getElementById('c-label').textContent = any && d < 0 ? 'RO Engine costs' : 'You\u2019d save'
+    document.getElementById('c-diff').textContent = any ? money(Math.abs(d)) : '\u2014'
+    document.getElementById('c-year').textContent = !any ? 'Tick what you pay for' : d < 0 ? 'more a month than what you ticked' : 'a month, ' + money(d * 12) + ' a year'
+  }
+  rows.forEach(function (r) {
+    var plan = r.querySelector('[data-plan]'), amt = r.querySelector('.amt input'), box = r.querySelector('[data-row]')
+    if (plan) plan.addEventListener('change', function () { if (plan.value) amt.value = plan.value; else { amt.value = ''; amt.focus() } box.checked = true; total() })
+    amt.addEventListener('input', function () { if (amt.value !== '') box.checked = true; total() })
+    box.addEventListener('change', total)
+  })
+  total()
+})()
+</script>
 </body>
 </html>
