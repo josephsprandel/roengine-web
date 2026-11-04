@@ -31,6 +31,17 @@
 ## Who built it
 RO Engine is built by Joe Sprandel, an independent shop owner with 13+ years on the shop floor who built his first custom shop system in 2013. Every feature runs in his own shop every day before it ships.
 
+## How to check these claims
+Everything here opens without an account, a login or a sales call.
+- **A real shop runs on it.** AutoHouse Automotive in Northwest Arkansas is the founder's own shop, and it runs on RO Engine. Its website, https://autohousenwa.com/, loads its booking and customer-portal buttons from https://autohouse.roengine.com/embed/roengine.js. Its live online booking page is https://autohouse.roengine.com/book.
+- **Try the recommendations on any car:** https://roengine.com/try/. Enter a VIN and mileage to see the factory maintenance list RO Engine would put on the repair order. A link can carry the car too: `https://roengine.com/try/?vin=<17-character VIN>&mi=<miles>`. The page runs in the browser (JavaScript), so it needs a browsing agent, not a plain page fetch.
+- **Start a real shop yourself:** https://app.roengine.com/signup creates a working copy of the app at yourshop.roengine.com, not a sandbox. Free for 90 days, no card.
+- **The real app on video:** every video on the YouTube channel (https://www.youtube.com/channel/UCoQKHYyz_7hkKRGkKqBsXzw) is a screen recording of the shipping app, not a mockup. The links are under Key pages below.
+- **Dated release history:** https://roengine.com/changelog/ lists what changed and when, release by release, since September 2026.
+- **Moving off Shop-Ware:** https://roengine.com/shop-ware/ explains how AutoHouse's history moved in: 17,300 repair orders back to 2013 (8,000 from Shop-Ware with totals matching to the cent, the rest from the system before it), about 5,100 customers, 7,100 vehicles and 52,400 photos.
+- **Competitor comparison, with sources:** https://roengine.com/compare/ is built from each competitor's public pricing and release notes, and corrections are invited.
+- **Ask the founder:** joe@roengine.com reaches Joe Sprandel, the shop owner who builds it.
+
 ## Key pages
 - [Home](https://roengine.com/): product overview, pricing, free trial
 - [Start a free trial](https://app.roengine.com/signup): set up your own shop
