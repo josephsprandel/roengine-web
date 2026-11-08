@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4VST4NBNJY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4VST4NBNJY');
+</script>
+<!-- RO Engine attribution capture -->
+<script>
+(function () {
+  var MAXAGE = 60 * 60 * 24 * 90;
+  var CLICK = ['gclid','gbraid','wbraid','fbclid'], UTM = ['utm_source','utm_medium','utm_campaign','utm_content'];
+  var qs = new URLSearchParams(window.location.search);
+  var has = function (keys) { return keys.some(function (k) { return qs.get(k); }); };
+  // The first outside page that sent the visitor (origin + path only), kept from the first visit: a Meta ad
+  // link without tags still shows up as facebook.com.
+  var ref = '';
+  try { var r = new URL(document.referrer); if (/^https?:$/.test(r.protocol) && !/(^|[.])roengine[.]com$/.test(r.hostname)) ref = (r.origin + r.pathname).slice(0, 200); } catch (e) {}
+  if (!has(CLICK) && !has(UTM) && !ref) return;
+  var cur = {};
+  try { var m = document.cookie.match(/(?:^|; )re_attr=([^;]*)/); if (m) cur = JSON.parse(decodeURIComponent(m[1])) || {}; } catch (e) { cur = {}; }
+  if (!has(CLICK) && !has(UTM) && cur.ref) return;
+  // Only a newer ad click replaces an ad-click ID. A later non-ad visit (a newsletter link with
+  // utm_* tags) updates the campaign tags but must not erase the click Google Ads credits.
+  if (has(CLICK)) { CLICK.forEach(function (k) { delete cur[k]; if (qs.get(k)) cur[k] = qs.get(k); }); cur._ts = new Date().toISOString(); }
+  if (has(UTM)) { UTM.forEach(function (k) { delete cur[k]; if (qs.get(k)) cur[k] = qs.get(k); }); }
+  if (ref && !cur.ref) cur.ref = ref;
+  if (!cur._ts) cur._ts = new Date().toISOString();
+  document.cookie = 're_attr=' + encodeURIComponent(JSON.stringify(cur)) +
+    ';max-age=' + MAXAGE + ';path=/;domain=.roengine.com;samesite=lax;secure';
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>See it live — RO Engine demo shop</title>
+<meta name="description" content="Click through a real shop running RO Engine: two weeks of repair orders, cars on the floor, a full calendar. Made-up customers, the real app. No sign-up.">
+<link rel="canonical" href="https://roengine.com/demo/">
+<meta name="theme-color" content="#0b1524">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RO Engine">
+<meta property="og:url" content="https://roengine.com/demo/">
+<meta property="og:title" content="See it live — click through a shop running RO Engine">
+<meta property="og:description" content="Sample Auto &amp; Tire: two weeks of repair orders, cars on the floor, a full calendar. Made-up customers, the real app. No sign-up.">
+<meta property="og:image" content="https://roengine.com/assets/brand/og-image.png?v=2">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/brand/roe-icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/brand/roe-icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* ── Tokens ──────────────────────────────────────────────────────────── */
+:root{
+  --night:#0b1524; --night-2:#12233d; --navy:#14263f; --blue:#2d4d78; --blue-v:#3f7fc4;
+  --teal:#3fb5ae; --teal-b:#4fd1c9; --teal-w:#e8f8f6;
+  --ink:#101a26; --ink-2:#4a5c70; --ink-3:#8598ab; --line:#e2ecf4; --paper:#f6f8fb; --w:#fff;
+  --red:#e0625c; --amber:#e3a33b; --green:#2f9e69;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --display:'Archivo',system-ui,sans-serif; --body:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--w);color:var(--ink-2);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img,svg{display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);color:var(--ink);margin:0;letter-spacing:-.02em;line-height:1.05}
+h2{font-size:clamp(32px,4.4vw,52px);font-weight:800;font-stretch:108%}
+.eyebrow{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal)}
+.lead{font-size:19px;color:var(--ink-2);max-width:640px}
+section{padding:110px 0}
+@media (max-width:720px){section{padding:76px 0}body{font-size:16px}}
+
+/* ── Logo (direction A) ──────────────────────────────────────────────── */
+.mk{display:inline-flex;align-items:flex-start;font-family:var(--display);font-weight:900;font-stretch:118%;letter-spacing:-.035em;line-height:.8;color:var(--navy)}
+/* RO raised to the power e: a true math-italic exponent (STIX Two), a nod to AI's exponential curve. */
+.mk .e{font-family:'STIX Two Text',Georgia,serif;font-style:italic;font-weight:600;font-size:.72em;letter-spacing:0;color:var(--teal);line-height:.7;margin-left:.05em;transform:translateY(-.18em)}
+.on-dark .mk{color:#fff}.on-dark .mk .e{color:var(--teal-b)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand .mk{font-size:30px}
+.brand .nm{font-family:var(--display);font-weight:700;font-size:19px;color:var(--ink);letter-spacing:-.01em;line-height:1}
+.brand .tg{display:block;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-top:4px}
+.on-dark .brand .nm{color:#fff}
+/* Automotive Intelligence — the initials are A.I. */
+.brand .tg b{color:var(--teal);font-weight:800}
+.on-dark .brand .tg b{color:var(--teal-b)}
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:700;font-size:16px;text-decoration:none;border-radius:12px;padding:15px 24px;transition:transform .2s var(--ease),box-shadow .2s var(--ease),background .2s}
+.btn svg{width:18px;height:18px}
+.btn-p{background:var(--teal);color:#062a28;box-shadow:0 10px 30px -10px rgba(63,181,174,.7)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 16px 36px -12px rgba(63,181,174,.8)}
+.btn-g{color:#fff;border:1px solid rgba(255,255,255,.22)}
+.btn-g:hover{background:rgba(255,255,255,.07)}
+.btn-d{background:var(--navy);color:#fff}
+.btn-d:hover{transform:translateY(-2px)}
+
+/* ── Nav ─────────────────────────────────────────────────────────────── */
+.nav{position:sticky;top:0;z-index:50;transition:background .3s,border-color .3s,backdrop-filter .3s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(11,21,36,.86);backdrop-filter:blur(14px);border-color:rgba(255,255,255,.08)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:72px}
+.nav .links{margin-left:auto;display:flex;gap:26px;align-items:center}
+.nav .links a{color:#c8d6e6;text-decoration:none;font-weight:600;font-size:15px}
+.nav .links a:hover{color:#fff}
+.nav .btn{padding:10px 18px;font-size:14.5px}
+@media (max-width:860px){.nav .links a.hide-m{display:none}}
+.nav .btn{white-space:nowrap}
+@media (max-width:520px){.brand .tg{display:none}.brand .nm{font-size:17px}.nav .btn{padding:9px 14px;font-size:13.5px}.nav .wrap{gap:14px}}
+footer{background:var(--night);border-top:1px solid rgba(255,255,255,.07);color:#7f93aa;font-size:14px;padding:30px 0}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+footer a{color:#b7c7da;text-decoration:none}
+
+/* ── Try it on your VIN ─────────────────────────────────────────────── */
+.tv-hero{background:radial-gradient(1100px 520px at 80% 0%,rgba(63,181,174,.16),transparent 60%),linear-gradient(180deg,var(--night),var(--night-2));color:#c8d6e6;margin-top:-72px;padding:132px 0 72px}
+.tv-hero h1{color:#fff;font-size:clamp(36px,5.6vw,64px);font-weight:900;font-stretch:112%;max-width:900px}
+.tv-hero h1 .hl{color:var(--teal-b)}
+.tv-hero .lead{color:#b7c7da;margin-top:18px}
+.tv-form{margin-top:34px;display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr) auto auto;gap:12px;align-items:end;max-width:980px}
+.tv-form label{display:block;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8fa6bf;margin-bottom:7px}
+.tv-form input{width:100%;height:54px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;font:600 18px var(--body);padding:0 16px;outline:none}
+.tv-form input#vin{font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase}
+.tv-form input:focus{border-color:var(--teal-b);background:rgba(255,255,255,.09)}
+.tv-sched{display:flex;height:54px;border:1px solid rgba(255,255,255,.16);border-radius:12px;overflow:hidden}
+.tv-sched button{border:0;background:transparent;color:#b7c7da;font:600 14.5px var(--body);padding:0 14px;cursor:pointer}
+.tv-sched button[aria-pressed="true"]{background:rgba(79,209,201,.16);color:#fff}
+.tv-form .btn{height:54px;border:0;cursor:pointer}
+@media (max-width:860px){.tv-form{grid-template-columns:1fr 1fr}.tv-form .vinf{grid-column:1/-1}.tv-form .btn{grid-column:1/-1;justify-content:center}}
+.tv-samples{margin-top:26px;max-width:980px}
+.tv-samples p{margin:0 0 10px;font-size:14.5px;color:#8fa6bf}
+.tv-chips{display:flex;flex-wrap:wrap;gap:8px}
+.tv-chips button{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.04);color:#dbe6f2;font:600 14px var(--body);border-radius:999px;padding:8px 14px;cursor:pointer}
+.tv-chips button:hover{border-color:var(--teal-b);color:#fff}
+.tv-chips button small{color:#8fa6bf;font-weight:500;margin-left:6px}
+.tv-err{margin-top:14px;color:#ffb4ae;font-weight:600;min-height:1em}
+.tv-out{padding:64px 0 96px;background:var(--paper);display:none;scroll-margin-top:72px}
+.tv-out.on{display:block}
+.tv-car{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px}
+.tv-car h2{font-size:clamp(26px,3.4vw,40px)}
+.tv-car .mi{font-family:var(--display);font-weight:700;color:var(--ink-3);font-size:18px}
+.tv-note{margin:14px 0 0;max-width:860px;font-size:15px;color:var(--ink-2)}
+.tv-note b{color:var(--ink)}
+.tv-groups{margin-top:30px;display:grid;gap:28px}
+.tv-group h3{font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;display:flex;align-items:center;gap:10px}
+.tv-group h3 i{display:inline-block;width:10px;height:10px;border-radius:50%}
+.tv-group.over h3{color:var(--red)}.tv-group.over h3 i{background:var(--red)}
+.tv-group.now h3{color:#b9771a}.tv-group.now h3 i{background:var(--amber)}
+.tv-group.soon h3{color:#2b8d87}.tv-group.soon h3 i{background:var(--teal)}
+.tv-items{margin-top:12px;display:grid;gap:12px}
+.tv-item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:0 10px 30px -24px rgba(16,26,38,.4)}
+.tv-item .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 14px;align-items:baseline}
+.tv-item h4{margin:0;font-family:var(--display);font-size:20px;color:var(--ink);letter-spacing:-.01em}
+.tv-item .when{font-size:13.5px;font-weight:700;color:var(--ink-3)}
+.tv-item .sum{margin:6px 0 0;color:var(--ink-2)}
+.tv-item dl{margin:14px 0 0;display:grid;gap:10px}
+.tv-item dt{font-family:var(--display);font-weight:800;font-size:14px;color:var(--ink)}
+.tv-item dd{margin:2px 0 0;font-size:15.5px}
+.tv-hook{margin-top:40px;background:var(--night);color:#c8d6e6;border-radius:20px;padding:30px;display:grid;gap:18px}
+.tv-hook h3{color:#fff;font-size:clamp(22px,2.6vw,30px)}
+.tv-hook p{margin:0;max-width:760px}
+.tv-acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tv-acts .btn{padding:12px 18px;font-size:15px;border:0;cursor:pointer}
+.tv-acts .btn-g,.tv-mail .btn-g{background:transparent;border:1px solid rgba(255,255,255,.22)}
+.tv-mail{display:none;gap:8px;flex-wrap:wrap;align-items:center}
+.tv-mail.on{display:flex}
+.tv-mail input{height:46px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff;font:500 16px var(--body);padding:0 12px;min-width:260px}
+.tv-msg{font-size:14.5px;color:var(--teal-b);font-weight:600}
+.tv-empty{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;max-width:860px}
+.tv-empty h3{font-size:24px}
+.tv-empty p{margin:10px 0 0}
+.hp{position:absolute;left:-9999px}
+
+</style>
+<!-- Meta Pixel (dataset 1693754829035693 · ad account 3514465940926) -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1693754829035693');
+fbq('track', 'PageView');
+// Any "Set up my shop" link → InitiateCheckout (the trial itself finishes on app.roengine.com).
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="https://app.roengine.com/signup"]');
+  if (a) fbq('track', 'InitiateCheckout');
+  // Into the demo shop → DemoOpen (the shop itself is on demo.roengine.com, where the pixel isn't).
+  var d = e.target.closest && e.target.closest('a[href^="https://demo.roengine.com"]');
+  if (d) { fbq('trackCustom', 'DemoOpen'); window.gtag && gtag('event', 'demo_open'); }
+}, true);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel -->
+<style>
+.dm-shot{margin:34px auto 0;max-width:1100px;border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12)}
+.dm-shot img{display:block;width:100%;height:auto}
+.dm-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.dm-list{list-style:none;padding:0;margin:28px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 28px;max-width:860px}
+.dm-list li{position:relative;padding-left:22px;color:#c5d3e3;font-size:16px;line-height:1.45}
+.dm-list li::before{content:"";position:absolute;left:0;top:.5em;width:9px;height:9px;border-radius:50%;background:#4fd1c9}
+.dm-note{margin-top:22px;font-size:14px;color:#8fa3bb}
+@media (max-width:700px){.dm-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+</defs></svg>
+<nav class="nav on-dark solid" id="nav">
+  <div class="wrap">
+    <a href="/" class="brand" aria-label="RO Engine home"><img src="/assets/brand/roe-mark-on-dark.svg" alt="" width="77" height="30" style="height:30px;width:auto"><span><span class="nm">RO Engine</span><span class="tg"><b>A</b>utomotive <b>I</b>ntelligence</span></span></a>
+    <div class="links">
+      <a href="/#story" class="hide-m">How it works</a>
+      <a href="/#pricing" class="hide-m">Pricing</a>
+      <a href="/compare/" class="hide-m">Compare</a>
+      <a href="/changelog/" class="hide-m">What&rsquo;s new</a>
+      <a href="https://app.roengine.com/signup" class="btn btn-p">Set up my shop</a>
+    </div>
+  </div>
+</nav>
+<header class="tv-hero on-dark">
+  <div class="wrap">
+    <div class="eyebrow">See it live</div>
+    <h1 style="margin-top:14px">Click through a shop <span class="hl">running on RO Engine.</span></h1>
+    <p class="lead">Sample Auto &amp; Tire has two weeks of repair orders behind it, cars on the floor today and a calendar full of appointments. The customers are made up. The app is the real one. No sign-up, nothing to install.</p>
+    <div class="dm-ctas">
+      <a class="btn btn-p" href="https://demo.roengine.com/login?utm_source=roengine.com&amp;utm_medium=site&amp;utm_campaign=demo">Open the demo shop <svg><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-g" href="https://app.roengine.com/signup?utm_source=roengine.com&amp;utm_medium=demo-page">Or set up your own shop, 90 days free</a>
+    </div>
+    <ul class="dm-list">
+      <li>Open a repair order: jobs, parts, labor, inspection photos, the invoice</li>
+      <li>Drag a car across the job board, from check-in to ready</li>
+      <li>See the estimate your customer gets, with each job explained</li>
+      <li>Look at the calendar, the reports and the parts on the shelf</li>
+    </ul>
+    <p class="dm-note">It resets every night, with every date moved onto today, so break whatever you like. Nothing leaves it: no texts, emails or calls. A few things that need your own shop (the AI assistant, the phone, payments) are switched off.</p>
+    <div class="dm-shot"><a href="https://demo.roengine.com/login?utm_source=roengine.com&amp;utm_medium=site&amp;utm_campaign=demo"><img src="/assets/demo/repair-orders.jpg" alt="The Repair Orders screen in the demo shop: seven cars on the floor, each with its stage and tech" width="1200" height="703" loading="lazy"></a></div>
+  </div>
+</header>
+
+<footer class="on-dark">
+  <div class="wrap">
+    <a href="/" class="brand"><img src="/assets/brand/roe-mark-on-dark.svg" alt="" width="62" height="24" style="height:24px;width:auto"><span><span class="nm" style="font-size:16px">RO Engine</span><span class="tg"><b>A</b>utomotive <b>I</b>ntelligence</span></span></a>
+    <span>© 2026 RO Engine · <a href="mailto:joe@roengine.com">joe@roengine.com</a> · <a href="/changelog/">Release notes</a> · <a href="/compare/">Compare</a> · <a href="/card-fees/">Card fees</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/quickbooks/">QuickBooks terms</a> · Built by a shop owner, for shop owners.</span>
+  </div>
+</footer>
+</body>
+</html>
