@@ -195,6 +195,17 @@ document.addEventListener('click', function (e) {
   var d = e.target.closest && e.target.closest('a[href^="https://demo.roengine.com"]');
   if (d) { fbq('trackCustom', 'DemoOpen'); window.gtag && gtag('event', 'demo_open'); }
 }, true);
+// The ad's tags go along into the demo shop, so its visitor log knows a visit came from the ad (RO Engine migration
+// 220): this page's utm_* replace the links' own "roengine.com / site" tags when the visitor arrived with any.
+document.addEventListener('DOMContentLoaded', function () {
+  var here = new URLSearchParams(location.search), keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'];
+  if (!keys.some(function (k) { return here.get(k); })) return;
+  document.querySelectorAll('a[href^="https://demo.roengine.com"]').forEach(function (a) {
+    var u = new URL(a.href);
+    keys.forEach(function (k) { if (here.get(k)) u.searchParams.set(k, here.get(k)); else u.searchParams.delete(k); });
+    a.href = u.toString();
+  });
+});
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
