@@ -6,6 +6,7 @@ RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://roengine.com%{REQUEST_URI} [L,R=301]
 # --- one sign-in address for every shop (RO Engine ROADMAP §2) -------------
+# Optional on the host: /login/ (a forwarding page, deployed) already does it; this makes it a 301.
 RewriteRule ^login/?$ https://login.roengine.com/ [L,R=301]
 # --- never serve the config or dotfiles --------------------------------------
 <FilesMatch "^(config\.php|config\.example\.php|\.htaccess|.*\.md)$">

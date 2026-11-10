@@ -26,6 +26,8 @@ deployment:
     - /bin/cp -Rf try $DEPLOYPATH
     - /bin/cp -Rf demo $DEPLOYPATH
     - /bin/cp -Rf changelog $DEPLOYPATH
+    # roengine.com/login → login.roengine.com (a forwarding page: .htaccess isn't deployed)
+    - /bin/cp -Rf login $DEPLOYPATH
     # Lead retention job, run by a cPanel cron — lives OUTSIDE public_html.
     - /bin/mkdir -p /home/roengine/ops
     - /bin/cp -f ops/lead-retention.php /home/roengine/ops/
