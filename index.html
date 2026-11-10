@@ -163,10 +163,11 @@ section{padding:110px 0}
 .nav .links a{color:#c8d6e6;text-decoration:none;font-weight:600;font-size:15px}
 .nav .links a:hover{color:#fff}
 .nav .btn{padding:10px 18px;font-size:14.5px}
-@media (max-width:860px){.nav .links a.hide-m{display:none}}
+@media (max-width:1000px){.nav .links a.hide-m{display:none}} /* 1000, was 860: with Live demo the full menu needs ~990px */
+.brand .nm{white-space:nowrap}
 .nav .btn{white-space:nowrap}
 .nav .links a{white-space:nowrap}
-@media (max-width:1120px){.nav .links{gap:18px}.nav .links a.hide-l{display:none}}
+@media (max-width:1140px){.nav .links{gap:18px}.nav .links a.hide-l{display:none}}
 @media (max-width:520px){.brand .tg{display:none}.brand .nm{font-size:17px}.nav .btn{padding:9px 14px;font-size:13.5px}.nav .wrap{gap:14px}}
 /* Live demo (owner, 2026-11-10): in the sticky nav at every width, so it's there all the way down the page. */
 .nav .links a.demo-l{display:inline-flex;align-items:center;gap:7px;color:#fff}
@@ -174,8 +175,8 @@ section{padding:110px 0}
 @keyframes demo-ping{70%{box-shadow:0 0 0 7px rgba(63,181,174,0)}100%{box-shadow:0 0 0 0 rgba(63,181,174,0)}}
 @media (prefers-reduced-motion:reduce){.nav .links a.demo-l i{animation:none}}
 @media (max-width:520px){.nav .links{gap:12px}.nav .links a.demo-l{font-size:13.5px;gap:6px}}
-@media (max-width:419px){.brand .nm{display:none}}
-@media (max-width:350px){.nav .wrap{gap:10px}.nav .links{gap:10px}.nav .btn{padding:8px 10px;font-size:12.5px}.nav .links a.demo-l{font-size:12.5px}.nav .links a.demo-l i{display:none}.nav .brand img{height:24px!important}}
+@media (max-width:449px){.brand .nm{display:none}}
+@media (max-width:359px){.nav .wrap{gap:10px}.nav .links{gap:10px}.nav .btn{padding:8px 10px;font-size:12.5px}.nav .links a.demo-l{font-size:12.5px}.nav .links a.demo-l i{display:none}.nav .brand img{height:24px!important}}
 
 /* ── Hero ────────────────────────────────────────────────────────────── */
 .hero{position:relative;background:radial-gradient(1200px 600px at 78% 20%,rgba(63,181,174,.18),transparent 60%),linear-gradient(180deg,var(--night),var(--night-2));color:#c8d6e6;margin-top:-72px;padding:150px 0 270px;overflow:hidden}
@@ -267,7 +268,8 @@ section{padding:110px 0}
 .strip .s:last-child{border-right:0}
 .strip b{display:block;font-family:var(--display);font-weight:900;font-size:40px;color:#fff;letter-spacing:-.02em;line-height:1}
 .strip span{font-size:13.5px;color:#8ea3bb}
-@media (max-width:760px){.strip .wrap{grid-template-columns:1fr 1fr}.strip .s:nth-child(2){border-right:0}.strip .s{border-bottom:1px solid rgba(255,255,255,.07)}}
+@media (max-width:760px){.strip .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}.strip .s:nth-child(2){border-right:0}.strip .s{border-bottom:1px solid rgba(255,255,255,.07)}}
+@media (max-width:440px){.strip .s{padding:24px 14px}.strip b{font-size:34px}} /* "17,300" at 40px + 22px padding was 19px wider than a 375 phone */
 
 /* ── Reveal on scroll ───────────────────────────────────────────────── */
 .rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
@@ -296,7 +298,7 @@ section{padding:110px 0}
 .fine-print{font-size:13px;color:var(--ink-3);margin-top:26px;max-width:760px}
 
 /* ── Scroll story ───────────────────────────────────────────────────── */
-.story{background:linear-gradient(180deg,var(--paper),#fff)}
+.story{background:linear-gradient(180deg,var(--paper),#fff);overflow-x:clip} /* the fanned-out back cards poke past the screen edge at laptop widths; clip (not hidden) keeps the deck sticky */
 .story-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;margin-top:40px}
 .steps .st{min-height:62vh;display:flex;flex-direction:column;justify-content:center;opacity:.28;transition:opacity .5s var(--ease)}
 .steps .st.on{opacity:1}
