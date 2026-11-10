@@ -168,6 +168,14 @@ section{padding:110px 0}
 .nav .links a{white-space:nowrap}
 @media (max-width:1120px){.nav .links{gap:18px}.nav .links a.hide-l{display:none}}
 @media (max-width:520px){.brand .tg{display:none}.brand .nm{font-size:17px}.nav .btn{padding:9px 14px;font-size:13.5px}.nav .wrap{gap:14px}}
+/* Live demo (owner, 2026-11-10): in the sticky nav at every width, so it's there all the way down the page. */
+.nav .links a.demo-l{display:inline-flex;align-items:center;gap:7px;color:#fff}
+.nav .links a.demo-l i{width:8px;height:8px;border-radius:50%;background:var(--teal-b);box-shadow:0 0 0 0 rgba(63,181,174,.6);animation:demo-ping 2s infinite}
+@keyframes demo-ping{70%{box-shadow:0 0 0 7px rgba(63,181,174,0)}100%{box-shadow:0 0 0 0 rgba(63,181,174,0)}}
+@media (prefers-reduced-motion:reduce){.nav .links a.demo-l i{animation:none}}
+@media (max-width:520px){.nav .links{gap:12px}.nav .links a.demo-l{font-size:13.5px;gap:6px}}
+@media (max-width:419px){.brand .nm{display:none}}
+@media (max-width:350px){.nav .wrap{gap:10px}.nav .links{gap:10px}.nav .btn{padding:8px 10px;font-size:12.5px}.nav .links a.demo-l{font-size:12.5px}.nav .links a.demo-l i{display:none}.nav .brand img{height:24px!important}}
 
 /* ── Hero ────────────────────────────────────────────────────────────── */
 .hero{position:relative;background:radial-gradient(1200px 600px at 78% 20%,rgba(63,181,174,.18),transparent 60%),linear-gradient(180deg,var(--night),var(--night-2));color:#c8d6e6;margin-top:-72px;padding:150px 0 270px;overflow:hidden}
@@ -614,6 +622,8 @@ fbq('track', 'PageView');
 document.addEventListener('click', function (e) {
   var a = e.target.closest && e.target.closest('a[href^="https://app.roengine.com/signup"]');
   if (a) fbq('track', 'InitiateCheckout');
+  // Into the demo shop (the nav's Live demo) → DemoOpen, as on /demo/.
+  if (e.target.closest && e.target.closest('a[href^="https://demo.roengine.com"]')) fbq('trackCustom', 'DemoOpen');
 }, true);
 </script>
 <noscript><img height="1" width="1" style="display:none"
@@ -648,6 +658,7 @@ src="https://www.facebook.com/tr?id=1693754829035693&ev=PageView&noscript=1"
       <a href="#pricing" class="hide-m">Pricing</a>
       <a href="/compare/" class="hide-m">Compare</a>
       <a href="/changelog/" class="hide-m">What&rsquo;s new</a>
+      <a href="https://demo.roengine.com/login?utm_source=roengine.com&amp;utm_medium=site&amp;utm_campaign=demo&amp;utm_content=home-nav" class="demo-l"><i aria-hidden="true"></i>Live demo</a>
       <a href="https://app.roengine.com/signup" class="btn btn-p">Set up my shop</a>
     </div>
   </div>
